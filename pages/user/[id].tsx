@@ -103,7 +103,7 @@ export default function UserProfilePage() {
             value={phoneNumber}
           />
         </VStack>
-        <Button onClick={handleUpdateInfo}>Update</Button>
+        <Button variant='callToAction' onClick={handleUpdateInfo}>Update</Button>
       </VStack>
     </>
   );
