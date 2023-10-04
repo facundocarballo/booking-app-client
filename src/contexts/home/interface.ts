@@ -1,7 +1,7 @@
 import { ILanguageJSON, Language } from "../../languages/interface";
 import User from "../../types/user";
 
-export interface IBookingContext {
+export interface IHomeContext {
     // Attributes
     user?: User,
     language: Language,

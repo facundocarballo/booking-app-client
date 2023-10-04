@@ -34,7 +34,6 @@ export default function UserProfilePage() {
   };
 
   const handleUpdateInfo = async () => {
-    console.log("Buenas: ", user);
     if (user === undefined) return;
     const res = await user.UpdateFirstName_Supabase(firstName);
     if (!res) {

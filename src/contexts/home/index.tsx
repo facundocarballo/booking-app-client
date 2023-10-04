@@ -1,10 +1,10 @@
 import React from "react";
 import EN from "../../languages/langs/en.json";
-import { IBookingContext } from "./interface";
+import { IHomeContext } from "./interface";
 import User from "../../types/user";
 import { ILanguageJSON, Language } from "../../languages/interface";
 
-const HomeContext = React.createContext<IBookingContext>({
+const HomeContext = React.createContext<IHomeContext>({
   // Attributes
   user: undefined,
   language: "en",
@@ -42,7 +42,7 @@ export const HomeContextProvider: React.FC<any> = (props: any) => {
   );
 };
 
-export function useHomeProvider(): IBookingContext {
+export function useHomeProvider(): IHomeContext {
   const context = React.useContext(HomeContext);
   if (!context)
     throw new Error("useProvider have to be inside of the BookingAppContext");

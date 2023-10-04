@@ -1,20 +1,14 @@
-import { LogInForm } from '@/src/components/LogInForm'
-import { SignUpForm } from '@/src/components/SignUpForm'
 import supabase from '@/src/supabase';
 import Head from 'next/head'
 import React from 'react'
-import Image from 'next/image';
-import { SignIn } from '@/src/components/welcome/signin';
 import { NavBar } from '@/src/components/navbar';
 import { theNavBarProps } from '@/src/handlers/navbar';
 import { Welcome } from '@/src/components/welcome';
-import { Circle } from '@chakra-ui/react';
 import { useHomeProvider } from '@/src/contexts/home';
 import User from '@/src/types/user';
 
 
 export default function Home() {
-  // const [user, setUser] = React.useState<any>(undefined);
   const { user, setUser } = useHomeProvider();
   const checkUserAuth = async () => 
   {

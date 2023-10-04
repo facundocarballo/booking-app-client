@@ -3,6 +3,7 @@ import supabase from "../supabase";
 import { BASE_URL_AVATARS } from "../supabase/urls";
 import { checkNull } from "../handlers/auxs";
 import { error } from "console";
+import { Business } from "./business";
 
 class User {
     // Attributes
@@ -53,6 +54,34 @@ class User {
         }
         return true;
     }
+
+    async GetBusiness(): Promise<boolean> {
+        try {
+            const res = await supabase.from("Business").select().eq("owner", this.id);
+            console.log("RES: ", res);
+        } catch (err) {
+            console.error("Error getting the business of this user. ", err);
+            return false;
+        }
+        return true;
+    }
+
+    async CreateBusiness(name: string, description: string, category_id: string): Promise<boolean> {
+        try {
+            const res = await supabase.from("Business").insert({
+                name,
+                description,
+                category_id,
+                owner: this.id
+            });
+            console.log("RES: ", res);
+        } catch (err) {
+            console.error("Error getting the business of this user. ", err);
+            return false;
+        }
+        return true;
+    }
+
     /// Update
     async UpdateAll(
         first_name: string|null,
@@ -187,7 +216,6 @@ class User {
         }
         return true;
     }
-
 
     // Private Methods
 }

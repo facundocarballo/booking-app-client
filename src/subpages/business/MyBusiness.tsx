@@ -1,33 +1,86 @@
-import React from 'react';
-import { VStack, HStack, Heading, Spacer, Button, Box, Text } from '@chakra-ui/react'
+import React from "react";
+import {
+  VStack,
+  HStack,
+  Heading,
+  Spacer,
+  Button,
+  Box,
+  Text,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure
+} from "@chakra-ui/react";
+import { CreateBusinessForm } from "@/src/components/business/CreateBusinessForm";
+import { useBusinessProvider } from "@/src/contexts/business";
+import { BusinessCategory } from "@/src/types/business/category";
 
 export const MyBusiness = () => {
-   // Attributes
-   // Context
-   const business: string[] = [];
-   // Methods
-   // Component
-   return(
-      <>
-        <VStack w='full'>
-            <HStack w='full'>
-                <Box w='10px' />
-                <Heading>Your Business</Heading>
-                <Spacer />
-                <Button variant='callToAction'>
-                    Create Business
-                </Button>
-                <Box w='10px' />
-            </HStack>
-            <Box h='10px' />
-            {
-                business.length > 0 ?
-                business.map((b, idx) => <Text key={idx}>{b}</Text>) :
-                <Text variant='empty'>
-                    {"Don't have a business yet? Create one now! It's Free. :)"}
-                </Text>
-            }
-        </VStack>
-      </>
-   );
-}
+  // Attributes
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef(null)
+
+  // Context
+  const { business, categories, setCategories } = useBusinessProvider();
+  // Methods
+  const handlerGetAllBusinessCategories = async () => {
+    const categories = await BusinessCategory.GetAllBusinessCategories();
+    console.log("Categories: ", categories);
+    setCategories(categories);
+  }
+  
+  React.useEffect(() => {
+    if (categories !== undefined) return;
+    handlerGetAllBusinessCategories();
+  }, []);
+  // Component
+  return (
+    <>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Create Business
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              <CreateBusinessForm />
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button colorScheme="red" onClick={onClose} ml={3}>
+                Cancel
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+
+      <VStack w="full">
+        <HStack w="full">
+          <Box w="10px" />
+          <Heading>Your Business</Heading>
+          <Spacer />
+          <Button variant="callToAction" onClick={onOpen}>Create Business</Button>
+          <Box w="10px" />
+        </HStack>
+        <Box h="10px" />
+        { business !== undefined && business.length > 0 ? (
+          business.map((b, idx) => <Text key={idx}>{b.name}</Text>)
+        ) : (
+          <Text variant="empty">
+            {"Don't have a business yet? Create one now! It's Free. :)"}
+          </Text>
+        )}
+      </VStack>
+    </>
+  );
+};
