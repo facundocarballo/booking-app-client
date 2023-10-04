@@ -5,19 +5,10 @@ import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import {
   Box,
-  HStack,
   VStack,
-  Spacer,
-  Circle,
-  Text,
-  Image,
-  Center,
-  Input,
   Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { UserImage } from "@/src/components/navbar/UserImage";
-import supabase from "@/src/supabase";
 import { InputImage } from "@/src/components/inputs/InputImage";
 import { InputInfo } from "@/src/components/inputs/InputInfo";
 
