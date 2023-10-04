@@ -1,0 +1,51 @@
+import React from "react";
+import { Input, Text, Divider, Box, HStack, Button } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
+export interface IInputPassword {
+  valueA: string | undefined;
+  handlerA: (_value: string) => void;
+  valueB: string | undefined;
+  handlerB: (_value: string) => void;
+}
+
+export const InputPassword = ({
+  valueA,
+  handlerA,
+  valueB,
+  handlerB,
+}: IInputPassword) => {
+  // Attributes
+  const [viewPassword, setViewPassword] = React.useState<boolean>(false);
+  // Context
+  // Methods
+  // Component
+  return (
+    <>
+      <Text fontWeight="bold">Password</Text>
+      <HStack w="full">
+        <Input
+          placeholder="Write your password"
+          value={valueA}
+          onChange={(e) => handlerA(e.currentTarget.value)}
+          type={viewPassword ? "text" : "password"}
+          w="full"
+        />
+        <Button w='50px' onClick={() => setViewPassword(!viewPassword)}>
+          {viewPassword ? <ViewOffIcon /> : <ViewIcon />}
+        </Button>
+      </HStack>
+      <Box h="10px" />
+      <HStack w="full">
+        <Input
+          placeholder="Repeat your password"
+          value={valueB}
+          onChange={(e) => handlerB(e.currentTarget.value)}
+          type={viewPassword ? "text" : "password"}
+          w="full"
+        />
+        <Box w='55px' />
+      </HStack>
+    </>
+  );
+};

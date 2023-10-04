@@ -1,0 +1,16 @@
+import { ILanguageJSON, Language } from "../../languages/interface";
+import User from "../../types/user";
+
+export interface IBookingContext {
+    // Attributes
+    user?: User,
+    language: Language,
+    jsonLanguague: ILanguageJSON,
+
+    // React useState Methods
+    setUser: (_user: User) => void,
+    setLanguage: (_languague: Language) => void,
+    setJsonLanguague: (_jsonLanguague: ILanguageJSON) => void,
+
+    // Methods
+};

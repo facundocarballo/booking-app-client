@@ -5,8 +5,6 @@ export const SignUpForm = () => {
   // Attributes
   const [email, setEmail] = React.useState<string | null>(null);
   const [password, setPassword] = React.useState<string | null>(null);
-  const [firstName, setFirstName] = React.useState<string | null>(null);
-  const [lastName, setLastName] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
   // Context
   // Methods
@@ -44,14 +42,6 @@ export const SignUpForm = () => {
             placeholder="password"
             type="password"
             onChange={(e) => setPassword(e.currentTarget.value)}
-          />
-          <input
-            placeholder="First Name"
-            onChange={(e) => setFirstName(e.currentTarget.value)}
-          />
-          <input
-            placeholder="Last Name"
-            onChange={(e) => setLastName(e.currentTarget.value)}
           />
           <button onClick={handleSignUp}>Sign Up</button>
         </>
