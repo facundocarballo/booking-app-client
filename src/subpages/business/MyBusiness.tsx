@@ -43,7 +43,7 @@ export const MyBusiness = () => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              <CreateBusinessForm />
+              <CreateBusinessForm onClose={onClose} />
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>

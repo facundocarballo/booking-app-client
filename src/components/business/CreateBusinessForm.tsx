@@ -12,8 +12,13 @@ import { InputInfo } from "../inputs/InputInfo";
 import { useBusinessProvider } from "@/src/contexts/business";
 import { BusinessCategory } from "@/src/types/business/category";
 import { SelectBusinessCategory } from "./SelectBusinessCategory";
+import { useHomeProvider } from "@/src/contexts/home";
 
-export const CreateBusinessForm = () => {
+export interface ICreateBusinessForm {
+    onClose: () => void
+}
+
+export const CreateBusinessForm = ({onClose}: ICreateBusinessForm) => {
   // Attributes
   const [name, setName] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
@@ -23,8 +28,10 @@ export const CreateBusinessForm = () => {
   const [categorySelected, setCategorySelected] = React.useState<
     string | undefined
   >(undefined);
+  const [loading, setLoading] = React.useState<boolean>(false);
   // Context
   const { categories, setCategories } = useBusinessProvider();
+  const { user } = useHomeProvider();
   // Methods
   const handlerGetAllBusinessCategories = async () => {
     const c = await BusinessCategory.GetAllBusinessCategories();
@@ -34,10 +41,20 @@ export const CreateBusinessForm = () => {
   };
 
   const handleCreateBusiness = async () => {
-    console.log("Name: ", name);
-    console.log("Description: ", description);
-    console.log("Category: ", categorySelected);
+    if (user === undefined || categorySelected === undefined) return;
+    setLoading(true);
+    await user.CreateBusiness(name, description, categorySelected);
+    setLoading(false);
+    clearInputs();
+    onClose();
   };
+
+  const clearInputs = () => {
+    setName("");
+    setDescription("");
+    if (cats === undefined) return;
+    setCategorySelected(cats[0].id);
+  }
 
   React.useEffect(() => {
     if (categories !== undefined) {
@@ -78,6 +95,9 @@ export const CreateBusinessForm = () => {
           <Button variant="callToAction" onClick={handleCreateBusiness}>
             CREATE BUSINESS
           </Button>
+          {
+            loading ? <Spinner /> : null
+          }
         </HStack>
       </VStack>
     </>

@@ -74,7 +74,6 @@ class User {
                 category_id,
                 owner: this.id
             });
-            console.log("RES: ", res);
         } catch (err) {
             console.error("Error getting the business of this user. ", err);
             return false;
