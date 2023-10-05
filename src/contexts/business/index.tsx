@@ -39,7 +39,10 @@ export const BusinessContextProvider: React.FC<any> = (props: any) => {
     setCategories,
   };
 
-  const memo = React.useMemo(() => values, [business, favouriteBusiness]);
+  const memo = React.useMemo(
+    () => values,
+    [business, favouriteBusiness, categories]
+  );
 
   return (
     <BusinessContext.Provider value={memo}>

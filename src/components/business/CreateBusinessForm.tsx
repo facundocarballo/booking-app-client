@@ -1,8 +1,6 @@
 import React from "react";
 import {
   VStack,
-  Select,
-  Text,
   Button,
   Spinner,
   HStack,
@@ -15,16 +13,13 @@ import { SelectBusinessCategory } from "./SelectBusinessCategory";
 import { useHomeProvider } from "@/src/contexts/home";
 
 export interface ICreateBusinessForm {
-    onClose: () => void
+  onClose: () => void;
 }
 
-export const CreateBusinessForm = ({onClose}: ICreateBusinessForm) => {
+export const CreateBusinessForm = ({ onClose }: ICreateBusinessForm) => {
   // Attributes
   const [name, setName] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
-  const [cats, setCats] = React.useState<undefined | BusinessCategory[]>(
-    undefined
-  );
   const [categorySelected, setCategorySelected] = React.useState<
     string | undefined
   >(undefined);
@@ -35,7 +30,6 @@ export const CreateBusinessForm = ({onClose}: ICreateBusinessForm) => {
   // Methods
   const handlerGetAllBusinessCategories = async () => {
     const c = await BusinessCategory.GetAllBusinessCategories();
-    setCats(c);
     setCategorySelected(c[0].id);
     setCategories(c);
   };
@@ -52,13 +46,13 @@ export const CreateBusinessForm = ({onClose}: ICreateBusinessForm) => {
   const clearInputs = () => {
     setName("");
     setDescription("");
-    if (cats === undefined) return;
-    setCategorySelected(cats[0].id);
-  }
+    if (categories === undefined) return;
+    setCategorySelected(categories[0].id);
+  };
 
   React.useEffect(() => {
     if (categories !== undefined) {
-      setCats(categories);
+      setCategories(categories);
       return;
     }
     handlerGetAllBusinessCategories();
@@ -81,12 +75,12 @@ export const CreateBusinessForm = ({onClose}: ICreateBusinessForm) => {
           value={description}
           handler={setDescription}
         />
-        {cats === undefined ? (
+        {categories === undefined ? (
           <Spinner />
         ) : (
           <SelectBusinessCategory
             handler={setCategorySelected}
-            options={cats}
+            options={categories}
             title="Business Category"
           />
         )}
@@ -95,9 +89,7 @@ export const CreateBusinessForm = ({onClose}: ICreateBusinessForm) => {
           <Button variant="callToAction" onClick={handleCreateBusiness}>
             CREATE BUSINESS
           </Button>
-          {
-            loading ? <Spinner /> : null
-          }
+          {loading ? <Spinner /> : null}
         </HStack>
       </VStack>
     </>

@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import { CreateBusinessForm } from "@/src/components/business/CreateBusinessForm";
 import { useBusinessProvider } from "@/src/contexts/business";
-import { BusinessCategory } from "@/src/types/business/category";
 
 export const MyBusiness = () => {
   // Attributes
