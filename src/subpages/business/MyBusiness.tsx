@@ -25,18 +25,9 @@ export const MyBusiness = () => {
   const cancelRef = React.useRef(null)
 
   // Context
-  const { business, categories, setCategories } = useBusinessProvider();
+  const { business } = useBusinessProvider();
   // Methods
-  const handlerGetAllBusinessCategories = async () => {
-    const categories = await BusinessCategory.GetAllBusinessCategories();
-    console.log("Categories: ", categories);
-    setCategories(categories);
-  }
-  
-  React.useEffect(() => {
-    if (categories !== undefined) return;
-    handlerGetAllBusinessCategories();
-  }, []);
+
   // Component
   return (
     <>
@@ -54,12 +45,6 @@ export const MyBusiness = () => {
             <AlertDialogBody>
               <CreateBusinessForm />
             </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
-                Cancel
-              </Button>
-            </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>

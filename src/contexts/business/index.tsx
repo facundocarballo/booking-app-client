@@ -28,6 +28,7 @@ export const BusinessContextProvider: React.FC<any> = (props: any) => {
   >(undefined);
 
   // Methods
+
   const values = {
     business,
     favouriteBusiness,
