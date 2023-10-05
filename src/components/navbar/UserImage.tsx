@@ -2,21 +2,24 @@ import React from "react";
 import { Circle, Center, Text, Image } from "@chakra-ui/react";
 import { useHomeProvider } from "@/src/contexts/home";
 
-export const UserImage = () => {
+interface IUserImage {
+  photoUrl?: string;
+  name: string;
+}
+
+export const UserImage = ({ name, photoUrl }: IUserImage) => {
   // Attributes
   // Context
-  const { user } = useHomeProvider();
   // Methods
   // Component
-  if (user === undefined) return null;
   return (
     <>
-      {user.photo_url === undefined ? (
+      {photoUrl === undefined ? (
         <Circle size="40px" bg="purple">
           <Center>
-            <Text fontSize="20px" color="white">{`${user.email
+            <Text fontSize="20px" color="white">{`${name
               ?.charAt(0)
-              .toUpperCase()}${user.email?.charAt(1).toUpperCase()}`}</Text>
+              .toUpperCase()}${name.charAt(1).toUpperCase()}`}</Text>
           </Center>
         </Circle>
       ) : (
@@ -25,7 +28,7 @@ export const UserImage = () => {
           h="50px"
           borderRadius={100}
           alt="user-img"
-          src={user.photo_url}
+          src={photoUrl}
         />
       )}
     </>

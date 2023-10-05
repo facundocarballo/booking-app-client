@@ -3,29 +3,38 @@ import Head from "next/head";
 import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
-import { Box, Divider } from "@chakra-ui/react";
-import { MyBusiness } from "@/src/subpages/business/MyBusiness";
-import { FavouriteBusiness } from "@/src/subpages/business/FavouriteBusiness";
 import { useRouter } from "next/router";
-import { BusinessContextProvider } from "@/src/contexts/business";
+import { Box } from "@chakra-ui/react";
+import { InputImage } from "@/src/components/inputs/InputImage";
 
-export default function BusinessPasge() {
+export default function BusinessProfilePage() {
   // Attributes
+  const file = React.useRef<File | null>(null);
   const router = useRouter();
   // Context
   const { user } = useHomeProvider();
   // Methods
+  const handleUploadImage = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    file.current = event.target.files === null ? null : event.target.files[0];
+    if (user === undefined || file.current === null) return;
+    const res = await user.UpdatePhotoUrl_Supabase(file.current);
+    if (!res) {
+      alert("Error uploading the image to Supabase.");
+    }
+  };
+
   React.useEffect(() => {
     if (user === undefined) {
       router.push("/");
-      return;
     }
-  });
+  }, []);
   // Component
   return (
     <>
       <Head>
-        <title>{user?.first_name} Business</title>
+        <title>Business Profile</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
@@ -35,13 +44,11 @@ export default function BusinessPasge() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <BusinessContextProvider>
-        <MyBusiness />
-        <Box h="20px" />
-        <Divider />
-        <Box h="10px" />
-        <FavouriteBusiness />
-      </BusinessContextProvider>
+      <InputImage
+        handler={handleUploadImage}
+        photoUrl={undefined}
+        name={"Pelukeria Diego"}
+      />
     </>
   );
 }

@@ -55,15 +55,19 @@ class User {
         return true;
     }
 
-    async GetBusiness(): Promise<boolean> {
+    async GetBusiness(): Promise<Business[]> {
+        let business: Business[] = []
         try {
             const res = await supabase.from("Business").select().eq("owner", this.id);
-            console.log("RES: ", res);
+            if (res.data === null) return business;
+            for (const b of res.data) {
+                business.push(new Business(b))
+            }
         } catch (err) {
             console.error("Error getting the business of this user. ", err);
-            return false;
+            return business;
         }
-        return true;
+        return business;
     }
 
     async CreateBusiness(name: string, description: string, category_id: string): Promise<boolean> {

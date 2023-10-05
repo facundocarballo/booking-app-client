@@ -68,7 +68,10 @@ export const NavBar = ({ props }: NavBarProps) => {
         </Button>
         {user !== undefined ? (
           <NextLink href={`/user/${user.id}`}>
-            <UserImage />
+            <UserImage
+              name={user.first_name === undefined ? "" : user.first_name}
+              photoUrl={user.photo_url}
+            />
           </NextLink>
         ) : null}
 

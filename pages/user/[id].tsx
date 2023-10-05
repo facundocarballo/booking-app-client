@@ -3,11 +3,7 @@ import Head from "next/head";
 import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
-import {
-  Box,
-  VStack,
-  Button,
-} from "@chakra-ui/react";
+import { Box, VStack, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { InputImage } from "@/src/components/inputs/InputImage";
 import { InputInfo } from "@/src/components/inputs/InputInfo";
@@ -37,9 +33,9 @@ export default function UserProfilePage() {
     if (user === undefined) return;
     const res = await user.UpdateFirstName_Supabase(firstName);
     if (!res) {
-        alert("Error updating the info in Supabase.");
+      alert("Error updating the info in Supabase.");
     } else {
-        console.log("todo ok");
+      console.log("todo ok");
     }
   };
 
@@ -65,7 +61,10 @@ export default function UserProfilePage() {
       <Box h="15px" />
       <VStack w="full">
         <Box h="100px" />
-        <InputImage handler={handleUploadImage} />
+        <InputImage
+          handler={handleUploadImage}
+          name={user.first_name === undefined ? "" : user.first_name}
+        />
         <VStack display={{ lg: "flex", md: "flex", sm: "none" }} w="50%">
           <InputInfo
             handler={setFirstName}
@@ -93,7 +92,9 @@ export default function UserProfilePage() {
             value={phoneNumber}
           />
         </VStack>
-        <Button variant='callToAction' onClick={handleUpdateInfo}>Update</Button>
+        <Button variant="callToAction" onClick={handleUpdateInfo}>
+          Update
+        </Button>
       </VStack>
     </>
   );
