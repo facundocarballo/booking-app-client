@@ -23,10 +23,7 @@ export default function UserProfilePage() {
   ) => {
     file.current = event.target.files === null ? null : event.target.files[0];
     if (user === undefined || file.current === null) return;
-    const res = await user.UpdatePhotoUrl_Supabase(file.current);
-    if (!res) {
-      alert("Error uploading the image to Supabase.");
-    }
+    await user.UpdatePhotoUrl_Supabase(file.current);
   };
 
   const handleUpdateInfo = async () => {

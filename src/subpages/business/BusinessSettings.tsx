@@ -23,10 +23,7 @@ export const BusinessSettings = ({ id }: IBusinessSettings) => {
   ) => {
     file.current = event.target.files === null ? null : event.target.files[0];
     if (theBusiness === undefined || file.current === null) return;
-    const res = await theBusiness.UpdatePhotoUrl_Supabase(file.current);
-    if (!res) {
-      alert("Error uploading the image to Supabase.");
-    }
+    await theBusiness.UpdatePhotoUrl_Supabase(file.current);
   };
 
   const handleSetTheBusiness = () => {
