@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Text, Divider, Box, HStack, Button } from "@chakra-ui/react";
+import { Input, Text, Box, HStack, Button } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export interface IInputPassword {
@@ -19,6 +19,12 @@ export const InputPassword = ({
   const [viewPassword, setViewPassword] = React.useState<boolean>(false);
   // Context
   // Methods
+  const areDiferrentsPasswords = () => {
+    if (valueA === valueB) return false;
+    if (valueB === undefined) return false;
+    if (valueB.length === 0) return false;
+    return true;
+  };
   // Component
   return (
     <>
@@ -31,8 +37,8 @@ export const InputPassword = ({
           type={viewPassword ? "text" : "password"}
           w="full"
         />
-        <Button w='50px' onClick={() => setViewPassword(!viewPassword)}>
-          {viewPassword ? <ViewOffIcon /> : <ViewIcon />}
+        <Button w="50px" onClick={() => setViewPassword(!viewPassword)}>
+          {viewPassword ?  <ViewIcon /> : <ViewOffIcon />}
         </Button>
       </HStack>
       <Box h="10px" />
@@ -44,8 +50,12 @@ export const InputPassword = ({
           type={viewPassword ? "text" : "password"}
           w="full"
         />
-        <Box w='55px' />
+        <Box w="55px" />
       </HStack>
+      <Box h="10px" />
+      {areDiferrentsPasswords() ? (
+        <Text variant="alert">{"The passwords doesn't match"}</Text>
+      ) : null}
     </>
   );
 };

@@ -10,5 +10,9 @@ export const Text = {
         description: () => ({
             color: useColorModeValue('gray.500', 'gray.400'),
         }),
+        alert: () => ({
+            color: useColorModeValue('red.300', 'red.600'),
+            fontWeight: 'bold'
+        })
     }
 }

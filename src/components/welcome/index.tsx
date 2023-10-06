@@ -2,14 +2,15 @@ import React from "react";
 import {
   AlertDialog,
   AlertDialogBody,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
   Text,
   Button,
   Input,
+  Spacer,
   Box,
+  HStack,
 } from "@chakra-ui/react";
 
 export const Welcome = () => {
@@ -34,14 +35,16 @@ export const Welcome = () => {
 
           <AlertDialogBody>
             <Text>
-                {"You are not logged in Booking App. Please Login or create your account."}
+              {
+                "You are not logged in Booking App. Please Login or create your account."
+              }
             </Text>
+            <HStack w="full">
+              <Spacer />
+              <Button variant='callToAction'>Log In</Button>
+              <Button variant='callToAction'>Sign Up</Button>
+            </HStack>
           </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button>Log In</Button>
-            <Button>Sign Up</Button>
-          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialogOverlay>
     </AlertDialog>
