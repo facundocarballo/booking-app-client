@@ -21,10 +21,10 @@ export default function BusinessPasge() {
     }
   });
   // Component
-  return (
+  return user === undefined ? null : (
     <>
       <Head>
-        <title>{user?.first_name} Business</title>
+        <title>{user.first_name} Business</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
