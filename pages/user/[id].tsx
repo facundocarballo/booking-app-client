@@ -16,7 +16,7 @@ export default function UserProfilePage() {
   const file = React.useRef<File | null>(null);
   const router = useRouter();
   // Context
-  const { user } = useHomeProvider();
+  const { user, setUser } = useHomeProvider();
   // Methods
   const handleUploadImage = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -36,6 +36,13 @@ export default function UserProfilePage() {
     }
   };
 
+  const handleSignOut = async () => {
+    if (user === undefined) return;
+    await user.SignOut();
+    setUser(undefined);
+    router.push("/");
+  };
+
   // Component
   React.useEffect(() => {
     if (user === undefined) {
@@ -46,7 +53,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Head>
-        <title>{user?.first_name} Profile</title>
+        <title>{user.first_name} Profile</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
@@ -91,6 +98,9 @@ export default function UserProfilePage() {
         </VStack>
         <Button variant="callToAction" onClick={handleUpdateInfo}>
           Update
+        </Button>
+        <Button variant='callToAction' onClick={handleSignOut}>
+          Sign Out
         </Button>
       </VStack>
     </>

@@ -8,7 +8,7 @@ export interface IHomeContext {
     jsonLanguague: ILanguageJSON,
 
     // React useState Methods
-    setUser: (_user: User) => void,
+    setUser: (_user: User|undefined) => void,
     setLanguage: (_languague: Language) => void,
     setJsonLanguague: (_jsonLanguague: ILanguageJSON) => void,
 
