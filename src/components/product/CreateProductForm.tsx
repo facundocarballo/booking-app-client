@@ -1,7 +1,6 @@
 import React from "react";
 import { VStack, Button, Spinner, HStack, Spacer } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
-import { useBusinessProvider } from "@/src/contexts/business";
 import { useBranchProvider } from "@/src/contexts/branch";
 
 export interface ICreateBusinessForm {
@@ -31,7 +30,7 @@ export const CreateProductForm = ({ onClose }: ICreateBusinessForm) => {
   const clearInputs = () => {
     setName("");
     setDescription("");
-    setPrice(0);
+    setPrice("");
   };
 
   // Component
