@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Box } from "@chakra-ui/react";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
+import { BranchProducts } from "@/src/subpages/branch/BranchProducts";
 
 export default function BranchProfilePage() {
   // Attributes
@@ -50,6 +51,7 @@ export default function BranchProfilePage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
+      <BranchProducts />
     </>
   );
 }

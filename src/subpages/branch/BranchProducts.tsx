@@ -21,13 +21,13 @@ import { CreateBranchForm } from "@/src/components/branch/CreateBranchForm";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { BranchCard } from "@/src/components/branch/BranchCard";
 
-export const BusinessBranches = () => {
+export const BranchProducts = () => {
   // Attributes
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   // Context
-  const { businessSelected } = useBusinessProvider();
-  const { branches, setBranches } = useBranchProvider();
+  const { businessSelected, setBusiness } = useBusinessProvider();
+  const { branches, setBranches, branchSelected } = useBranchProvider();
   // Methods
   const handleGetBusiness = async () => {
     if (businessSelected === undefined) return;
@@ -49,7 +49,7 @@ export const BusinessBranches = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Create Branch
+              Create Product
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -62,10 +62,10 @@ export const BusinessBranches = () => {
       <VStack w="full">
         <HStack w="full">
           <Box w="10px" />
-          <Heading>Your Branches</Heading>
+          <Heading>Your Products</Heading>
           <Spacer />
           <Button variant="callToAction" onClick={onOpen}>
-            Create Branch
+            Create Product
           </Button>
           <Box w="10px" />
         </HStack>
