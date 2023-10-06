@@ -75,14 +75,14 @@ class User {
 
     async CreateBusiness(name: string, description: string, category_id: string): Promise<boolean> {
         try {
-            const res = await supabase.from("Business").insert({
+            await supabase.from("Business").insert({
                 name,
                 description,
                 category_id,
                 owner: this.id
             });
         } catch (err) {
-            console.error("Error getting the business of this user. ", err);
+            console.error("Error creating the business for this user. ", err);
             return false;
         }
         return true;

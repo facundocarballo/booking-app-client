@@ -1,4 +1,6 @@
+import supabase from "@/src/supabase";
 import { Storage } from "../storage";
+import { ENTITIES } from "@/src/supabase/entities";
 
 export class Business {
   // Attributes
@@ -33,5 +35,19 @@ export class Business {
       this.photo_url,
     );
   }
-  /// Get
+  /// Create
+  async CreateBranch(name: string, geogash: string, description: string): Promise<boolean> {
+    try {
+      await supabase.from(ENTITIES.branch).insert({
+        name,
+        description,
+        geogash,
+        business_id: this.id
+      });
+    } catch (err) {
+      console.error(`Error creating the branch for ${this.name}. `, err);
+      return false;
+  }
+    return true;
+  }
 }

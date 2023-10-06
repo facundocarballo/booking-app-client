@@ -5,11 +5,13 @@ import { BusinessCategory } from "@/src/types/business/category";
 
 const BusinessContext = React.createContext<IBusinessContext>({
   // Attributes
+  businessSelected: undefined,
   business: undefined,
   favouriteBusiness: undefined,
   categories: undefined,
 
   // React useState Methods
+  setBusinessSelected: () => {},
   setBusiness: () => {},
   setFavouriteBusiness: () => {},
   setCategories: () => {},
@@ -17,6 +19,9 @@ const BusinessContext = React.createContext<IBusinessContext>({
 
 export const BusinessContextProvider: React.FC<any> = (props: any) => {
   // Attributes
+  const [businessSelected, setBusinessSelected] = React.useState<
+    Business | undefined
+  >(undefined);
   const [business, setBusiness] = React.useState<Business[] | undefined>(
     undefined
   );
@@ -30,10 +35,12 @@ export const BusinessContextProvider: React.FC<any> = (props: any) => {
   // Methods
 
   const values = {
+    businessSelected,
     business,
     favouriteBusiness,
     categories,
 
+    setBusinessSelected,
     setBusiness,
     setFavouriteBusiness,
     setCategories,
@@ -41,7 +48,7 @@ export const BusinessContextProvider: React.FC<any> = (props: any) => {
 
   const memo = React.useMemo(
     () => values,
-    [business, favouriteBusiness, categories]
+    [businessSelected, business, favouriteBusiness, categories]
   );
 
   return (

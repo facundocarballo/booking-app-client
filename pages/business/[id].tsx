@@ -7,30 +7,27 @@ import { useRouter } from "next/router";
 import { Box } from "@chakra-ui/react";
 import { BusinessSettings } from "@/src/subpages/business/BusinessSettings";
 import { useBusinessProvider } from "@/src/contexts/business";
-import { Business } from "@/src/types/business";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
+import { BusinessBranches } from "@/src/subpages/business/BusinessBranches";
 
 export default function BusinessProfilePage() {
   // Attributes
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [theBusiness, setTheBusiness] = React.useState<Business | undefined>(
-    undefined
-  );
   const router = useRouter();
   const url = router.asPath.split("/");
-  const theBusinessId = url[url.length - 1];
+  const businessSelectedId = url[url.length - 1];
   // Context
   const { user } = useHomeProvider();
-  const { business } = useBusinessProvider();
+  const { business, businessSelected, setBusinessSelected } = useBusinessProvider();
   // Methods
   const handleGetTheBusiness = async () => {
-    const finded = business?.find((b) => b.id === theBusinessId);
+    const finded = business?.find((b) => b.id === businessSelectedId);
     if (finded === undefined) {
       // Busco el business por mi cuenta con una consulta.
       setLoading(false);
       return;
     }
-    setTheBusiness(finded);
+    setBusinessSelected(finded);
     setLoading(false);
   };
   React.useEffect(() => {
@@ -41,11 +38,11 @@ export default function BusinessProfilePage() {
   }, []);
   // Component
   if (loading) return null;
-  if (theBusiness === undefined) return <BusinessNotFound />;
+  if (businessSelected === undefined) return <BusinessNotFound />;
   return (
     <>
       <Head>
-        <title>{theBusiness.name} - Profile</title>
+        <title>{businessSelected.name} - Profile</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
@@ -55,6 +52,8 @@ export default function BusinessProfilePage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
+      <BusinessBranches />
+      <Box h='10px' />
       <BusinessSettings id={url[url.length - 1]} />
     </>
   );
