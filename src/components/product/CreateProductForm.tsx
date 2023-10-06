@@ -2,25 +2,27 @@ import React from "react";
 import { VStack, Button, Spinner, HStack, Spacer } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBusinessProvider } from "@/src/contexts/business";
+import { useBranchProvider } from "@/src/contexts/branch";
 
 export interface ICreateBusinessForm {
-  onClose: () => void
+  onClose: () => void;
 }
 
-export const CreateBranchForm = ({ onClose }: ICreateBusinessForm) => {
+export const CreateProductForm = ({ onClose }: ICreateBusinessForm) => {
   // Attributes
   const [name, setName] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
-  const [geoHash, setGeoHash] = React.useState<string>("");
+  const [price, setPrice] = React.useState<string>("");
+  const [photoUrl, setPhotoUrl] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   // Context
-  const { businessSelected } = useBusinessProvider();
+  const { branchSelected } = useBranchProvider();
   // Methods
 
   const handleCreateBusiness = async () => {
-    if (businessSelected === undefined) return;
+    if (branchSelected === undefined) return;
     setLoading(true);
-    await businessSelected.CreateBranch(name, geoHash, description);
+    await branchSelected.CreateProduct(name, description, Number(price), photoUrl);
     setLoading(false);
     clearInputs();
     onClose();
@@ -29,7 +31,7 @@ export const CreateBranchForm = ({ onClose }: ICreateBusinessForm) => {
   const clearInputs = () => {
     setName("");
     setDescription("");
-    setGeoHash("");
+    setPrice(0);
   };
 
   // Component
@@ -38,29 +40,29 @@ export const CreateBranchForm = ({ onClose }: ICreateBusinessForm) => {
       <VStack w="full">
         <InputInfo
           title="Name"
-          placeholder="Booking App - New York"
+          placeholder="Hair cut"
           type="text"
           value={name}
           handler={setName}
         />
         <InputInfo
           title="Description"
-          placeholder="App to organize your business and get new clients."
+          placeholder="Beautiful hair cut"
           type="text"
           value={description}
           handler={setDescription}
         />
         <InputInfo
-          title="GeoHash"
-          placeholder="69y6ge"
-          type="text"
-          value={geoHash}
-          handler={setGeoHash}
+          title="Price"
+          placeholder="2800"
+          type="number"
+          value={price}
+          handler={setPrice}
         />
         <HStack w="full">
           <Spacer />
           <Button variant="callToAction" onClick={handleCreateBusiness}>
-            CREATE BRANCH
+            CREATE PRODUCT
           </Button>
           {loading ? <Spinner /> : null}
         </HStack>

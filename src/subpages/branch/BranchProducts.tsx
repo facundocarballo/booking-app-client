@@ -17,9 +17,9 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import { useBusinessProvider } from "@/src/contexts/business";
-import { CreateBranchForm } from "@/src/components/branch/CreateBranchForm";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { BranchCard } from "@/src/components/branch/BranchCard";
+import { CreateProductForm } from "@/src/components/product/CreateProductForm";
 
 export const BranchProducts = () => {
   // Attributes
@@ -29,14 +29,14 @@ export const BranchProducts = () => {
   const { businessSelected, setBusiness } = useBusinessProvider();
   const { branches, setBranches, branchSelected } = useBranchProvider();
   // Methods
-  const handleGetBusiness = async () => {
+  const handleGetBranches = async () => {
     if (businessSelected === undefined) return;
     const res = await businessSelected.GetBranches();
     setBranches(res);
   };
 
   React.useEffect(() => {
-    handleGetBusiness();
+    handleGetBranches();
   }, []);
   // Component
   return (
@@ -53,7 +53,7 @@ export const BranchProducts = () => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              <CreateBranchForm onClose={onClose} />
+              <CreateProductForm onClose={onClose} />
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>

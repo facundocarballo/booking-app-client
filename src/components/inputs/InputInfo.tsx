@@ -4,9 +4,9 @@ import { Input, Text, Box, HStack, Spacer } from "@chakra-ui/react";
 export interface IInputInfo {
   title: string;
   placeholder: string;
-  value: string | undefined;
+  value: any;
   type: string;
-  handler: (_value: string) => void;
+  handler: (_value: any) => void;
 }
 
 export const InputInfo = ({

@@ -1,5 +1,6 @@
 export const ENTITIES = {
     user: "User",
     business: "Business",
-    branch: "Branch"
+    branch: "Branch",
+    product: "Product",
 }
