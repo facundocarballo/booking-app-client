@@ -23,7 +23,7 @@ export const BranchCard = ({ branch }: IBranchCard) => {
   // Context
   // Methods
   const handleOnClick = () => {
-    router.push(`/business/branch/${branch.id}`);
+    router.push(`/branch/${branch.id}`);
   };
   // Component
   return (

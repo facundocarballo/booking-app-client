@@ -20,19 +20,21 @@ import { useBusinessProvider } from "@/src/contexts/business";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { BranchCard } from "@/src/components/branch/BranchCard";
 import { CreateProductForm } from "@/src/components/product/CreateProductForm";
+import { useProductProvider } from "@/src/contexts/product";
+import { ProductCard } from "@/src/components/product/ProductCard";
 
 export const BranchProducts = () => {
   // Attributes
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   // Context
-  const { businessSelected, setBusiness } = useBusinessProvider();
-  const { branches, setBranches, branchSelected } = useBranchProvider();
+  const { branchSelected } = useBranchProvider();
+  const { products, setProducts } = useProductProvider();
   // Methods
   const handleGetBranches = async () => {
-    if (businessSelected === undefined) return;
-    const res = await businessSelected.GetBranches();
-    setBranches(res);
+    if (branchSelected === undefined) return;
+    const res = await branchSelected.GetProducts();
+    setProducts(res);
   };
 
   React.useEffect(() => {
@@ -70,11 +72,11 @@ export const BranchProducts = () => {
           <Box w="10px" />
         </HStack>
         <Box h="10px" />
-        {branches !== undefined && branches.length > 0 ? (
+        {products !== undefined && products.length > 0 ? (
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {branches.map((b, idx) => (
+            {products.map((p, idx) => (
               <GridItem key={idx}>
-                <BranchCard branch={b} />
+                <ProductCard product={p} />
               </GridItem>
             ))}
           </Grid>

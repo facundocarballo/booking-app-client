@@ -29,5 +29,17 @@ export const Container = {
                 cursor: 'pointer'
             }
         }),
+        productCard: () => ({
+            bg: useColorModeValue('gray.200', 'gray.700'),
+            borderRadius: 10,
+            margin: '2px',
+            w: "300px",
+            h: "180px",
+            _hover: {
+                boxShadow: 'lg',
+                transform: 'scale(1.05)',
+                cursor: 'pointer'
+            }
+        }),
     }
 }

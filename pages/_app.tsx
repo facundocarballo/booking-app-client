@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../styles/theme";
 import { BusinessContextProvider } from "@/src/contexts/business";
 import { BranchContextProvider } from "@/src/contexts/branch";
+import { ProductContextProvider } from "@/src/contexts/product";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <HomeContextProvider>
           <BusinessContextProvider>
             <BranchContextProvider>
-              <Component {...pageProps} />
+              <ProductContextProvider>
+                <Component {...pageProps} />
+              </ProductContextProvider>
             </BranchContextProvider>
           </BusinessContextProvider>
         </HomeContextProvider>

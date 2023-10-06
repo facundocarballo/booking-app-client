@@ -1,5 +1,6 @@
 import supabase from "../supabase";
 import { ENTITIES } from "../supabase/entities";
+import { Product } from "./product";
 
 export class Branch {
   id: string;
@@ -33,12 +34,31 @@ export class Branch {
         description,
         price,
         photo_url,
-        branch_id: this.id
+        branch_id: this.id,
       });
     } catch (err) {
       console.error(`Error creating the product for ${this.name}. `, err);
       return false;
     }
     return true;
+  }
+
+  /// Get
+  async GetProducts(): Promise<Product[]> {
+    let products: Product[] = [];
+    try {
+      const res = await supabase
+        .from(ENTITIES.product)
+        .select()
+        .eq("branch_id", this.id);
+      if (res.data === null) return products;
+      for (const p of res.data) {
+        products.push(new Product(p));
+      }
+    } catch (err) {
+      console.error("Error getting the products of this branch. ", err);
+      return products;
+    }
+    return products;
   }
 }
