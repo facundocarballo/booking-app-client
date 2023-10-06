@@ -7,7 +7,6 @@ import { Box, Divider } from "@chakra-ui/react";
 import { MyBusiness } from "@/src/subpages/business/MyBusiness";
 import { FavouriteBusiness } from "@/src/subpages/business/FavouriteBusiness";
 import { useRouter } from "next/router";
-import { BusinessContextProvider } from "@/src/contexts/business";
 
 export default function BusinessPasge() {
   // Attributes
@@ -35,13 +34,11 @@ export default function BusinessPasge() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <BusinessContextProvider>
-        <MyBusiness />
-        <Box h="20px" />
-        <Divider />
-        <Box h="10px" />
-        <FavouriteBusiness />
-      </BusinessContextProvider>
+      <MyBusiness />
+      <Box h="20px" />
+      <Divider />
+      <Box h="10px" />
+      <FavouriteBusiness />
     </>
   );
 }

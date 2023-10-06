@@ -1,9 +1,8 @@
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import supabase from "../supabase";
-import { BASE_URL_AVATARS } from "../supabase/urls";
 import { checkNull } from "../handlers/auxs";
-import { error } from "console";
 import { Business } from "./business";
+import { Storage } from "./storage";
 
 class User {
     // Attributes
@@ -24,8 +23,6 @@ class User {
     constructor(user: SupabaseUser) {
         this.id = user.id;
         this.email = user.email;
-        this.phone_number = user.phone;
-        this.photo_url = BASE_URL_AVATARS + this.id;
         this.GetData()
     }
 
@@ -42,6 +39,7 @@ class User {
             this.first_name = data.first_name;
             this.last_name = data.last_name;
             this.phone_number = data.phone_number;
+            this.photo_url = data.photo_url;
             this.telegram = data.telegram;
             this.instagram = data.instagram;
             this.facebook = data.facebook;
@@ -142,15 +140,14 @@ class User {
     }
     
     async UpdatePhotoUrl_Supabase(file: File):Promise<boolean> {
-        try {
-            await supabase.storage
-            .from("avatars")
-            .upload(`${this.id}`, file);
-        } catch(err) {
-            console.error("Error updating the photo url of the user to supabase. ", err);
-            return false;
-        }
-        return true;
+        return await Storage.Upload(
+            "avatars",
+            "User",
+            this.id,
+            file,
+            "profile",
+            this.photo_url,
+        );
     }
 
     ///// Social Media links

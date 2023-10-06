@@ -5,25 +5,15 @@ import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import { useRouter } from "next/router";
 import { Box } from "@chakra-ui/react";
-import { InputImage } from "@/src/components/inputs/InputImage";
+import { BusinessSettings } from "@/src/subpages/business/BusinessSettings";
 
 export default function BusinessProfilePage() {
   // Attributes
-  const file = React.useRef<File | null>(null);
   const router = useRouter();
+  const url = router.asPath.split("/");
   // Context
   const { user } = useHomeProvider();
   // Methods
-  const handleUploadImage = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    file.current = event.target.files === null ? null : event.target.files[0];
-    if (user === undefined || file.current === null) return;
-    const res = await user.UpdatePhotoUrl_Supabase(file.current);
-    if (!res) {
-      alert("Error uploading the image to Supabase.");
-    }
-  };
 
   React.useEffect(() => {
     if (user === undefined) {
@@ -44,11 +34,7 @@ export default function BusinessProfilePage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <InputImage
-        handler={handleUploadImage}
-        photoUrl={undefined}
-        name={"Pelukeria Diego"}
-      />
+      <BusinessSettings id={url[url.length - 1]} />
     </>
   );
 }

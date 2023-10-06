@@ -7,7 +7,8 @@ export const Container = {
             borderRadius: 10,
             margin: '2px',
             minW: "400px",
-            minH: "180px",
+            minH: "220px",
+            maxH: "220px",
             _hover: {
                 boxShadow: 'lg',
                 transform: 'scale(1.05)',
