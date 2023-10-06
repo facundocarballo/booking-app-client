@@ -19,6 +19,7 @@ import {
 import { useBusinessProvider } from "@/src/contexts/business";
 import { CreateBranchForm } from "@/src/components/branch/CreateBranchForm";
 import { useBranchProvider } from "@/src/contexts/branch";
+import { BranchCard } from "@/src/components/branch/BranchCard";
 
 export const BusinessBranches = () => {
   // Attributes
@@ -73,7 +74,7 @@ export const BusinessBranches = () => {
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
             {branches.map((b, idx) => (
               <GridItem key={idx}>
-                <Text>{b.name}</Text>
+                <BranchCard branch={b} />
               </GridItem>
             ))}
           </Grid>
