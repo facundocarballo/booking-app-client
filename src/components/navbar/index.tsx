@@ -6,15 +6,12 @@ import {
   IconButton,
   Container,
   HStack,
-  Heading,
   Spacer,
   Box,
   Collapse,
   Stack,
   Center,
   Image,
-  Text,
-  Circle,
 } from "@chakra-ui/react";
 import React from "react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -41,7 +38,6 @@ export interface NavBarProps {
 export const NavBar = ({ props }: NavBarProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue("bgLight", "bgDark");
-  const isDark = colorMode === "dark";
   const { isOpen, onToggle } = useDisclosure();
   // Context
   const { user } = useHomeProvider();
@@ -68,10 +64,7 @@ export const NavBar = ({ props }: NavBarProps) => {
         </Button>
         {user !== undefined ? (
           <NextLink href={`/user/${user.id}`}>
-            <UserImage
-              name={user.first_name === undefined ? "" : user.first_name}
-              photoUrl={user.photo_url}
-            />
+            <UserImage />
           </NextLink>
         ) : null}
 

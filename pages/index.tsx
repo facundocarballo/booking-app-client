@@ -14,7 +14,7 @@ export default function Home() {
   {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      const newUser = new User(user);
+      const newUser = await User.CreateUserWithData(user);
       setUser(newUser);
     }
   }

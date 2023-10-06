@@ -23,7 +23,12 @@ class User {
     constructor(user: SupabaseUser) {
         this.id = user.id;
         this.email = user.email;
-        this.GetData()
+    }
+
+    static async CreateUserWithData(user: SupabaseUser): Promise<User> {
+        const u = new User(user);
+        await u.GetData();
+        return u;
     }
 
     // Public Methods
