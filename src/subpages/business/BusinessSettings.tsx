@@ -51,6 +51,7 @@ export const BusinessSettings = ({ id }: IBusinessSettings) => {
       ) : (
         <VStack w="full">
           <InputImage
+            types={{ business: theBusiness }}
             handler={handleUploadImage}
             name={theBusiness?.name}
             photoUrl={theBusiness?.photo_url}
