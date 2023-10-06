@@ -1,7 +1,5 @@
-import { Business } from "@/src/types/business";
 import {
   VStack,
-  Image,
   Box,
   Heading,
   Text,
@@ -23,7 +21,7 @@ export const ProductCard = ({ product }: IBusinessCard) => {
   // Context
   // Methods
   const handleOnClick = () => {
-    // router.push(`/business/${business.id}`);
+    router.push(`/product/${product.id}`);
   };
   // Component
   return (
