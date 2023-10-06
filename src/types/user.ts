@@ -3,6 +3,7 @@ import supabase from "../supabase";
 import { checkNull } from "../handlers/auxs";
 import { Business } from "./business";
 import { Storage } from "./storage";
+import { ENTITIES } from "../supabase/entities";
 
 class User {
     // Attributes
@@ -35,7 +36,7 @@ class User {
     /// Get Data from Supabase
     async GetData(): Promise<boolean> {
         try {
-            const res = await supabase.from("User").select().eq("id", this.id);
+            const res = await supabase.from(ENTITIES.user).select().eq("id", this.id);
             if (res.data === null) {
                 console.error("Error getting data for user from Supabase. res.data = null");
                 return false;
@@ -61,7 +62,7 @@ class User {
     async GetBusiness(): Promise<Business[]> {
         let business: Business[] = []
         try {
-            const res = await supabase.from("Business").select().eq("owner", this.id);
+            const res = await supabase.from(ENTITIES.business).select().eq("owner", this.id);
             if (res.data === null) return business;
             for (const b of res.data) {
                 business.push(new Business(b))
@@ -75,7 +76,7 @@ class User {
 
     async CreateBusiness(name: string, description: string, category_id: string): Promise<boolean> {
         try {
-            await supabase.from("Business").insert({
+            await supabase.from(ENTITIES.business).insert({
                 name,
                 description,
                 category_id,
@@ -95,7 +96,7 @@ class User {
         phone_number: string|null,
     ):Promise<boolean> {
         try {
-            const res = await supabase.from("User").update({
+            const res = await supabase.from(ENTITIES.user).update({
                 first_name,
                 last_name,
                 phone_number,
@@ -113,7 +114,7 @@ class User {
     //// Updates functions    
     async UpdateFirstName_Supabase(first_name: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({first_name}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({first_name}).eq('id', this.id);
             this.first_name = first_name;
         } catch(err) {
             console.error("Error updating the first name of the user to supabase. ", err);
@@ -124,7 +125,7 @@ class User {
 
     async UpdateLastName_Supabase(last_name: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({last_name}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({last_name}).eq('id', this.id);
             this.last_name = last_name;
         } catch(err) {
             console.error("Error updating the last name of the user to supabase. ", err);
@@ -135,7 +136,7 @@ class User {
 
     async UpdatePhoneNumber_Supabase(phone_number: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({phone_number}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({phone_number}).eq('id', this.id);
             this.phone_number = phone_number;
         } catch(err) {
             console.error("Error updating the phone number of the user to supabase. ", err);
@@ -158,7 +159,7 @@ class User {
     ///// Social Media links
     async UpdateTelegram_Supabase(telegram: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({telegram}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({telegram}).eq('id', this.id);
             this.telegram = telegram;
         } catch(err) {
             console.error("Error updating the telegram account of the user to supabase. ", err);
@@ -169,7 +170,7 @@ class User {
 
     async UpdateInstagram_Supabase(instagram: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({instagram}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({instagram}).eq('id', this.id);
             this.telegram = instagram;
         } catch(err) {
             console.error("Error updating the instagram account of the user to supabase. ", err);
@@ -180,7 +181,7 @@ class User {
 
     async UpdateFacebook_Supabase(facebook: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({facebook}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({facebook}).eq('id', this.id);
             this.facebook = facebook;
         } catch(err) {
             console.error("Error updating the facebook account of the user to supabase. ", err);
@@ -191,7 +192,7 @@ class User {
 
     async UpdateTwitter_Supabase(twitter: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({twitter}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({twitter}).eq('id', this.id);
             this.twitter = twitter;
         } catch(err) {
             console.error("Error updating the twitter account of the user to supabase. ", err);
@@ -202,7 +203,7 @@ class User {
 
     async UpdateLinkedin_Supabase(linkedin: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({linkedin}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({linkedin}).eq('id', this.id);
             this.linkedin = linkedin;
         } catch(err) {
             console.error("Error updating the linkedin account of the user to supabase. ", err);
@@ -213,7 +214,7 @@ class User {
 
     async UpdateSpotify_Supabase(spotify: string):Promise<boolean> {
         try {
-            await supabase.from("User").update({spotify}).eq('id', this.id);
+            await supabase.from(ENTITIES.user).update({spotify}).eq('id', this.id);
             this.spotify = spotify;
         } catch(err) {
             console.error("Error updating the spotify account of the user to supabase. ", err);

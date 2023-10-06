@@ -17,23 +17,21 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import { useBusinessProvider } from "@/src/contexts/business";
-import { useHomeProvider } from "@/src/contexts/home";
-import { BusinessCard } from "@/src/components/business/BusinessCard";
 import { CreateBranchForm } from "@/src/components/branch/CreateBranchForm";
+import { useBranchProvider } from "@/src/contexts/branch";
 
 export const BusinessBranches = () => {
   // Attributes
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
-
   // Context
-  const { user } = useHomeProvider();
-  const { business, setBusiness } = useBusinessProvider();
+  const { businessSelected, setBusiness } = useBusinessProvider();
+  const { branches, setBranches } = useBranchProvider();
   // Methods
   const handleGetBusiness = async () => {
-    if (user === undefined) return;
-    const res = await user.GetBusiness();
-    setBusiness(res);
+    if (businessSelected === undefined) return;
+    const res = await businessSelected.GetBranches();
+    setBranches(res);
   };
 
   React.useEffect(() => {
@@ -71,11 +69,11 @@ export const BusinessBranches = () => {
           <Box w="10px" />
         </HStack>
         <Box h="10px" />
-        {business !== undefined && business.length > 0 ? (
+        {branches !== undefined && branches.length > 0 ? (
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {business.map((b, idx) => (
+            {branches.map((b, idx) => (
               <GridItem key={idx}>
-                <BusinessCard business={b} key={idx} />
+                <Text>{b.name}</Text>
               </GridItem>
             ))}
           </Grid>

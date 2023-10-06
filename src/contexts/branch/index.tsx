@@ -2,7 +2,7 @@ import React from "react";
 import { IBranchContext } from "./interface";
 import { Branch } from "@/src/types/branch";
 
-const BranchesContext = React.createContext<IBranchContext>({
+const BranchContext = React.createContext<IBranchContext>({
   // Attributes
   branchSelected: undefined,
   branches: undefined,
@@ -14,7 +14,7 @@ const BranchesContext = React.createContext<IBranchContext>({
   setFavouriteBranches: () => {},
 });
 
-export const BranchesContextProvider: React.FC<any> = (props: any) => {
+export const BranchContextProvider: React.FC<any> = (props: any) => {
   // Attributes
   const [branchSelected, setBranchesSelected] = React.useState<
     Branch | undefined
@@ -44,14 +44,14 @@ export const BranchesContextProvider: React.FC<any> = (props: any) => {
   );
 
   return (
-    <BranchesContext.Provider value={memo}>
+    <BranchContext.Provider value={memo}>
       {props.children}
-    </BranchesContext.Provider>
+    </BranchContext.Provider>
   );
 };
 
-export function useBranchesProvider(): IBranchContext {
-  const context = React.useContext(BranchesContext);
+export function useBranchProvider(): IBranchContext {
+  const context = React.useContext(BranchContext);
   if (!context)
     throw new Error("useProvider have to be inside of the BranchContext.");
   return context;
