@@ -93,7 +93,7 @@ class User {
 
   async GetBranchesFromSearch(
     category_id: string,
-    geoHash: string // este geohash tiene que contener los caracteres minimos que considero necesario para determinar si estan cerca.
+    geoHash: string
   ): Promise<Branch[]> {
     let branches: Branch[] = [];
     try {
@@ -143,7 +143,7 @@ class User {
     phone_number: string | null
   ): Promise<boolean> {
     try {
-      const res = await supabase
+      await supabase
         .from(ENTITIES.user)
         .update({
           first_name,

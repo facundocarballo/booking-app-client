@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Text, Box, HStack, Spacer, Select } from "@chakra-ui/react";
+import { Text, Box, HStack, Spacer, Select } from "@chakra-ui/react";
 import { BusinessCategory } from "@/src/types/business/category";
 
 export interface ISelectBusinessCategory {

@@ -72,7 +72,7 @@ export default function Home() {
 
   const handleSignUp = async () => {
     setLoadingSignUp(true);
-    let { data, error } = await supabase.auth.signUp({
+    await supabase.auth.signUp({
       email,
       password,
     });
@@ -84,7 +84,7 @@ export default function Home() {
 
   const handleLogIn = async () => {
     setLoadingLogIn(true);
-    let { data, error } = await supabase.auth.signInWithPassword({
+    await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -251,7 +251,7 @@ export default function Home() {
       <Box h={height.current / 2.4} />
       {loading ? <Spinner /> : null}
       <SearchBranch />
-      <Box h='50px' />
+      <Box h="50px" />
       <BranchSearched />
     </>
   );
