@@ -72,8 +72,7 @@ class User {
     return true;
   }
 
-  // GetMyBusiness...
-  async GetBusiness(): Promise<Business[]> {
+  async GetMyBusiness(): Promise<Business[]> {
     let business: Business[] = [];
     try {
       const res = await supabase

@@ -32,7 +32,7 @@ export const MyBusiness = () => {
   // Methods
   const handleGetBusiness = async () => {
     if (user === undefined) return;
-    const res = await user.GetBusiness();
+    const res = await user.GetMyBusiness();
     setBusiness(res);
   };
 
