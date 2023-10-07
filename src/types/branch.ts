@@ -2,6 +2,11 @@ import supabase from "../supabase";
 import { ENTITIES } from "../supabase/entities";
 import { Product } from "./product";
 
+export interface SearchBranchQuery {
+  category_id: string,
+  Branch: Branch[]
+}
+
 export class Branch {
   id: string;
   created_at: Date;

@@ -4,6 +4,7 @@ import { checkNull } from "../handlers/auxs";
 import { Business } from "./business";
 import { Storage } from "./storage";
 import { ENTITIES } from "../supabase/entities";
+import { Branch } from "./branch";
 
 class User {
   // Attributes
@@ -71,6 +72,7 @@ class User {
     return true;
   }
 
+  // GetMyBusiness...
   async GetBusiness(): Promise<Business[]> {
     let business: Business[] = [];
     try {
@@ -87,6 +89,32 @@ class User {
       return business;
     }
     return business;
+  }
+
+  async GetBranchesFromSearch(
+    category_id: string,
+    geoHash: string // este geohash tiene que contener los caracteres minimos que considero necesario para determinar si estan cerca.
+  ): Promise<Branch[]> {
+    let branches: Branch[] = [];
+    try {
+      const res = await supabase
+        .from(ENTITIES.business)
+        .select("category_id, Branch(*)")
+        .eq("category_id", category_id)
+        .like("Branch.geohash", `${geoHash}%`)
+        .limit(9);
+
+      if (res.data === null) return branches;
+      for (const r of res.data) {
+        for (const b of r.Branch) {
+          branches.push(new Branch(b));
+        }
+      }
+    } catch (err) {
+      console.error("Error getting the branches of this search. ", err);
+      return branches;
+    }
+    return branches;
   }
 
   async CreateBusiness(

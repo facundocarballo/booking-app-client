@@ -13,6 +13,11 @@ export const Text = {
         alert: () => ({
             color: useColorModeValue('red.300', 'red.600'),
             fontWeight: 'bold'
+        }),
+        caption: () => ({
+            color: useColorModeValue('gray.900', 'gray.100'),
+            fontWeight: 'bold',
+            fontSize: '20px'
         })
     }
 }

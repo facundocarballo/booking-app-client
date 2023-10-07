@@ -27,8 +27,8 @@ export const SelectBusinessCategory = ({
         defaultValue={options[0].id}
         onChange={(e) => handler(e.currentTarget.value)}
       >
-        {options.map((cat, idx) => (
-          <option key={idx} value={cat.id}>
+        {options.map((cat) => (
+          <option key={cat.id} value={cat.id}>
             {cat.description}
           </option>
         ))}

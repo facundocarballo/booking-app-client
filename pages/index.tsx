@@ -22,6 +22,8 @@ import {
 import { InputInfo } from "@/src/components/inputs/InputInfo";
 import { InputPassword } from "@/src/components/inputs/InputPassword";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { SearchBranch } from "@/src/components/inputs/SearchBranch";
+import { BranchSearched } from "@/src/subpages/home/BranchSearched";
 
 export default function Home() {
   // Attributes
@@ -42,9 +44,10 @@ export default function Home() {
   const welcomeRef = React.useRef(null);
   const signUpRef = React.useRef(null);
   const logInRef = React.useRef(null);
+  const height = React.useRef(0);
 
   // Context
-  const { user, setUser } = useHomeProvider();
+  const { setUser } = useHomeProvider();
 
   // Methods
   const onWelcomeClose = () => setWelcomeOpen(false);
@@ -100,6 +103,7 @@ export default function Home() {
 
   React.useEffect(() => {
     checkUserAuth();
+    height.current = window.innerHeight;
   }, []);
 
   return (
@@ -244,11 +248,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar props={theNavBarProps} />
-      <Box h="100px" />
+      <Box h={height.current / 2.4} />
       {loading ? <Spinner /> : null}
-      {/* {user === undefined ? <Welcome /> : null} */}
-      {/* <Circle bg='red' size='100px' /> */}
-      {/* <SignIn /> */}
+      <SearchBranch />
+      <Box h='50px' />
+      <BranchSearched />
     </>
   );
 }

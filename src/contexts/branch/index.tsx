@@ -6,11 +6,13 @@ const BranchContext = React.createContext<IBranchContext>({
   // Attributes
   branchSelected: undefined,
   branches: undefined,
+  searchBranches: undefined,
   favouriteBranches: undefined,
 
   // React useState Methods
   setBranchesSelected: () => {},
   setBranches: () => {},
+  setSearchBranches: () => {},
   setFavouriteBranches: () => {},
 });
 
@@ -22,6 +24,9 @@ export const BranchContextProvider: React.FC<any> = (props: any) => {
   const [branches, setBranches] = React.useState<Branch[] | undefined>(
     undefined
   );
+  const [searchBranches, setSearchBranches] = React.useState<Branch[] | undefined>(
+    undefined
+  );
   const [favouriteBranches, setFavouriteBranches] = React.useState<
     Branch[] | undefined
   >(undefined);
@@ -31,16 +36,18 @@ export const BranchContextProvider: React.FC<any> = (props: any) => {
   const values = {
     branchSelected,
     branches,
+    searchBranches,
     favouriteBranches,
 
     setBranchesSelected,
     setBranches,
+    setSearchBranches,
     setFavouriteBranches,
   };
 
   const memo = React.useMemo(
     () => values,
-    [branchSelected, branches, favouriteBranches]
+    [branchSelected, branches, searchBranches, favouriteBranches]
   );
 
   return (
