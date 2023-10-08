@@ -41,5 +41,9 @@ export const Container = {
                 cursor: 'pointer'
             }
         }),
+        switch: () => ({
+            border: '10px solid #000',
+            borderRadius: 10,
+        })
     }
 }

@@ -27,12 +27,27 @@ export const Button = {
     carrousel: () => ({
       bg: useColorModeValue("gray.200", "gray.600"),
       color: useColorModeValue("bgDark", "bgLight"),
-      minW: '0.5',
-      maxW: '0.1',
+      minW: "0.5",
+      maxW: "0.1",
       _hover: {
         boxShadow: "md",
         transform: "scale(1.10)",
         bg: useColorModeValue("gray.400", "gray.500"),
+      },
+    }),
+    switchSelected: () => ({
+      bg: useColorModeValue("purple.300", "purple.600"),
+      color: useColorModeValue("bgDark", "bgLight"),
+      minW: '100px'
+    }),
+    switchUnselected: () => ({
+      bg: useColorModeValue("bgLight", "bgDark"),
+      color: useColorModeValue("bgDark", "bgLight"),
+      minW: '100px',
+      _hover: {
+        boxShadow: "md",
+        transform: "scale(1.10)",
+        bg: useColorModeValue("gray.200", "gray.600"),
       },
     }),
   },

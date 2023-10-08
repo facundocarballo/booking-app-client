@@ -15,10 +15,13 @@ import {
   useDisclosure,
   Grid,
   GridItem,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
-import { useBusinessProvider } from "@/src/contexts/business";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { BranchCard } from "@/src/components/branch/BranchCard";
 import { CreateProductForm } from "@/src/components/product/CreateProductForm";
 import { useProductProvider } from "@/src/contexts/product";
 import { ProductCard } from "@/src/components/product/ProductCard";
@@ -61,31 +64,39 @@ export const BranchProducts = () => {
         </AlertDialogOverlay>
       </AlertDialog>
 
-      <VStack w="full">
-        <HStack w="full">
-          <Box w="10px" />
-          <Heading>Your Products</Heading>
-          <Spacer />
-          <Button variant="callToAction" onClick={onOpen}>
-            Create Product
-          </Button>
-          <Box w="10px" />
-        </HStack>
-        <Box h="10px" />
-        {products !== undefined && products.length > 0 ? (
-          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {products.map((p, idx) => (
-              <GridItem key={idx}>
-                <ProductCard product={p} />
-              </GridItem>
-            ))}
-          </Grid>
-        ) : (
-          <Text variant="empty">
-            {"Don't have a branch yet? Create one now! It's Free. :)"}
-          </Text>
-        )}
-      </VStack>
+      <Accordion allowToggle>
+        <AccordionItem>
+          <AccordionButton>
+            <HStack w="full">
+              <Heading>Your Products</Heading>
+              <Spacer />
+              <Button variant="callToAction" onClick={onOpen}>
+                Create Product
+              </Button>
+              <AccordionIcon />
+            </HStack>
+          </AccordionButton>
+
+          <AccordionPanel>
+            <VStack w="full">
+              <Box h="10px" />
+              {products !== undefined && products.length > 0 ? (
+                <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+                  {products.map((p) => (
+                    <GridItem key={p.id}>
+                      <ProductCard product={p} />
+                    </GridItem>
+                  ))}
+                </Grid>
+              ) : (
+                <Text variant="empty">
+                  {"Don't have a branch yet? Create one now! It's Free. :)"}
+                </Text>
+              )}
+            </VStack>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 };

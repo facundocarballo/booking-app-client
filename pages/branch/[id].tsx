@@ -4,10 +4,12 @@ import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import { useRouter } from "next/router";
-import { Box } from "@chakra-ui/react";
+import { Box, Divider } from "@chakra-ui/react";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { BranchProducts } from "@/src/subpages/branch/BranchProducts";
+import { BranchBooks } from "@/src/subpages/branch/BranchBooks";
+import { BookContextProvider } from "@/src/contexts/book";
 
 export default function BranchProfilePage() {
   // Attributes
@@ -52,6 +54,10 @@ export default function BranchProfilePage() {
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
       <BranchProducts />
+      <Box h="30px" />
+      <BookContextProvider>
+        <BranchBooks />
+      </BookContextProvider>
     </>
   );
 }
