@@ -1,10 +1,16 @@
+import {
+  convertStringToTime,
+  getTimeString,
+  incrementTime,
+} from "../handlers/dates";
 import supabase from "../supabase";
 import { ENTITIES } from "../supabase/entities";
+import { Book } from "./book";
 import { Product } from "./product";
 
 export interface SearchBranchQuery {
-  category_id: string,
-  Branch: Branch[]
+  category_id: string;
+  Branch: Branch[];
 }
 
 export class Branch {
@@ -28,9 +34,9 @@ export class Branch {
     this.geogash = branch.geogash;
     this.latitude = branch.latitude;
     this.longitude = branch.longitude;
-    this.open = branch.open;
-    this.close = branch.close;
-    this.time_book = branch.time_book;
+    this.open = convertStringToTime(branch.open);
+    this.close = convertStringToTime(branch.close);
+    this.time_book = convertStringToTime(branch.time_book);
     this.description = branch.description;
   }
 
@@ -75,5 +81,38 @@ export class Branch {
       return products;
     }
     return products;
+  }
+
+  async GetBusyBooks(date: Date): Promise<Book[]> {
+    let books: Book[] = [];
+    try {
+      const res = await supabase
+        .from(ENTITIES.book)
+        .select()
+        .eq("branch_id", this.id)
+        .eq("date", date);
+      if (res.data === null) return books;
+      for (const book of res.data) {
+        books.push(new Book(book));
+      }
+    } catch (err) {
+      console.error("Error getting the books of this branch. ", err);
+      return books;
+    }
+    return books;
+  }
+
+  async GetAvailableBooks(date: Date): Promise<string[]> {
+    let books: string[] = [];
+    const busyBooks = await this.GetBusyBooks(date);
+    let now = this.open;
+    while (now.getTime() <= this.close.getTime()) {
+      if (!busyBooks.find((b) => b.date.getTime() === now.getTime())) {
+        books.push(getTimeString(now));
+      }
+      now = incrementTime(now, this.time_book);
+    }
+
+    return books;
   }
 }

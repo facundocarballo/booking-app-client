@@ -3,4 +3,6 @@ export const ENTITIES = {
     business: "Business",
     branch: "Branch",
     product: "Product",
+    book: "Book",
+    client: "Client",
 }
