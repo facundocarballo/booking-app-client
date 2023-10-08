@@ -60,7 +60,6 @@ export const SearchBranch = () => {
     setSearchBranches([]);
     if (!user || !categorySelected) return;
     setLoading(true);
-    console.log("Usamos este Geohash: ", getGeoHashOfQuery());
     const res = await user.GetBranchesFromSearch(
       categorySelected,
       getGeoHashOfQuery()
@@ -107,7 +106,7 @@ export const SearchBranch = () => {
           <Text variant="caption">Que quieres hacer hoy?</Text>
           <Spacer />
         </HStack>
-        
+
         {!categories ? (
           <Spinner />
         ) : (
