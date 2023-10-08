@@ -13,6 +13,11 @@ export class Branch {
   business_id: string;
   name: string;
   geogash: string;
+  latitude: string;
+  longitude: string;
+  open: Date;
+  close: Date;
+  time_book: Date;
   description?: string;
 
   constructor(branch: Branch) {
@@ -21,6 +26,11 @@ export class Branch {
     this.business_id = branch.business_id;
     this.name = branch.name;
     this.geogash = branch.geogash;
+    this.latitude = branch.latitude;
+    this.longitude = branch.longitude;
+    this.open = branch.open;
+    this.close = branch.close;
+    this.time_book = branch.time_book;
     this.description = branch.description;
   }
 

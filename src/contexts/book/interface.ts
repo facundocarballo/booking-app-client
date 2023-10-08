@@ -5,11 +5,12 @@ export interface IBookContext {
   bookSelected?: Book;
   books?: Book[];
   showAvailable: boolean;
+  daySelected: Date;
 
   // React useState Methods
   setBookSelected: (_book: Book) => void;
   setBooks: (_books: Book[]) => void;
   setShowAvailable: (_showAvailable: boolean) => void;
-
+  setDaySelected: (_daySelected: Date) => void;
   // Methods
 }
