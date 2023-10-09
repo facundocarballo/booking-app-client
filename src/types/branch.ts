@@ -21,6 +21,7 @@ export class Branch {
   id: string;
   created_at: Date;
   business_id: string;
+  owner_id?: string;
   name: string;
   geogash: string;
   latitude: string;
@@ -30,7 +31,7 @@ export class Branch {
   time_book: Date;
   description?: string;
 
-  constructor(branch: Branch) {
+  constructor(branch: any) {
     this.id = branch.id;
     this.created_at = branch.created_at;
     this.business_id = branch.business_id;
@@ -42,6 +43,7 @@ export class Branch {
     this.close = convertStringToTime(branch.close);
     this.time_book = convertStringToTime(branch.time_book);
     this.description = branch.description;
+    this.owner_id = branch.Business.owner;
   }
 
   // Methods
@@ -206,5 +208,19 @@ export class Branch {
       return clients;
     }
     return clients;
+  }
+
+  static async GetBranch(id: string): Promise<Branch | undefined> {
+    try {
+      const res = await supabase
+        .from(ENTITIES.branch)
+        .select("*, Business(*)")
+        .eq("id", id);
+      if (res.data === null) return;
+      return new Branch(res.data[0]);
+    } catch (err) {
+      console.error(`Error getting this branch ${id}. `, err);
+      return;
+    }
   }
 }

@@ -4,12 +4,15 @@ import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import { useRouter } from "next/router";
-import { Box, Divider } from "@chakra-ui/react";
+import { VStack, Box, Spinner } from "@chakra-ui/react";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { BranchProducts } from "@/src/subpages/branch/BranchProducts";
 import { BranchBooks } from "@/src/subpages/branch/BranchBooks";
 import { BookContextProvider } from "@/src/contexts/book";
+import supabase from "@/src/supabase";
+import User from "@/src/types/user";
+import { Branch } from "@/src/types/branch";
 
 export default function BranchProfilePage() {
   // Attributes
@@ -18,7 +21,7 @@ export default function BranchProfilePage() {
   const url = router.asPath.split("/");
   const branchSelectedId = url[url.length - 1];
   // Context
-  const { user } = useHomeProvider();
+  const { user, setUser } = useHomeProvider();
   const { branches, branchSelected, setBranchesSelected } = useBranchProvider();
   // Methods
   const handleGetTheBusiness = async () => {
@@ -31,14 +34,49 @@ export default function BranchProfilePage() {
     setBranchesSelected(finded);
     setLoading(false);
   };
-  React.useEffect(() => {
-    if (user === undefined) {
+
+  const checkUserAuth = async () => {
+    setLoading(true);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const newUser = await User.CreateUserWithData(user);
+      const branch = await Branch.GetBranch(branchSelectedId);
+      if (branch === undefined) {
+        return;
+      }
+      if (branch.owner_id !== newUser.id) {
+        return;
+      }
+      setUser(newUser);
+      setBranchesSelected(branch);
+      setLoading(false);
+      return;
+    }
+
+    if (!user) {
       router.push("/");
+      return;
+    }
+  };
+
+  React.useEffect(() => {
+    if (!user) {
+      checkUserAuth();
+      return;
     }
     handleGetTheBusiness();
   }, []);
   // Component
-  if (loading) return null;
+  if (loading)
+    return (
+      <VStack w="full">
+        <Box h="100px" />
+        <Spinner />
+      </VStack>
+    );
   if (branchSelected === undefined) return <BusinessNotFound />;
   return (
     <>
@@ -60,4 +98,10 @@ export default function BranchProfilePage() {
       </BookContextProvider>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
 }
