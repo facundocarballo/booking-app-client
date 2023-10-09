@@ -1,10 +1,12 @@
 import {
   convertStringToTime,
+  getDateAtTime,
   getTimeString,
   incrementTime,
 } from "../handlers/dates";
 import supabase from "../supabase";
 import { ENTITIES } from "../supabase/entities";
+import { Client } from "./Client";
 import { Book } from "./book";
 import { Product } from "./product";
 
@@ -64,6 +66,56 @@ export class Branch {
     return true;
   }
 
+  async CreateBook(
+    time: string,
+    day: Date,
+    client_id: string,
+    price: number,
+    description: string
+  ): Promise<boolean> {
+    try {
+      await supabase.from(ENTITIES.book).insert({
+        date: getDateAtTime(day, time),
+        branch_id: this.id,
+        client_id,
+        price,
+        description,
+      });
+    } catch (err) {
+      console.error(
+        `Error creating a book at ${time} for this branch: ${this.name}. `,
+        err
+      );
+      return false;
+    }
+    return true;
+  }
+
+  async CreateClient(name: string, description: string): Promise<Client> {
+    const c = {
+      id: "",
+      name: "",
+      description: "",
+    };
+    try {
+      const res = await supabase
+        .from(ENTITIES.client)
+        .insert({
+          name,
+          description,
+          branch_id: this.id
+        }).select();
+      console.log("Res: ", res);
+    } catch (err) {
+      console.error(
+        `Error creating a client for this branch: ${this.name}. `,
+        err
+      );
+      return c;
+    }
+    return c;
+  }
+
   /// Get
   async GetProducts(): Promise<Product[]> {
     let products: Product[] = [];
@@ -114,5 +166,23 @@ export class Branch {
     }
 
     return books;
+  }
+
+  async GetClients(): Promise<Client[]> {
+    let clients: Client[] = [];
+    try {
+      let res = await supabase
+        .from(ENTITIES.client)
+        .select()
+        .eq("branch_id", this.id);
+      if (res.data === null) return clients;
+      for (const c of res.data) {
+        clients.push(new Client(c));
+      }
+    } catch (err) {
+      console.error(`Error getting the clients of ${this.name}. `, err);
+      return clients;
+    }
+    return clients;
   }
 }

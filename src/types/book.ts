@@ -17,6 +17,4 @@ export class Book {
         this.price = book.price;
         this.description = book.description;
     }
-
-    
 }

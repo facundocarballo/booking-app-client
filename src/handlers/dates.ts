@@ -10,11 +10,9 @@ export const convertStringToTime = (dateString: any): Date => {
 export const incrementTime = (now: Date, time: Date): Date => {
   let increment = 1000 * 60;
   if (time.getHours() > 0) {
-    console.log("Incrementando horas...");
     increment *= time.getHours();
   }
   if (time.getMinutes() > 0) {
-    console.log("Incrementando minutos...");
     increment *= time.getMinutes();
   }
   if (time.getSeconds() > 0) {
@@ -42,3 +40,7 @@ export const getTimeString = (time: Date): string => {
 
   return res;
 };
+
+export const getDateAtTime = (date: Date, time: string): Date  => {
+  return new Date();
+}

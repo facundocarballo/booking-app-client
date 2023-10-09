@@ -33,7 +33,6 @@ export const InputInfo = ({
         type={type}
         w="full"
       />
-      <Box h="10px" />
     </>
   );
 };

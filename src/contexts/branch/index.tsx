@@ -1,6 +1,7 @@
 import React from "react";
 import { IBranchContext } from "./interface";
 import { Branch } from "@/src/types/branch";
+import { Client } from "@/src/types/Client";
 
 const BranchContext = React.createContext<IBranchContext>({
   // Attributes
@@ -8,12 +9,14 @@ const BranchContext = React.createContext<IBranchContext>({
   branches: undefined,
   searchBranches: undefined,
   favouriteBranches: undefined,
+  clients: undefined,
 
   // React useState Methods
   setBranchesSelected: () => {},
   setBranches: () => {},
   setSearchBranches: () => {},
   setFavouriteBranches: () => {},
+  setClients: () => {},
 });
 
 export const BranchContextProvider: React.FC<any> = (props: any) => {
@@ -24,12 +27,13 @@ export const BranchContextProvider: React.FC<any> = (props: any) => {
   const [branches, setBranches] = React.useState<Branch[] | undefined>(
     undefined
   );
-  const [searchBranches, setSearchBranches] = React.useState<Branch[] | undefined>(
-    undefined
-  );
+  const [searchBranches, setSearchBranches] = React.useState<
+    Branch[] | undefined
+  >(undefined);
   const [favouriteBranches, setFavouriteBranches] = React.useState<
     Branch[] | undefined
   >(undefined);
+  const [clients, setClients] = React.useState<Client[] | undefined>(undefined);
 
   // Methods
 
@@ -38,16 +42,18 @@ export const BranchContextProvider: React.FC<any> = (props: any) => {
     branches,
     searchBranches,
     favouriteBranches,
+    clients,
 
     setBranchesSelected,
     setBranches,
     setSearchBranches,
     setFavouriteBranches,
+    setClients,
   };
 
   const memo = React.useMemo(
     () => values,
-    [branchSelected, branches, searchBranches, favouriteBranches]
+    [branchSelected, branches, searchBranches, favouriteBranches, clients]
   );
 
   return (
