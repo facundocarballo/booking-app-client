@@ -154,15 +154,18 @@ export class Branch {
 
   async GetBusyBooks(date: Date): Promise<Book[]> {
     let books: Book[] = [];
-    const maxDate = date;
-    maxDate.setHours(24);
+    const minDate = new Date(date);
+    minDate.setHours(0);
+    const maxDate = new Date(date);
+    maxDate.setHours(23);
+    maxDate.setMinutes(59);
     try {
       const res = await supabase
         .from(ENTITIES.book)
         .select("*, Client(*)")
-        .eq("branch_id", this.id);
-      // .gt("date", date.toISOString())
-      // .lt("date", maxDate.toISOString());
+        .eq("branch_id", this.id)
+        .gt("date", minDate.toISOString())
+        .lt("date", maxDate.toISOString());
       if (res.data === null) return books;
       for (const book of res.data) {
         books.push(new Book(book));

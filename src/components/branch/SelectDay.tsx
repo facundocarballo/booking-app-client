@@ -2,7 +2,7 @@ import React from "react";
 import { Input } from "@chakra-ui/react";
 import { useBookProvider } from "@/src/contexts/book";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { compareTimes } from "@/src/handlers/dates";
+import { compareTimes, formatDateToCustomString } from "@/src/handlers/dates";
 
 const DAY_TIME = 1000 * 60 * 60 * 24;
 
@@ -37,7 +37,11 @@ export const SelectDay = () => {
   // Component
   return (
     <>
-      <Input type="date" w="200px" onChange={(e) => handleChangeDate(e)} />
+      <Input
+        type="date"
+        w="200px"
+        onChange={(e) => handleChangeDate(e)}
+      />
     </>
   );
 };

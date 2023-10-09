@@ -11,6 +11,8 @@ import {
 import { useBookProvider } from "@/src/contexts/book";
 import { BookAvailable } from "@/src/components/book/BookAvailable";
 import { BookUnavailable } from "@/src/components/book/BookUnavailable";
+import { useBranchProvider } from "@/src/contexts/branch";
+import { compareTimes } from "@/src/handlers/dates";
 
 export const MyBooks = () => {
   // Attributes
@@ -23,8 +25,32 @@ export const MyBooks = () => {
     base: "repeat(2, 1fr)",
   };
   // Context
-  const { booksAvailables, showAvailable, books } = useBookProvider();
+  const { branchSelected } = useBranchProvider();
+  const {
+    booksAvailables,
+    showAvailable,
+    books,
+    daySelected,
+    setBooksAvailables,
+    setBooks,
+  } = useBookProvider();
   // Methods
+  const handleGetBooks = async (date: Date) => {
+    if (!branchSelected) return;
+    const busyBooks = await branchSelected.GetBusyBooks(date);
+    const books = await branchSelected.GetAvailableBooks(busyBooks);
+    const busyBooksSorted = busyBooks.sort(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    );
+    const booksSorted = books.sort((a, b) => compareTimes(a, b));
+    setBooksAvailables(booksSorted);
+    setBooks(busyBooksSorted);
+  };
+
+  React.useEffect(() => {
+    if (books) return;
+    handleGetBooks(daySelected);
+  }, []);
   // Component
   return (
     <>

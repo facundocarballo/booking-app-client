@@ -43,9 +43,10 @@ export const getTimeString = (time: Date): string => {
 
 export const getDateAtTime = (date: Date, time: string): Date => {
   const [hour, minutes] = time.split(":");
-  date.setHours(Number(hour));
-  date.setMinutes(Number(minutes));
-  return date;
+  const d = new Date(date);
+  d.setHours(Number(hour));
+  d.setMinutes(Number(minutes));
+  return d;
 };
 
 export function formatDateToCustomString(date: Date): string {
