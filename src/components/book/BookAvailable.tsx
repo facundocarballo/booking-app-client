@@ -45,7 +45,7 @@ export const BookAvailable = ({ time }: IBookAvailable) => {
         </AlertDialogOverlay>
       </AlertDialog>
 
-      <VStack w="200px" bg={bg} borderRadius={10}>
+      <VStack w="150px" bg={bg} borderRadius={10}>
         <Text variant="caption">{time}</Text>
         <Button variant="callToAction" w="full" onClick={onOpen}>
           APPOINT
