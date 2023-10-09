@@ -50,5 +50,14 @@ export const Button = {
         bg: useColorModeValue("gray.200", "gray.600"),
       },
     }),
+    info: () => ({
+      bg: useColorModeValue("bgLight", "bgDark"),
+      color: useColorModeValue("bgDark", "bgLight"),
+      _hover: {
+        boxShadow: "md",
+        transform: "scale(1.10)",
+        bg: useColorModeValue("gray.200", "gray.600"),
+      },
+    }),
   },
 };

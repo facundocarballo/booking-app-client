@@ -119,6 +119,20 @@ export class Branch {
     return c;
   }
 
+  /// Delete
+  async DeleteBook(book: Book): Promise<boolean> {
+    try {
+      await supabase.from(ENTITIES.book).delete().eq("id", book.id);
+    } catch (err) {
+      console.error(
+        `Error deleting this book (${book}) for this branch (${this}). `,
+        err
+      );
+      return false;
+    }
+    return true;
+  }
+
   /// Get
   async GetProducts(): Promise<Product[]> {
     let products: Product[] = [];
@@ -145,10 +159,10 @@ export class Branch {
     try {
       const res = await supabase
         .from(ENTITIES.book)
-        .select()
-        .eq("branch_id", this.id)
-        // .gt("date", date.toISOString())
-        // .lt("date", maxDate.toISOString());
+        .select("*, Client(*)")
+        .eq("branch_id", this.id);
+      // .gt("date", date.toISOString())
+      // .lt("date", maxDate.toISOString());
       if (res.data === null) return books;
       for (const book of res.data) {
         books.push(new Book(book));
@@ -160,9 +174,8 @@ export class Branch {
     return books;
   }
 
-  async GetAvailableBooks(date: Date): Promise<string[]> {
+  async GetAvailableBooks(busyBooks: Book[]): Promise<string[]> {
     let books: string[] = [];
-    const busyBooks = await this.GetBusyBooks(date);
     let now = this.open;
     while (now.getTime() <= this.close.getTime()) {
       if (!busyBooks.find((b) => areEqualsByHoursAndMinuts(b.date, now))) {

@@ -4,6 +4,7 @@ import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBookProvider } from "@/src/contexts/book";
 import { SelectClient } from "../branch/SelectClient";
+import { compareTimes } from "@/src/handlers/dates";
 
 interface ICreateBookForm {
   time: string;
@@ -16,8 +17,8 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   const [price, setPrice] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
   // Context
-  const { branchSelected,  } = useBranchProvider();
-  const { daySelected, setBooksAvailables } = useBookProvider();
+  const { branchSelected } = useBranchProvider();
+  const { daySelected, setBooksAvailables, setBooks } = useBookProvider();
   // Methods
   const handleAppointment = async () => {
     if (!branchSelected) return;
@@ -28,8 +29,14 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
       Number(price),
       description
     );
-    const booksAvailables = await branchSelected.GetAvailableBooks(daySelected);
-    setBooksAvailables(booksAvailables);
+    const busyBooks = await branchSelected.GetBusyBooks(daySelected);
+    const booksAvailables = await branchSelected.GetAvailableBooks(busyBooks);
+    const busyBooksSorted = busyBooks.sort(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    );
+    const booksSorted = booksAvailables.sort((a, b) => compareTimes(a, b));
+    setBooksAvailables(booksSorted);
+    setBooks(busyBooksSorted);
     onClose();
   };
   // Component

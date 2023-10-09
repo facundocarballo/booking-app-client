@@ -18,6 +18,12 @@ export const Text = {
             color: useColorModeValue('gray.900', 'gray.100'),
             fontWeight: 'bold',
             fontSize: '20px'
+        }),
+        link: () => ({
+            color: useColorModeValue('purple.300', 'purple.600'),
+            fontWeight: 'bold',
+            fontSize: '15px',
+            textDecoration: 'underline'
         })
     }
 }

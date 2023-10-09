@@ -48,28 +48,28 @@ export const getDateAtTime = (date: Date, time: string): Date => {
   return date;
 };
 
-export function formatDateToCustomString(date: Date):string {
+export function formatDateToCustomString(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
-  const milliseconds = String(date.getMilliseconds()).padStart(6, "0");
-  const timezoneOffset = date.getTimezoneOffset();
-  const timezoneOffsetHours = Math.abs(Math.floor(timezoneOffset / 60))
-    .toString()
-    .padStart(2, "0");
-  const timezoneOffsetMinutes = (Math.abs(timezoneOffset) % 60)
-    .toString()
-    .padStart(2, "0");
-  const timezoneSign = timezoneOffset >= 0 ? "+" : "-";
-
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${timezoneSign}${timezoneOffsetHours}:${timezoneOffsetMinutes}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 export const areEqualsByHoursAndMinuts = (a: Date, b: Date): boolean => {
   if (a.getHours() !== b.getHours()) return false;
   if (a.getMinutes() !== b.getMinutes()) return false;
   return true;
-}
+};
+
+export const compareTimes = (a: string, b: string): number => {
+  const [hourA, minutesA] = a.split(":");
+  const [hourB, minutesB] = b.split(":");
+  return (
+    Number(hourA) * 60 +
+    Number(minutesA) -
+    (Number(hourB) * 60 + Number(minutesB))
+  );
+};
