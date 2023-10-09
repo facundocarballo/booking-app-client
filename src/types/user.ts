@@ -94,20 +94,25 @@ class User {
     category_id: string,
     geoHash: string
   ): Promise<Branch[]> {
+    console.log("cat_id: ", category_id);
+    console.log("geoHash: ", geoHash);
     let branches: Branch[] = [];
     try {
+      // const res = await supabase
+      //   .from(ENTITIES.business)
+      //   .select("category_id, Branch(*)")
+      //   .eq("category_id", category_id)
+      //   .like("Branch.geohash", `${geoHash}%`)
+      //   .limit(9);
       const res = await supabase
-        .from(ENTITIES.business)
-        .select("category_id, Branch(*)")
-        .eq("category_id", category_id)
-        .like("Branch.geohash", `${geoHash}%`)
-        .limit(9);
+        .from(ENTITIES.branch)
+        .select("*, Business(*)")
+        .eq("Business.category_id", category_id)
+        .like("geohash", `${geoHash}%`);
 
       if (res.data === null) return branches;
       for (const r of res.data) {
-        for (const b of r.Branch) {
-          branches.push(new Branch(b));
-        }
+        branches.push(new Branch(r));
       }
     } catch (err) {
       console.error("Error getting the branches of this search. ", err);
