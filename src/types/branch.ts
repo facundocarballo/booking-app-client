@@ -1,5 +1,7 @@
 import {
+  areEqualsByHoursAndMinuts,
   convertStringToTime,
+  formatDateToCustomString,
   getDateAtTime,
   getTimeString,
   incrementTime,
@@ -75,7 +77,7 @@ export class Branch {
   ): Promise<boolean> {
     try {
       await supabase.from(ENTITIES.book).insert({
-        date: getDateAtTime(day, time),
+        date: getDateAtTime(day, time).toISOString(),
         branch_id: this.id,
         client_id,
         price,
@@ -103,8 +105,9 @@ export class Branch {
         .insert({
           name,
           description,
-          branch_id: this.id
-        }).select();
+          branch_id: this.id,
+        })
+        .select();
       console.log("Res: ", res);
     } catch (err) {
       console.error(
@@ -137,12 +140,15 @@ export class Branch {
 
   async GetBusyBooks(date: Date): Promise<Book[]> {
     let books: Book[] = [];
+    const maxDate = date;
+    maxDate.setHours(24);
     try {
       const res = await supabase
         .from(ENTITIES.book)
         .select()
         .eq("branch_id", this.id)
-        .eq("date", date);
+        // .gt("date", date.toISOString())
+        // .lt("date", maxDate.toISOString());
       if (res.data === null) return books;
       for (const book of res.data) {
         books.push(new Book(book));
@@ -159,7 +165,7 @@ export class Branch {
     const busyBooks = await this.GetBusyBooks(date);
     let now = this.open;
     while (now.getTime() <= this.close.getTime()) {
-      if (!busyBooks.find((b) => b.date.getTime() === now.getTime())) {
+      if (!busyBooks.find((b) => areEqualsByHoursAndMinuts(b.date, now))) {
         books.push(getTimeString(now));
       }
       now = incrementTime(now, this.time_book);

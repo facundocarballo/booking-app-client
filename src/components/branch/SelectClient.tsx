@@ -19,35 +19,39 @@ import { useBranchProvider } from "@/src/contexts/branch";
 import { CreateClientForm } from "./CreateClientForm";
 import { Client } from "@/src/types/Client";
 
-export const CreateClient = () => {
+interface ISelectClient {
+  setClientSelected: (_str: string) => void;
+}
+
+export const SelectClient = ({ setClientSelected }: ISelectClient) => {
   // Attributes
   const [searchClientName, setSearchClientName] = React.useState<string>("");
-  const [clientSelected, setClientSelected] = React.useState<string>("");
   const [clientsFiltered, setClientsFiltered] = React.useState<Client[]>([]);
-  const [clientsAll, setclientsAll] = React.useState<Client[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   // Context
 
-  const { clients, branchSelected, setClients } = useBranchProvider();
+  const { clients, setClients, branchSelected } = useBranchProvider();
   // Methods
   const handleGetClients = async () => {
     if (branchSelected === undefined) return;
     const res = await branchSelected.GetClients();
-    setclientsAll(res);
+    setClients(res);
     setClientsFiltered(res);
+    if (res.length > 0)
+      setClientSelected(res[0].id)
   };
 
   React.useEffect(() => {
-    console.log("Ejecutando useEffect de clients...");
     handleGetClients();
-  }, [clients]);
+  }, []);
 
   const handleSearchClient = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!clients) return;
     const input = e.currentTarget.value;
     setSearchClientName(input);
     setClientsFiltered(
-      clientsAll.filter(
+      clients.filter(
         (c) => c.name.startsWith(input) || c.description.includes(input)
       )
     );
@@ -97,7 +101,9 @@ export const CreateClient = () => {
               onChange={(e) => setClientSelected(e.currentTarget.value)}
             >
               {clientsFiltered.map((c) => (
-                <option key={c.id}>{c.name}</option>
+                <option value={c.id} key={c.id}>
+                  {c.name}
+                </option>
               ))}
             </Select>
           )}

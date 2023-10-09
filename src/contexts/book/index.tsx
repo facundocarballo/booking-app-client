@@ -26,12 +26,11 @@ export const BookContextProvider: React.FC<any> = (props: any) => {
   const [books, setBooks] = React.useState<Book[] | undefined>(undefined);
   const [showAvailable, setShowAvailable] = React.useState<boolean>(true);
   const [daySelected, setDaySelected] = React.useState<Date>(
-    new Date(Date.now())
+    new Date()
   );
   const [booksAvailables, setBooksAvailables] = React.useState<string[]>([]);
 
   // Methods
-
   const values = {
     bookSelected,
     books,

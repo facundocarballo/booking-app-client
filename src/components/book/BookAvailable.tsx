@@ -39,7 +39,7 @@ export const BookAvailable = ({ time }: IBookAvailable) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              <CreateBookForm time={time} />
+              <CreateBookForm time={time} onClose={onClose} />
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>

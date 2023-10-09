@@ -3,30 +3,40 @@ import { VStack, HStack, Spacer, Button } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBookProvider } from "@/src/contexts/book";
-import { CreateClient } from "../branch/CreateClient";
+import { SelectClient } from "../branch/SelectClient";
 
 interface ICreateBookForm {
   time: string;
+  onClose: () => void;
 }
 
-export const CreateBookForm = ({ time }: ICreateBookForm) => {
+export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   // Attributes
-  const [clientName, setClientName] = React.useState<string>("");
-  const clientId = React.useRef("");
+  const [clientId, setClientId] = React.useState<string>("");
   const [price, setPrice] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
   // Context
-  const { branchSelected } = useBranchProvider();
-  const { daySelected } = useBookProvider();
+  const { branchSelected,  } = useBranchProvider();
+  const { daySelected, setBooksAvailables } = useBookProvider();
   // Methods
   const handleAppointment = async () => {
-
+    if (!branchSelected) return;
+    await branchSelected.CreateBook(
+      time,
+      daySelected,
+      clientId,
+      Number(price),
+      description
+    );
+    const booksAvailables = await branchSelected.GetAvailableBooks(daySelected);
+    setBooksAvailables(booksAvailables);
+    onClose();
   };
   // Component
   return (
     <>
       <VStack w="full">
-        <CreateClient />
+        <SelectClient setClientSelected={setClientId} />
         <InputInfo
           title="Price"
           placeholder="3000"

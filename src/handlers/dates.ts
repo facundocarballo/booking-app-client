@@ -41,6 +41,35 @@ export const getTimeString = (time: Date): string => {
   return res;
 };
 
-export const getDateAtTime = (date: Date, time: string): Date  => {
-  return new Date();
+export const getDateAtTime = (date: Date, time: string): Date => {
+  const [hour, minutes] = time.split(":");
+  date.setHours(Number(hour));
+  date.setMinutes(Number(minutes));
+  return date;
+};
+
+export function formatDateToCustomString(date: Date):string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  const milliseconds = String(date.getMilliseconds()).padStart(6, "0");
+  const timezoneOffset = date.getTimezoneOffset();
+  const timezoneOffsetHours = Math.abs(Math.floor(timezoneOffset / 60))
+    .toString()
+    .padStart(2, "0");
+  const timezoneOffsetMinutes = (Math.abs(timezoneOffset) % 60)
+    .toString()
+    .padStart(2, "0");
+  const timezoneSign = timezoneOffset >= 0 ? "+" : "-";
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${timezoneSign}${timezoneOffsetHours}:${timezoneOffsetMinutes}`;
+}
+
+export const areEqualsByHoursAndMinuts = (a: Date, b: Date): boolean => {
+  if (a.getHours() !== b.getHours()) return false;
+  if (a.getMinutes() !== b.getMinutes()) return false;
+  return true;
 }

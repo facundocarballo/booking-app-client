@@ -17,6 +17,7 @@ export const SelectDay = () => {
     const date = new Date(
       new Date(event.currentTarget.value).getTime() + DAY_TIME
     );
+    date.setHours(0);
     setDaySelected(date);
     await handleGetBooks(date);
   };
