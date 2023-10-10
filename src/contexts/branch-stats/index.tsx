@@ -12,6 +12,7 @@ const BranchStatsContext = React.createContext<IBranchStatsContext>({
   booksPerWeek: [],
   booksPerMonth: [],
   booksPerYear: [],
+  range: 0,
 
   // Methods
   // React useState Methods
@@ -20,6 +21,7 @@ const BranchStatsContext = React.createContext<IBranchStatsContext>({
   setBooksPerWeek: () => {},
   setBooksPerMonth: () => {},
   setBooksPerYear: () => {},
+  setRange: () => {},
 });
 
 export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
@@ -29,6 +31,7 @@ export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
   const [booksPerWeek, setBooksPerWeek] = React.useState<DataChart[]>([]);
   const [booksPerMonth, setBooksPerMonth] = React.useState<DataChart[]>([]);
   const [booksPerYear, setBooksPerYear] = React.useState<DataChart[]>([]);
+  const [range, setRange] = React.useState<number>(0);
   // Methods
   const values = {
     books,
@@ -36,15 +39,17 @@ export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
     booksPerWeek,
     booksPerMonth,
     booksPerYear,
+    range,
 
     setBooks,
     setBooksPerDay,
     setBooksPerWeek,
     setBooksPerMonth,
     setBooksPerYear,
+    setRange,
   };
 
-  const memo = React.useMemo(() => values, [books, booksPerDay]);
+  const memo = React.useMemo(() => values, [books, booksPerDay, range]);
 
   return (
     <BranchStatsContext.Provider value={memo}>

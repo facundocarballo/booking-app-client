@@ -32,7 +32,10 @@ export const SelectDates = () => {
     if (!branchSelected) return;
     setLoading(true);
     const books = await branchSelected.GetBusyBooks(dateFrom, dateTo);
-    const booksPerDay = DataChart.CreateDataChartPerDay(books);
+    const booksSorted = books.toSorted(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    );
+    const booksPerDay = DataChart.CreateDataChartPerDay(booksSorted);
     setBooks(books);
     setBooksPerDay(booksPerDay);
     setLoading(false);

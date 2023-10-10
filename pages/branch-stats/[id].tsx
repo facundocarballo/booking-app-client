@@ -92,6 +92,7 @@ export default function BranchStatsPage() {
       <Box h="100px" />
       <BranchStatsContextProvider>
         <SelectDates />
+        <Box h="10px" />
         <BooksChart />
       </BranchStatsContextProvider>
     </>

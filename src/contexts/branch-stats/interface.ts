@@ -8,6 +8,7 @@ export interface IBranchStatsContext {
   booksPerWeek: DataChart[];
   booksPerMonth: DataChart[];
   booksPerYear: DataChart[];
+  range: number;
 
   // React useState Methods
   setBooks: (_books: Book[]) => void;
@@ -15,5 +16,6 @@ export interface IBranchStatsContext {
   setBooksPerWeek: (_data: DataChart[]) => void;
   setBooksPerMonth: (_data: DataChart[]) => void;
   setBooksPerYear: (_data: DataChart[]) => void;
+  setRange: (_range: number) => void;
   // Methods
 }

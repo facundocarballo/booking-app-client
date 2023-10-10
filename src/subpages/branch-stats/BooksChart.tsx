@@ -1,15 +1,21 @@
+import { SelectBarCharRange } from "@/src/components/branch-stats/SelectBarCharRange";
 import { useBranchStatsProvider } from "@/src/contexts/branch-stats";
-import { VStack, Box, Text } from "@chakra-ui/react";
-import React from "react";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+  VStack,
+  Box,
+  Text,
+  useColorModeValue,
+  HStack,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Heading,
+  Spacer,
+} from "@chakra-ui/react";
+import React from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 const data = [
   {
@@ -58,12 +64,12 @@ const data = [
 
 export const BooksChart = () => {
   // Attributes
+  const bg = useColorModeValue("#B794F4", "#6B46C1");
   // Context
   const { booksPerDay, books } = useBranchStatsProvider();
   // Methods
   const areDataToDisplay = (): boolean => {
     if (booksPerDay.length === 0) return false;
-    console.log(booksPerDay);
     return true;
   };
   // Component
@@ -78,26 +84,39 @@ export const BooksChart = () => {
     );
   return (
     <>
-      <VStack w="full">
-        <h2>{books.length} Books</h2>
-        <BarChart
-          width={1000}
-          height={400}
-          data={booksPerDay}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="value" fill="#B794F4" />
-        </BarChart>
-      </VStack>
+      <Accordion allowToggle>
+        <AccordionItem>
+          <AccordionButton>
+            <Heading>{books.length} Books</Heading>
+            <Spacer />
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel>
+            <VStack w="full">
+              <Box h="10px" />
+              <BarChart
+                width={1000}
+                height={400}
+                data={booksPerDay}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill={bg} />
+              </BarChart>
+              <Box h="10px" />
+              <SelectBarCharRange />
+            </VStack>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 };
