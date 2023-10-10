@@ -12,10 +12,8 @@ import {
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBranchStatsProvider } from "@/src/contexts/branch-stats";
 import { SearchIcon } from "@chakra-ui/icons";
-import { getCleanDate } from "@/src/handlers/dates";
+import { DAY_TIME, getCleanDate } from "@/src/handlers/dates";
 import { DataChart } from "@/src/types/dataChart";
-
-const DAY_TIME = 1000 * 60 * 60 * 24;
 
 export const SelectDates = () => {
   // Attributes
@@ -26,7 +24,13 @@ export const SelectDates = () => {
   const [dateTo, setDateTo] = React.useState<Date>(new Date(Date.now()));
   // Context
   const { branchSelected } = useBranchProvider();
-  const { setBooks, setBooksPerDay } = useBranchStatsProvider();
+  const {
+    setBooks,
+    setBooksPerDay,
+    setBooksPerWeek,
+    setBooksPerMonth,
+    setBooksPerYear,
+  } = useBranchStatsProvider();
   // Methods
   const handleSearchData = async () => {
     if (!branchSelected) return;
@@ -36,8 +40,14 @@ export const SelectDates = () => {
       (a, b) => a.date.getTime() - b.date.getTime()
     );
     const booksPerDay = DataChart.CreateDataChartPerDay(booksSorted);
+    const booksPerWeek = DataChart.CreateDataChartPerWeek(booksSorted);
+    const booksPerMonth = DataChart.CreateDataChartPerMonth(booksSorted);
+    const booksPerYear = DataChart.CreateDataChartPerYear(booksSorted);
     setBooks(books);
     setBooksPerDay(booksPerDay);
+    setBooksPerWeek(booksPerWeek);
+    setBooksPerMonth(booksPerMonth);
+    setBooksPerYear(booksPerYear);
     setLoading(false);
   };
 

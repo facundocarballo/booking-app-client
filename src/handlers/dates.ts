@@ -1,3 +1,5 @@
+export const DAY_TIME = 1000 * 60 * 60 * 24;
+
 export const convertStringToTime = (dateString: any): Date => {
   const [hours, minutes, seconds] = dateString.split(":").map(Number);
 
@@ -83,6 +85,35 @@ export const areInTheSameDay = (a: Date, b: Date): boolean => {
   );
 };
 
+export const areInTheSameWeek = (a: Date, b: Date): boolean => {
+  let minDate: Date;
+  let maxDate: Date;
+
+  if (a.getTime() < b.getTime()) {
+    minDate = getCleanDate(a, false);
+    maxDate = getCleanDate(b, true);
+  } else {
+    minDate = getCleanDate(b, false);
+    maxDate = getCleanDate(a, true);
+  }
+
+  const weekDayOfMinDate = minDate.getDay();
+  const daysToEndWeek = 6 - weekDayOfMinDate;
+  const maxTimestamp = getCleanDate(
+    new Date(minDate.getTime() + DAY_TIME * daysToEndWeek),
+    true
+  );
+  return maxDate.getTime() <= maxTimestamp.getTime();
+};
+
+export const areInTheSameMonth = (a: Date, b: Date): boolean => {
+  return a.getMonth() === b.getMonth();
+};
+
+export const areInTheSameYear = (a: Date, b: Date): boolean => {
+  return a.getFullYear() === b.getFullYear();
+};
+
 export const getCleanDate = (d: Date, max: boolean): Date => {
   const nDate = new Date(d);
   const hour = max ? 23 : 0;
@@ -96,4 +127,48 @@ export const getCleanDate = (d: Date, max: boolean): Date => {
 
 export const getDateString = (d: Date): string => {
   return `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()}`;
+};
+
+export const getWeekRange = (d: Date): string => {
+  const weekDay = d.getDay();
+  const minDate = getCleanDate(
+    new Date(d.getTime() - DAY_TIME * weekDay),
+    false
+  );
+  const maxDate = getCleanDate(
+    new Date(minDate.getTime() + DAY_TIME * 6),
+    true
+  );
+  return `${getDateString(minDate)} to ${getDateString(maxDate)}`;
+};
+
+export const getMonthString = (d: Date): string => {
+  switch (d.getMonth()) {
+    case 0:
+      return "January";
+    case 1:
+      return "February";
+    case 2:
+      return "March";
+    case 3:
+      return "April";
+    case 4:
+      return "May";
+    case 5:
+      return "June";
+    case 6:
+      return "July";
+    case 7:
+      return "August";
+    case 8:
+      return "September";
+    case 9:
+      return "October";
+    case 10:
+      return "November";
+    case 11:
+      return "December";
+    default:
+      return "Month doesn't exist.";
+  }
 };
