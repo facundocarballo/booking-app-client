@@ -4,7 +4,7 @@ import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBookProvider } from "@/src/contexts/book";
 import { SelectClient } from "../branch/SelectClient";
-import { compareTimes } from "@/src/handlers/dates";
+import { compareTimes, getCleanDate } from "@/src/handlers/dates";
 
 interface ICreateBookForm {
   time: string;
@@ -29,7 +29,9 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
       Number(price),
       description
     );
-    const busyBooks = await branchSelected.GetBusyBooks(daySelected);
+    const minDate = getCleanDate(daySelected, false);
+    const maxDate = getCleanDate(daySelected, true);
+    const busyBooks = await branchSelected.GetBusyBooks(minDate, maxDate);
     const booksAvailables = await branchSelected.GetAvailableBooks(busyBooks);
     const busyBooksSorted = busyBooks.sort(
       (a, b) => a.date.getTime() - b.date.getTime()
