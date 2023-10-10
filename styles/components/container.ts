@@ -44,6 +44,18 @@ export const Container = {
         switch: () => ({
             border: '10px solid #000',
             borderRadius: 10,
-        })
+        }),
+        clientCard: () => ({
+            bg: useColorModeValue('gray.200', 'gray.700'),
+            borderRadius: 10,
+            margin: '2px',
+            w: "250px",
+            h: "150px",
+            _hover: {
+                boxShadow: 'lg',
+                transform: 'scale(1.05)',
+                cursor: 'pointer'
+            }
+        }),
     }
 }

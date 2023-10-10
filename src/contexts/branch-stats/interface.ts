@@ -1,3 +1,4 @@
+import { DataClient } from "@/src/types/Client/data";
 import { Book } from "@/src/types/book";
 import { DataChart } from "@/src/types/dataChart";
 
@@ -9,6 +10,7 @@ export interface IBranchStatsContext {
   booksPerMonth: DataChart[];
   booksPerYear: DataChart[];
   range: number;
+  clients: DataClient[];
 
   // React useState Methods
   setBooks: (_books: Book[]) => void;
@@ -17,5 +19,6 @@ export interface IBranchStatsContext {
   setBooksPerMonth: (_data: DataChart[]) => void;
   setBooksPerYear: (_data: DataChart[]) => void;
   setRange: (_range: number) => void;
+  setClients: (_clients: DataClient[]) => void;
   // Methods
 }

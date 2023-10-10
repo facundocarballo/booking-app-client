@@ -7,17 +7,19 @@ import {
   getMonthString,
   getWeekRange,
 } from "../handlers/dates";
+import { Client } from "./Client";
 import { Book } from "./book";
 
 export class DataChart {
   name: string;
   value: number;
 
-  constructor(name: string, value: number, date: string) {
+  constructor(name: string, value: number) {
     this.name = name;
     this.value = value;
   }
 
+  // Range of Books
   static CreateDataChartPerDay(books: Book[]): DataChart[] {
     if (books.length === 0) return [];
     let charts: DataChart[] = [];
@@ -129,4 +131,5 @@ export class DataChart {
     });
     return charts;
   }
+
 }

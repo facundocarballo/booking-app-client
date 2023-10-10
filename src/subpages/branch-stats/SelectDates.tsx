@@ -14,6 +14,8 @@ import { useBranchStatsProvider } from "@/src/contexts/branch-stats";
 import { SearchIcon } from "@chakra-ui/icons";
 import { DAY_TIME, getCleanDate } from "@/src/handlers/dates";
 import { DataChart } from "@/src/types/dataChart";
+import { Book } from "@/src/types/book";
+import { DataClient } from "@/src/types/Client/data";
 
 export const SelectDates = () => {
   // Attributes
@@ -30,8 +32,21 @@ export const SelectDates = () => {
     setBooksPerWeek,
     setBooksPerMonth,
     setBooksPerYear,
+    setClients
   } = useBranchStatsProvider();
   // Methods
+  const setAllBooks = (booksSorted: Book[]) => {
+    const booksPerDay = DataChart.CreateDataChartPerDay(booksSorted);
+    const booksPerWeek = DataChart.CreateDataChartPerWeek(booksSorted);
+    const booksPerMonth = DataChart.CreateDataChartPerMonth(booksSorted);
+    const booksPerYear = DataChart.CreateDataChartPerYear(booksSorted);
+    setBooks(booksSorted);
+    setBooksPerDay(booksPerDay);
+    setBooksPerWeek(booksPerWeek);
+    setBooksPerMonth(booksPerMonth);
+    setBooksPerYear(booksPerYear);
+  };
+
   const handleSearchData = async () => {
     if (!branchSelected) return;
     setLoading(true);
@@ -39,15 +54,9 @@ export const SelectDates = () => {
     const booksSorted = books.toSorted(
       (a, b) => a.date.getTime() - b.date.getTime()
     );
-    const booksPerDay = DataChart.CreateDataChartPerDay(booksSorted);
-    const booksPerWeek = DataChart.CreateDataChartPerWeek(booksSorted);
-    const booksPerMonth = DataChart.CreateDataChartPerMonth(booksSorted);
-    const booksPerYear = DataChart.CreateDataChartPerYear(booksSorted);
-    setBooks(books);
-    setBooksPerDay(booksPerDay);
-    setBooksPerWeek(booksPerWeek);
-    setBooksPerMonth(booksPerMonth);
-    setBooksPerYear(booksPerYear);
+    const clients = DataClient.CreateDataChartClients(booksSorted);
+    setClients(clients);
+    setAllBooks(booksSorted);
     setLoading(false);
   };
 
