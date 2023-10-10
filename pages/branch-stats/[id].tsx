@@ -7,13 +7,11 @@ import { useRouter } from "next/router";
 import { VStack, Box, Spinner } from "@chakra-ui/react";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { BranchProducts } from "@/src/subpages/branch/BranchProducts";
-import { BranchBooks } from "@/src/subpages/branch/BranchBooks";
-import { BookContextProvider } from "@/src/contexts/book";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
 import { Branch } from "@/src/types/branch";
-import { Books } from "@/src/subpages/branch-stats/Books";
+import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
+import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
 
 export default function BranchStatsPage() {
   // Attributes
@@ -81,7 +79,7 @@ export default function BranchStatsPage() {
   return (
     <>
       <Head>
-        <title>{branchSelected.name} - Profile</title>
+        <title>{branchSelected.name} - Stats</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
@@ -91,7 +89,9 @@ export default function BranchStatsPage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <Books />
+      <BranchStatsContextProvider>
+        <SelectDates />
+      </BranchStatsContextProvider>
     </>
   );
 }

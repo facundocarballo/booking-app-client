@@ -2,40 +2,23 @@ import React from "react";
 import {
   VStack,
   HStack,
-  Heading,
   Box,
   Spacer,
   Input,
   Text,
   Spinner,
 } from "@chakra-ui/react";
-import { getCleanDate } from "@/src/handlers/dates";
 import { useBranchProvider } from "@/src/contexts/branch";
+import { useBranchStatsProvider } from "@/src/contexts/branch-stats";
 
-const DAY_TIME = 1000 * 60 * 60 * 24;
-
-export const Books = () => {
+export const SelectDates = () => {
   // Attributes
-  const [dateFrom, setDateFrom] = React.useState<Date>(
-    new Date(Date.now() - 30 * DAY_TIME)
-  );
-  const [dateTo, setDateTo] = React.useState<Date>(new Date(Date.now()));
+
   // Context
   const { branchSelected } = useBranchProvider();
+  const { books, dateFrom, handlerSetDateFrom, dateTo, handlerSetDateTo } =
+    useBranchStatsProvider();
   // Methods
-  const handlerSetDateFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = new Date(
-      new Date(e.currentTarget.value).getTime() + DAY_TIME
-    );
-    setDateFrom(getCleanDate(newDate));
-  };
-
-  const handlerSetDateTo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = new Date(
-      new Date(e.currentTarget.value).getTime() + DAY_TIME
-    );
-    setDateTo(getCleanDate(newDate));
-  };
 
   // Component
   if (!branchSelected)
@@ -50,7 +33,7 @@ export const Books = () => {
       <VStack w="full">
         <HStack w="full">
           <Box w="10px" />
-          <Text variant='caption'>{branchSelected.name}</Text>
+          <Text variant="caption">{branchSelected.name}</Text>
           <Spacer />
           <Input
             type="date"
