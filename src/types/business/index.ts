@@ -63,7 +63,7 @@ export class Business {
     try {
       const res = await supabase
         .from(ENTITIES.branch)
-        .select()
+        .select("*, Business(owner)")
         .eq("business_id", this.id);
       if (res.data === null) return branches;
       for (const b of res.data) {

@@ -72,8 +72,8 @@ export const BusinessBranches = () => {
         <Box h="10px" />
         {branches !== undefined && branches.length > 0 ? (
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {branches.map((b, idx) => (
-              <GridItem key={idx}>
+            {branches.map((b) => (
+              <GridItem key={b.id}>
                 <BranchCard branch={b} />
               </GridItem>
             ))}
