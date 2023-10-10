@@ -58,16 +58,6 @@ export const Button = {
         transform: "scale(1.10)",
         bg: useColorModeValue("gray.200", "gray.600"),
       },
-    }),
-    link: () => ({
-      bg: useColorModeValue("bgLight", "bgDark"),
-      color: useColorModeValue("bgDark", "bgLight"),
-      margin: "2px",
-      _hover: {
-        boxShadow: "md",
-        transform: "scale(1.10)",
-        bg: useColorModeValue("gray.200", "gray.600"),
-      },
-    }),
+    })
   },
 };
