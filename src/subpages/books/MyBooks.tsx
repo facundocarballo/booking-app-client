@@ -7,12 +7,16 @@ import {
   Box,
   Text,
   Grid,
+  Button,
+  Spinner,
 } from "@chakra-ui/react";
+import { MdOutlineQueryStats } from "react-icons/md";
 import { useBookProvider } from "@/src/contexts/book";
 import { BookAvailable } from "@/src/components/book/BookAvailable";
 import { BookUnavailable } from "@/src/components/book/BookUnavailable";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { compareTimes } from "@/src/handlers/dates";
+import NextLink from "next/link";
 
 export const MyBooks = () => {
   // Attributes
@@ -39,10 +43,10 @@ export const MyBooks = () => {
     if (!branchSelected) return;
     const busyBooks = await branchSelected.GetBusyBooks(date);
     const books = await branchSelected.GetAvailableBooks(busyBooks);
-    const busyBooksSorted = busyBooks.sort(
+    const busyBooksSorted = busyBooks.toSorted(
       (a, b) => a.date.getTime() - b.date.getTime()
     );
-    const booksSorted = books.sort((a, b) => compareTimes(a, b));
+    const booksSorted = books.toSorted((a, b) => compareTimes(a, b));
     setBooksAvailables(booksSorted);
     setBooks(busyBooksSorted);
   };
@@ -52,6 +56,14 @@ export const MyBooks = () => {
     handleGetBooks(daySelected);
   }, []);
   // Component
+  if (!branchSelected) {
+    return (
+      <VStack w="full">
+        <Box h="200px" />
+        <Spinner />
+      </VStack>
+    );
+  }
   return (
     <>
       <VStack w="full">
@@ -59,14 +71,22 @@ export const MyBooks = () => {
           <Box w="10px" />
           <Heading>My Books</Heading>
           <Spacer />
+          <NextLink href={`/branch-stats/${branchSelected.id}`} target="_blank">
+            <Button variant="callToAction">
+              <MdOutlineQueryStats />
+              <Box w="5px" />
+              <Text>Stadistics</Text>
+            </Button>
+          </NextLink>
+          <Box w="10px" />
         </HStack>
         <Box h="10px" />
         <HStack>
           <Box w="10px" />
           <Grid w="full" templateColumns={templeteColumns} gap={6}>
             {showAvailable
-              ? booksAvailables.map((b, idx) => (
-                  <BookAvailable time={b} key={idx} />
+              ? booksAvailables.map((b) => (
+                  <BookAvailable time={b} key={`${b}-key`} />
                 ))
               : books !== undefined
               ? books.map((b) => <BookUnavailable key={b.id} book={b} />)

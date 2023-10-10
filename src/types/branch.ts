@@ -1,7 +1,6 @@
 import {
   areEqualsByHoursAndMinuts,
   convertStringToTime,
-  formatDateToCustomString,
   getDateAtTime,
   getTimeString,
   incrementTime,
@@ -127,7 +126,7 @@ export class Branch {
       await supabase.from(ENTITIES.book).delete().eq("id", book.id);
     } catch (err) {
       console.error(
-        `Error deleting this book (${book}) for this branch (${this}). `,
+        `Error deleting this book (${book.id}) for this branch (${this}). `,
         err
       );
       return false;

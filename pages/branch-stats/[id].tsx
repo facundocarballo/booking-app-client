@@ -14,7 +14,7 @@ import supabase from "@/src/supabase";
 import User from "@/src/types/user";
 import { Branch } from "@/src/types/branch";
 
-export default function BranchProfilePage() {
+export default function BranchStatsPage() {
   // Attributes
   const [loading, setLoading] = React.useState<boolean>(true);
   const router = useRouter();
@@ -90,11 +90,7 @@ export default function BranchProfilePage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <BranchProducts />
-      <Box h="30px" />
-      <BookContextProvider>
-        <BranchBooks />
-      </BookContextProvider>
+      <h2>Stats</h2>
     </>
   );
 }
