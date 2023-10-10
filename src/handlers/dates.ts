@@ -74,3 +74,12 @@ export const compareTimes = (a: string, b: string): number => {
     (Number(hourB) * 60 + Number(minutesB))
   );
 };
+
+export const getCleanDate = (d: Date): Date => {
+  const nDate = new Date(d);
+  nDate.setHours(0);
+  nDate.setMinutes(0);
+  nDate.setSeconds(0);
+  nDate.setMilliseconds(0);
+  return nDate;
+}

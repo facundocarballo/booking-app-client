@@ -13,6 +13,7 @@ import { BookContextProvider } from "@/src/contexts/book";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
 import { Branch } from "@/src/types/branch";
+import { Books } from "@/src/subpages/branch-stats/Books";
 
 export default function BranchStatsPage() {
   // Attributes
@@ -90,7 +91,7 @@ export default function BranchStatsPage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <h2>Stats</h2>
+      <Books />
     </>
   );
 }
