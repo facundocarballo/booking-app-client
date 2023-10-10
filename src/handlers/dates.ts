@@ -75,6 +75,14 @@ export const compareTimes = (a: string, b: string): number => {
   );
 };
 
+export const areInTheSameDay = (a: Date, b: Date): boolean => {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+};
+
 export const getCleanDate = (d: Date, max: boolean): Date => {
   const nDate = new Date(d);
   const hour = max ? 23 : 0;
@@ -84,4 +92,8 @@ export const getCleanDate = (d: Date, max: boolean): Date => {
   nDate.setSeconds(other);
   nDate.setMilliseconds(other);
   return nDate;
+};
+
+export const getDateString = (d: Date): string => {
+  return `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()}`;
 };

@@ -13,6 +13,7 @@ import { useBranchProvider } from "@/src/contexts/branch";
 import { useBranchStatsProvider } from "@/src/contexts/branch-stats";
 import { SearchIcon } from "@chakra-ui/icons";
 import { getCleanDate } from "@/src/handlers/dates";
+import { DataChart } from "@/src/types/dataChart";
 
 const DAY_TIME = 1000 * 60 * 60 * 24;
 
@@ -25,13 +26,15 @@ export const SelectDates = () => {
   const [dateTo, setDateTo] = React.useState<Date>(new Date(Date.now()));
   // Context
   const { branchSelected } = useBranchProvider();
-  const { setBooks } = useBranchStatsProvider();
+  const { setBooks, setBooksPerDay } = useBranchStatsProvider();
   // Methods
   const handleSearchData = async () => {
     if (!branchSelected) return;
     setLoading(true);
     const books = await branchSelected.GetBusyBooks(dateFrom, dateTo);
+    const booksPerDay = DataChart.CreateDataChartPerDay(books);
     setBooks(books);
+    setBooksPerDay(booksPerDay);
     setLoading(false);
   };
 
