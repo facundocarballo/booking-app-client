@@ -75,11 +75,13 @@ export const compareTimes = (a: string, b: string): number => {
   );
 };
 
-export const getCleanDate = (d: Date): Date => {
+export const getCleanDate = (d: Date, max: boolean): Date => {
   const nDate = new Date(d);
-  nDate.setHours(0);
-  nDate.setMinutes(0);
-  nDate.setSeconds(0);
-  nDate.setMilliseconds(0);
+  const hour = max ? 23 : 0;
+  const other = max ? 59 : 0;
+  nDate.setHours(hour);
+  nDate.setMinutes(other);
+  nDate.setSeconds(other);
+  nDate.setMilliseconds(other);
   return nDate;
-}
+};

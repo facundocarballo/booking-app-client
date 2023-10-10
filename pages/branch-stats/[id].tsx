@@ -12,6 +12,7 @@ import User from "@/src/types/user";
 import { Branch } from "@/src/types/branch";
 import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
 import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
+import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
 
 export default function BranchStatsPage() {
   // Attributes
@@ -91,6 +92,7 @@ export default function BranchStatsPage() {
       <Box h="100px" />
       <BranchStatsContextProvider>
         <SelectDates />
+        <BooksChart />
       </BranchStatsContextProvider>
     </>
   );
