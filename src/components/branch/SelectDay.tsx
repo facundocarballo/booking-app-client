@@ -2,7 +2,7 @@ import React from "react";
 import { Input } from "@chakra-ui/react";
 import { useBookProvider } from "@/src/contexts/book";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { compareTimes } from "@/src/handlers/dates";
+import { compareTimes, getCleanDate } from "@/src/handlers/dates";
 
 const DAY_TIME = 1000 * 60 * 60 * 24;
 
@@ -25,7 +25,9 @@ export const SelectDay = () => {
 
   const handleGetBooks = async (date: Date) => {
     if (!branchSelected) return;
-    const busyBooks = await branchSelected.GetBusyBooks(date);
+    const minDate = getCleanDate(date, false);
+    const maxDate = getCleanDate(date, true);
+    const busyBooks = await branchSelected.GetBusyBooks(minDate, maxDate);
     const books = await branchSelected.GetAvailableBooks(busyBooks);
     const busyBooksSorted = busyBooks.toSorted(
       (a, b) => a.date.getTime() - b.date.getTime()

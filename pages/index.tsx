@@ -47,7 +47,7 @@ export default function Home() {
   const height = React.useRef(0);
 
   // Context
-  const { setUser } = useHomeProvider();
+  const { setUser, user } = useHomeProvider();
 
   // Methods
   const onWelcomeClose = () => setWelcomeOpen(false);
@@ -84,10 +84,11 @@ export default function Home() {
 
   const handleLogIn = async () => {
     setLoadingLogIn(true);
-    await supabase.auth.signInWithPassword({
+    const res = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    console.log(res);
     clearInputs();
     await checkUserAuth();
     setLogInOpen(false);
@@ -250,9 +251,13 @@ export default function Home() {
       <NavBar props={theNavBarProps} />
       <Box h={height.current / 2.4} />
       {loading ? <Spinner /> : null}
-      <SearchBranch />
-      <Box h="50px" />
-      <BranchSearched />
+      {!user ? null : (
+        <>
+          <SearchBranch />
+          <Box h="50px" />
+          <BranchSearched />
+        </>
+      )}
     </>
   );
 }
