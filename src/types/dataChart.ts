@@ -7,7 +7,6 @@ import {
   getMonthString,
   getWeekRange,
 } from "../handlers/dates";
-import { Client } from "./Client";
 import { Book } from "./book";
 
 export class DataChart {
