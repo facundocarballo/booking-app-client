@@ -4,7 +4,6 @@ import {
   VStack,
   Text,
   Spacer,
-  Button,
   AlertDialog,
   AlertDialogBody,
   AlertDialogHeader,
@@ -38,8 +37,7 @@ export const SelectClient = ({ setClientSelected }: ISelectClient) => {
     const res = await branchSelected.GetClients();
     setClients(res);
     setClientsFiltered(res);
-    if (res.length > 0)
-      setClientSelected(res[0].id)
+    if (res.length > 0) setClientSelected(res[0].id);
   };
 
   React.useEffect(() => {
@@ -82,9 +80,6 @@ export const SelectClient = ({ setClientSelected }: ISelectClient) => {
         <HStack w="full">
           <Text fontWeight="bold">Client</Text>
           <Spacer />
-          <Button variant="callToAction" onClick={onOpen}>
-            CREATE CLIENT
-          </Button>
         </HStack>
         <HStack w="full">
           <Input
@@ -108,6 +103,9 @@ export const SelectClient = ({ setClientSelected }: ISelectClient) => {
             </Select>
           )}
         </HStack>
+        <Text variant="link" onClick={onOpen}>
+          {"Don't find your Client? Create one."}
+        </Text>
       </VStack>
     </>
   );

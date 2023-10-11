@@ -23,7 +23,13 @@ export const Text = {
             color: useColorModeValue('purple.300', 'purple.600'),
             fontWeight: 'bold',
             fontSize: '15px',
-            textDecoration: 'underline'
+            textDecoration: 'underline',
+            _hover: {
+                cursor: 'pointer',
+                transform: 'scale(1.02)',
+                color: useColorModeValue('purple.400', 'purple.500'),
+                boxShadow: 'lg'
+            }
         })
     }
 }

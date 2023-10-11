@@ -33,10 +33,10 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
     const maxDate = getCleanDate(daySelected, true);
     const busyBooks = await branchSelected.GetBusyBooks(minDate, maxDate);
     const booksAvailables = await branchSelected.GetAvailableBooks(busyBooks);
-    const busyBooksSorted = busyBooks.sort(
+    const busyBooksSorted = busyBooks.toSorted(
       (a, b) => a.date.getTime() - b.date.getTime()
     );
-    const booksSorted = booksAvailables.sort((a, b) => compareTimes(a, b));
+    const booksSorted = booksAvailables.toSorted((a, b) => compareTimes(a, b));
     setBooksAvailables(booksSorted);
     setBooks(busyBooksSorted);
     onClose();
