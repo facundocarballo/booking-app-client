@@ -1,12 +1,8 @@
 import { ClientCard } from "@/src/components/branch-stats/ClientCard";
-import { SelectBarCharRange } from "@/src/components/branch-stats/SelectBarCharRange";
 import { useBranchStatsProvider } from "@/src/contexts/branch-stats";
-import { DataChart } from "@/src/types/dataChart";
 import {
   VStack,
   Box,
-  Text,
-  useColorModeValue,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -20,7 +16,6 @@ import React from "react";
 
 export const ClientChart = () => {
   // Attributes
-  const bg = useColorModeValue("#B794F4", "#6B46C1");
   // Context
   const { clients } = useBranchStatsProvider();
   // Methods
@@ -45,7 +40,7 @@ export const ClientChart = () => {
               <Box h="10px" />
               <Grid templateColumns="repeat(6, 1fr)" gap={6}>
                 {clients.map((c) => (
-                  <ClientCard client={c.client} value={c.value} />
+                  <ClientCard key={c.client.id} data={c} />
                 ))}
               </Grid>
               <Box h="10px" />

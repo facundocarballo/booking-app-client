@@ -14,7 +14,6 @@ import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
 import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
 import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
 import { ClientChart } from "@/src/subpages/branch-stats/ClientChart";
-import { MoneyChart } from "@/src/subpages/branch-stats/MoneyChart";
 
 export default function BranchStatsPage() {
   // Attributes
