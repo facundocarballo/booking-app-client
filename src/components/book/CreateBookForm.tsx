@@ -13,19 +13,23 @@ interface ICreateBookForm {
 
 export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   // Attributes
-  const [clientId, setClientId] = React.useState<string>("");
   const [price, setPrice] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
   // Context
   const { branchSelected } = useBranchProvider();
-  const { daySelected, setBooksAvailables, setBooks } = useBookProvider();
+  const {
+    daySelected,
+    clientIdSelected,
+    setBooksAvailables,
+    setBooks,
+  } = useBookProvider();
   // Methods
   const handleAppointment = async () => {
     if (!branchSelected) return;
     await branchSelected.CreateBook(
       time,
       daySelected,
-      clientId,
+      clientIdSelected,
       Number(price),
       description
     );
@@ -45,7 +49,7 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   return (
     <>
       <VStack w="full">
-        <SelectClient setClientSelected={setClientId} />
+        <SelectClient />
         <InputInfo
           title="Price"
           placeholder="3000"

@@ -16,28 +16,30 @@ import {
 } from "@chakra-ui/react";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { CreateClientForm } from "./CreateClientForm";
-import { Client } from "@/src/types/Client";
+import { useBookProvider } from "@/src/contexts/book";
 
-interface ISelectClient {
-  setClientSelected: (_str: string) => void;
-}
-
-export const SelectClient = ({ setClientSelected }: ISelectClient) => {
+export const SelectClient = () => {
   // Attributes
   const [searchClientName, setSearchClientName] = React.useState<string>("");
-  const [clientsFiltered, setClientsFiltered] = React.useState<Client[]>([]);
+  // const [clientsFiltered, setClientsFiltered] = React.useState<Client[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   // Context
-
-  const { clients, setClients, branchSelected } = useBranchProvider();
+  const { setClientIdSelected, clientIdSelected } = useBookProvider();
+  const {
+    clients,
+    setClients,
+    clientsFiltered,
+    setClientsFiltered,
+    branchSelected,
+  } = useBranchProvider();
   // Methods
   const handleGetClients = async () => {
     if (branchSelected === undefined) return;
     const res = await branchSelected.GetClients();
     setClients(res);
     setClientsFiltered(res);
-    if (res.length > 0) setClientSelected(res[0].id);
+    if (res.length > 0) setClientIdSelected(res[0].id);
   };
 
   React.useEffect(() => {
@@ -88,12 +90,13 @@ export const SelectClient = ({ setClientSelected }: ISelectClient) => {
             w="full"
             placeholder="Search for your client"
           />
-          {clients === undefined ? (
+          {!clients || !clientsFiltered ? (
             <Spinner />
           ) : (
             <Select
               w="full"
-              onChange={(e) => setClientSelected(e.currentTarget.value)}
+              value={clientIdSelected}
+              onChange={(e) => setClientIdSelected(e.currentTarget.value)}
             >
               {clientsFiltered.map((c) => (
                 <option value={c.id} key={c.id}>

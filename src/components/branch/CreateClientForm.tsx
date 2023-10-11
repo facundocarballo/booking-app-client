@@ -2,6 +2,7 @@ import React from "react";
 import { VStack, Button, HStack, Spacer } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
+import { useBookProvider } from "@/src/contexts/book";
 
 interface ICreateBookForm {
   onClose: () => void;
@@ -12,11 +13,23 @@ export const CreateClientForm = ({ onClose }: ICreateBookForm) => {
   const [name, setName] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
   // Context
-  const { clients, branchSelected } = useBranchProvider();
+  const { setClientIdSelected } = useBookProvider();
+  const {
+    clients,
+    branchSelected,
+    setClients,
+    setClientsFiltered,
+    clientsFiltered,
+  } = useBranchProvider();
   // Methods
   const handleCreateClient = async () => {
-    if (!branchSelected || !clients) return;
-    await branchSelected.CreateClient(name, description);
+    if (!branchSelected || !clients || !clientsFiltered) return;
+    const newClient = await branchSelected.CreateClient(name, description);
+    if (newClient) {
+      setClients([...clients, newClient]);
+      setClientsFiltered([...clientsFiltered, newClient]);
+      setClientIdSelected(newClient.id);
+    }
     onClose();
   };
   // Component

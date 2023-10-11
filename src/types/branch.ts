@@ -94,12 +94,10 @@ export class Branch {
     return true;
   }
 
-  async CreateClient(name: string, description: string): Promise<Client> {
-    const c = {
-      id: "",
-      name: "",
-      description: "",
-    };
+  async CreateClient(
+    name: string,
+    description: string
+  ): Promise<Client | undefined> {
     try {
       const res = await supabase
         .from(ENTITIES.client)
@@ -109,15 +107,15 @@ export class Branch {
           branch_id: this.id,
         })
         .select();
-      console.log("Res: ", res);
+      if (!res.data) return;
+      return new Client(res.data[0]);
     } catch (err) {
       console.error(
         `Error creating a client for this branch: ${this.name}. `,
         err
       );
-      return c;
+      return undefined;
     }
-    return c;
   }
 
   /// Delete
@@ -197,6 +195,7 @@ export class Branch {
       for (const c of res.data) {
         clients.push(new Client(c));
       }
+      clients = clients.toSorted((a, b) => a.name.localeCompare(b.name));
     } catch (err) {
       console.error(`Error getting the clients of ${this.name}. `, err);
       return clients;
