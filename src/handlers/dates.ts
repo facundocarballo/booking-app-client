@@ -172,3 +172,10 @@ export const getMonthString = (d: Date): string => {
       return "Month doesn't exist.";
   }
 };
+
+export const getDaysBetweenTwoDates = (a: Date, b: Date): number => {
+  const aClean = getCleanDate(a, false);
+  const bClean = getCleanDate(b, false);
+  const diffMiliseconds = Math.abs(aClean.getTime() - b.getTime());
+  return Math.ceil(diffMiliseconds / DAY_TIME);
+};
