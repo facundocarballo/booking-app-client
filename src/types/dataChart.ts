@@ -13,10 +13,12 @@ import { Book } from "./book";
 export class DataChart {
   name: string;
   value: number;
+  price: number;
 
-  constructor(name: string, value: number) {
+  constructor(name: string, value: number, price: number) {
     this.name = name;
     this.value = value;
+    this.price = price;
   }
 
   // Range of Books
@@ -25,20 +27,26 @@ export class DataChart {
     let charts: DataChart[] = [];
     let date = new Date(books[0].date);
     let value = 0;
+    let amount = 0;
     for (const book of books) {
-      if (areInTheSameDay(date, book.date)) value++;
-      else {
+      if (areInTheSameDay(date, book.date)) {
+        value++;
+        amount += book.price;
+      } else {
         charts.push({
           name: getDateString(date),
           value,
+          price: amount,
         });
         date = new Date(book.date);
         value = 1;
+        amount = 0;
       }
     }
     charts.push({
       name: getDateString(date),
       value,
+      price: amount,
     });
     charts = charts.toSorted((a, b) => {
       const aDate = new Date(a.name);
@@ -53,20 +61,26 @@ export class DataChart {
     let charts: DataChart[] = [];
     let date = new Date(books[0].date);
     let value = 0;
+    let amount = 0;
     for (const book of books) {
-      if (areInTheSameWeek(date, book.date)) value++;
-      else {
+      if (areInTheSameWeek(date, book.date)) {
+        value++;
+        amount += book.price;
+      } else {
         charts.push({
           name: getWeekRange(date),
           value,
+          price: amount,
         });
         date = new Date(book.date);
         value = 1;
+        amount = 0;
       }
     }
     charts.push({
       name: getWeekRange(date),
       value,
+      price: amount,
     });
     charts = charts.toSorted((a, b) => {
       const aDate = new Date(a.name);
@@ -81,20 +95,26 @@ export class DataChart {
     let charts: DataChart[] = [];
     let date = new Date(books[0].date);
     let value = 0;
+    let amount = 0;
     for (const book of books) {
-      if (areInTheSameMonth(date, book.date)) value++;
-      else {
+      if (areInTheSameMonth(date, book.date)) {
+        value++;
+        amount += book.price;
+      } else {
         charts.push({
           name: getMonthString(date),
           value,
+          price: amount,
         });
         date = new Date(book.date);
         value = 1;
+        amount = 0;
       }
     }
     charts.push({
       name: getMonthString(date),
       value,
+      price: amount,
     });
     charts = charts.toSorted((a, b) => {
       const aDate = new Date(a.name);
@@ -109,20 +129,26 @@ export class DataChart {
     let charts: DataChart[] = [];
     let date = new Date(books[0].date);
     let value = 0;
+    let amount = 0;
     for (const book of books) {
-      if (areInTheSameYear(date, book.date)) value++;
-      else {
+      if (areInTheSameYear(date, book.date)) {
+        value++;
+        amount += book.price;
+      } else {
         charts.push({
           name: `${date.getFullYear()}`,
           value,
+          price: amount,
         });
         date = new Date(book.date);
         value = 1;
+        amount = 0;
       }
     }
     charts.push({
       name: `${date.getFullYear()}`,
       value,
+      price: amount,
     });
     charts = charts.toSorted((a, b) => {
       const aDate = new Date(a.name);
@@ -131,5 +157,4 @@ export class DataChart {
     });
     return charts;
   }
-
 }
