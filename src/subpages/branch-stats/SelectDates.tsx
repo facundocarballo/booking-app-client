@@ -16,6 +16,7 @@ import { DAY_TIME, getCleanDate } from "@/src/handlers/dates";
 import { DataChart } from "@/src/types/dataChart";
 import { Book } from "@/src/types/book";
 import { DataClient } from "@/src/types/Client/data";
+import { DataProduct } from "@/src/types/Product/data";
 
 export const SelectDates = () => {
   // Attributes
@@ -32,7 +33,8 @@ export const SelectDates = () => {
     setBooksPerWeek,
     setBooksPerMonth,
     setBooksPerYear,
-    setClients
+    setClients,
+    setProducts,
   } = useBranchStatsProvider();
   // Methods
   const setAllBooks = (booksSorted: Book[]) => {
@@ -55,7 +57,9 @@ export const SelectDates = () => {
       (a, b) => a.date.getTime() - b.date.getTime()
     );
     const clients = DataClient.CreateDataChartClients(booksSorted);
+    const products: DataProduct[] = [];
     setClients(clients);
+    setProducts(products);
     setAllBooks(booksSorted);
     setLoading(false);
   };

@@ -1,4 +1,4 @@
-import { Product } from "@/src/types/product";
+import { Product } from "@/src/types/Product";
 
 export interface IProductContext {
     // Attributes

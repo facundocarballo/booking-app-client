@@ -14,7 +14,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import React from "react";
-import { Product } from "@/src/types/product";
+import { Product } from "@/src/types/Product";
 import { EditProductForm } from "./EditProductForm";
 
 interface IBusinessCard {

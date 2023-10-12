@@ -9,7 +9,7 @@ import supabase from "../supabase";
 import { ENTITIES } from "../supabase/entities";
 import { Client } from "./Client";
 import { Book } from "./book";
-import { Product } from "./product";
+import { Product } from "./Product";
 
 export interface SearchBranchQuery {
   category_id: string;

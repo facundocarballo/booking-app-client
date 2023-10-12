@@ -14,6 +14,7 @@ import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
 import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
 import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
 import { ClientChart } from "@/src/subpages/branch-stats/ClientChart";
+import { ProductChart } from "@/src/subpages/branch-stats/ProductChart";
 
 export default function BranchStatsPage() {
   // Attributes
@@ -96,6 +97,7 @@ export default function BranchStatsPage() {
         <Box h="10px" />
         <BooksChart />
         <ClientChart />
+        <ProductChart />
       </BranchStatsContextProvider>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { IProductContext } from "./interface";
-import { Product } from "@/src/types/product";
+import { Product } from "@/src/types/Product";
 
 const ProductContext = React.createContext<IProductContext>({
   // Attributes

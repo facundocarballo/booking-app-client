@@ -2,8 +2,8 @@ import React from "react";
 import { IBranchStatsContext } from "./interface";
 import { Book } from "@/src/types/book";
 import { DataChart } from "@/src/types/dataChart";
-import { Client } from "@/src/types/Client";
 import { DataClient } from "@/src/types/Client/data";
+import { DataProduct } from "@/src/types/Product/data";
 
 const BranchStatsContext = React.createContext<IBranchStatsContext>({
   // Attributes
@@ -14,6 +14,7 @@ const BranchStatsContext = React.createContext<IBranchStatsContext>({
   booksPerYear: [],
   range: 0,
   clients: [],
+  products: [],
 
   // Methods
   // React useState Methods
@@ -24,6 +25,7 @@ const BranchStatsContext = React.createContext<IBranchStatsContext>({
   setBooksPerYear: () => {},
   setRange: () => {},
   setClients: () => {},
+  setProducts: () => {},
 });
 
 export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
@@ -35,6 +37,7 @@ export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
   const [booksPerYear, setBooksPerYear] = React.useState<DataChart[]>([]);
   const [range, setRange] = React.useState<number>(0);
   const [clients, setClients] = React.useState<DataClient[]>([]);
+  const [products, setProducts] = React.useState<DataProduct[]>([]);
   // Methods
   const values = {
     books,
@@ -44,6 +47,7 @@ export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
     booksPerYear,
     range,
     clients,
+    products,
 
     setBooks,
     setBooksPerDay,
@@ -52,6 +56,7 @@ export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
     setBooksPerYear,
     setRange,
     setClients,
+    setProducts,
   };
 
   const memo = React.useMemo(
@@ -64,6 +69,7 @@ export const BranchStatsContextProvider: React.FC<any> = (props: any) => {
       booksPerYear,
       range,
       clients,
+      products,
     ]
   );
 

@@ -2,7 +2,7 @@ import React from "react";
 import { VStack, Button, Spinner, HStack, Spacer } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { Product } from "@/src/types/product";
+import { Product } from "@/src/types/Product";
 import { useProductProvider } from "@/src/contexts/product";
 
 export interface ICreateBusinessForm {
