@@ -73,6 +73,7 @@ export class Branch {
     time: string,
     day: Date,
     client_id: string,
+    product_id: string,
     price: number,
     description: string
   ): Promise<boolean> {
@@ -81,6 +82,7 @@ export class Branch {
         date: getDateAtTime(day, time).toISOString(),
         branch_id: this.id,
         client_id,
+        product_id,
         price,
         description,
       });

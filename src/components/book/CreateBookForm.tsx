@@ -18,15 +18,23 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   const [description, setDescription] = React.useState<string>("");
   // Context
   const { branchSelected } = useBranchProvider();
-  const { daySelected, clientIdSelected, setBooksAvailables, setBooks } =
-    useBookProvider();
+  const {
+    daySelected,
+    clientIdSelected,
+    setBooksAvailables,
+    setBooks,
+    productIdSelected,
+  } = useBookProvider();
   // Methods
   const handleAppointment = async () => {
     if (!branchSelected) return;
+    if (!productIdSelected) return;
+    
     await branchSelected.CreateBook(
       time,
       daySelected,
       clientIdSelected,
+      productIdSelected,
       Number(price),
       description
     );
