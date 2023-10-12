@@ -7,6 +7,7 @@ export class Book {
     branch_id: string;
     client: Client;
     price: number;
+    product_id: string;
     description?: string;
 
     // Constructor
@@ -18,5 +19,6 @@ export class Book {
         this.client = new Client(book.Client);
         this.price = book.price;
         this.description = book.description;
+        this.product_id = book.product_id;
     }
 }

@@ -12,7 +12,7 @@ export const ProductDataCard = ({ data }: IClientCard) => {
   // Component
   return (
     <>
-      <Container variant="clientCard">
+      <Container variant="productCard">
         <VStack w="full">
           <Box h="2px" />
           <Text variant="caption">{data.product.name}</Text>

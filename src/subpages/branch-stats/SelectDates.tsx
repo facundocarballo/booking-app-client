@@ -52,14 +52,22 @@ export const SelectDates = () => {
   const handleSearchData = async () => {
     if (!branchSelected) return;
     setLoading(true);
+
     const books = await branchSelected.GetBusyBooks(dateFrom, dateTo);
     const booksSorted = books.toSorted(
       (a, b) => a.date.getTime() - b.date.getTime()
     );
+    const products = await branchSelected.GetProducts();
+
+    console.log("BOOKS: ", books);
+
     const clients = DataClient.CreateDataChartClients(booksSorted);
-    const products: DataProduct[] = [];
+    const productsData: DataProduct[] = DataProduct.CreateDataChartProducts(
+      booksSorted,
+      products
+    );
     setClients(clients);
-    setProducts(products);
+    setProducts(productsData);
     setAllBooks(booksSorted);
     setLoading(false);
   };
