@@ -6,10 +6,19 @@ import {
   HStack,
   Spacer,
   Container,
+  useDisclosure,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
 } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
 import { Product } from "@/src/types/product";
+import { EditProductForm } from "./EditProductForm";
 
 interface IBusinessCard {
   product: Product;
@@ -17,6 +26,8 @@ interface IBusinessCard {
 
 export const ProductCard = ({ product }: IBusinessCard) => {
   // Attributes
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef(null);
   const router = useRouter();
   // Context
   // Methods
@@ -26,11 +37,29 @@ export const ProductCard = ({ product }: IBusinessCard) => {
   // Component
   return (
     <>
-      <Container variant="productCard" centerContent onClick={handleOnClick}>
-        <VStack w='full'>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Product | {product.name}
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              <EditProductForm onClose={onClose} product={product} />
+            </AlertDialogBody>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+
+      <Container variant="productCard" centerContent onClick={onOpen}>
+        <VStack w="full">
           <Box h="10px" />
           <Heading fontSize="lg">{product.name}</Heading>
-          <VStack h='60px'>
+          <VStack h="60px">
             <Text align="justify" variant="description" fontSize="15px">
               {product.description}
             </Text>

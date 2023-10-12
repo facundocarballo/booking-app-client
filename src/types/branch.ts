@@ -132,6 +132,30 @@ export class Branch {
     return true;
   }
 
+  /// Edit
+  async EditProduct(
+    productId: string,
+    newName: string,
+    newDescription: string,
+    newPrice: string
+  ): Promise<boolean> {
+    try {
+      await supabase
+        .from(ENTITIES.product)
+        .update({
+          name: newName,
+          description: newDescription,
+          price: newPrice,
+        })
+        .eq("id", productId);
+
+      return true;
+    } catch (err) {
+      console.error(`Error editing the product ${productId}. `, err);
+      return false;
+    }
+  }
+
   /// Get
   async GetProducts(): Promise<Product[]> {
     let products: Product[] = [];
