@@ -9,14 +9,11 @@ import {
   useDisclosure,
   AlertDialog,
   AlertDialogBody,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  Button,
 } from "@chakra-ui/react";
 import React from "react";
-import { useRouter } from "next/router";
 import { Product } from "@/src/types/product";
 import { EditProductForm } from "./EditProductForm";
 
@@ -28,12 +25,8 @@ export const ProductCard = ({ product }: IBusinessCard) => {
   // Attributes
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
-  const router = useRouter();
   // Context
   // Methods
-  const handleOnClick = () => {
-    router.push(`/product/${product.id}`);
-  };
   // Component
   return (
     <>
