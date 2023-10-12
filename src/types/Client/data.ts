@@ -33,7 +33,7 @@ export class DataClient {
         });
         client = book.client;
         value = 1;
-        amount = 0;
+        amount = book.price;
       }
     }
 
