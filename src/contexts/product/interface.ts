@@ -3,11 +3,12 @@ import { Product } from "@/src/types/product";
 export interface IProductContext {
     // Attributes
     productSelected?: Product;
-    products?: Product[];
+    products: Product[];
+    productsFiltered: Product[],
 
     // React useState Methods
-    setProductSelected: (_business: Product) => void,
-    setProducts: (_business: Product[]) => void,
-
+    setProductSelected: (_product: Product) => void,
+    setProducts: (_products: Product[]) => void,
+    setProductsFiltered: (_products: Product[]) => void
     // Methods
 };

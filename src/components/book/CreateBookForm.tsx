@@ -1,10 +1,11 @@
 import React from "react";
-import { VStack, HStack, Spacer, Button } from "@chakra-ui/react";
+import { VStack, HStack, Spacer, Button, Box, Text } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBookProvider } from "@/src/contexts/book";
 import { SelectClient } from "../branch/SelectClient";
 import { compareTimes, getCleanDate } from "@/src/handlers/dates";
+import { SelectProduct } from "../product/SelectProduct";
 
 interface ICreateBookForm {
   time: string;
@@ -17,12 +18,8 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   const [description, setDescription] = React.useState<string>("");
   // Context
   const { branchSelected } = useBranchProvider();
-  const {
-    daySelected,
-    clientIdSelected,
-    setBooksAvailables,
-    setBooks,
-  } = useBookProvider();
+  const { daySelected, clientIdSelected, setBooksAvailables, setBooks } =
+    useBookProvider();
   // Methods
   const handleAppointment = async () => {
     if (!branchSelected) return;
@@ -50,6 +47,7 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
     <>
       <VStack w="full">
         <SelectClient />
+        <SelectProduct setPrice={setPrice} />
         <InputInfo
           title="Price"
           placeholder="3000"
@@ -58,7 +56,7 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
           type="number"
         />
         <InputInfo
-          title="Description"
+          title="Description (Optional)"
           placeholder="Say something about this appointment."
           handler={setDescription}
           value={description}

@@ -88,7 +88,7 @@ export const SelectClient = () => {
             value={searchClientName}
             onChange={handleSearchClient}
             w="full"
-            placeholder="Search for your client"
+            placeholder="Search Client"
           />
           {!clients || !clientsFiltered ? (
             <Spinner />

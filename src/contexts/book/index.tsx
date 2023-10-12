@@ -11,6 +11,7 @@ const BookContext = React.createContext<IBookContext>({
   daySelected: new Date(Date.now()),
   booksAvailables: [],
   clientIdSelected: "",
+  productIdSelected: undefined,
 
   // React useState Methods
   setBookSelected: () => {},
@@ -19,6 +20,7 @@ const BookContext = React.createContext<IBookContext>({
   setBooks: () => {},
   setBooksAvailables: () => {},
   setClientIdSelected: () => {},
+  setProductIdSelected: () => {},
 
   // Methods
   handleSetBooks: () => {},
@@ -38,6 +40,7 @@ export const BookContextProvider: React.FC<any> = (props: any) => {
   );
   const [booksAvailables, setBooksAvailables] = React.useState<string[]>([]);
   const [clientIdSelected, setClientIdSelected] = React.useState<string>("");
+  const [productIdSelected, setProductIdSelected] = React.useState<string>("");
 
   // Methods
   const handleSetBooks = (book: Book): void => {
@@ -82,16 +85,19 @@ export const BookContextProvider: React.FC<any> = (props: any) => {
     daySelected,
     booksAvailables,
     clientIdSelected,
+    productIdSelected,
 
     setBookSelected,
     setBooks,
     setBooksAvailables,
     setShowAvailable,
     setDaySelected,
+    setClientIdSelected,
+    setProductIdSelected,
+
     handleSetBooks,
     handleSetBooksAvailables,
     handleRemoveBook,
-    setClientIdSelected,
   };
 
   const memo = React.useMemo(
@@ -103,6 +109,7 @@ export const BookContextProvider: React.FC<any> = (props: any) => {
       daySelected,
       booksAvailables,
       clientIdSelected,
+      productIdSelected,
     ]
   );
 
