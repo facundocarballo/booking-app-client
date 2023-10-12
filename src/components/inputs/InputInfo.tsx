@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Text, Box, HStack, Spacer } from "@chakra-ui/react";
+import { Input, Text, HStack, Spacer } from "@chakra-ui/react";
 
 export interface IInputInfo {
   title: string;

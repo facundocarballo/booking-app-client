@@ -1,5 +1,5 @@
 import React from "react";
-import { VStack, HStack, Spacer, Button, Box, Text } from "@chakra-ui/react";
+import { VStack, HStack, Spacer, Button } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBookProvider } from "@/src/contexts/book";
