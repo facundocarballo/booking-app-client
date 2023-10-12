@@ -11,6 +11,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { MdOutlineQueryStats } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
 import { useBookProvider } from "@/src/contexts/book";
 import { BookAvailable } from "@/src/components/book/BookAvailable";
 import { BookUnavailable } from "@/src/components/book/BookUnavailable";
@@ -73,6 +74,13 @@ export const MyBooks = () => {
           <Box w="10px" />
           <Heading>My Books</Heading>
           <Spacer />
+          <NextLink href={`/clients/${branchSelected.id}`} target="_blank">
+            <Button variant="callToAction">
+              <FaUsers />
+              <Box w="5px" />
+              <Text>Clients</Text>
+            </Button>
+          </NextLink>
           <NextLink href={`/branch-stats/${branchSelected.id}`} target="_blank">
             <Button variant="callToAction">
               <MdOutlineQueryStats />
