@@ -1,5 +1,5 @@
 import React from "react";
-import { VStack, HStack, Spacer, Button } from "@chakra-ui/react";
+import { VStack, HStack, Spacer, Button, Text } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { useBookProvider } from "@/src/contexts/book";
@@ -11,6 +11,9 @@ interface ICreateBookForm {
   time: string;
   onClose: () => void;
 }
+
+const MISS_CLIENT = 1;
+const MISS_PRODUCT = 2;
 
 export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   // Attributes
@@ -29,7 +32,7 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
   const handleAppointment = async () => {
     if (!branchSelected) return;
     if (!productIdSelected) return;
-    
+
     await branchSelected.CreateBook(
       time,
       daySelected,
@@ -49,6 +52,21 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
     setBooksAvailables(booksSorted);
     setBooks(busyBooksSorted);
     onClose();
+  };
+  const isDisableToBook = (): number => {
+    if (clientIdSelected === "") return MISS_CLIENT;
+    if (productIdSelected === "") return MISS_PRODUCT;
+    return 0;
+  };
+  const getAlertMessage = (): string => {
+    switch (isDisableToBook()) {
+      case MISS_CLIENT:
+        return "You have to select a client to appoint this book.";
+      case MISS_PRODUCT:
+        return "You have to select a product to appoint this book.";
+      default:
+        return "";
+    }
   };
   // Component
   return (
@@ -72,10 +90,17 @@ export const CreateBookForm = ({ time, onClose }: ICreateBookForm) => {
         />
         <HStack w="full">
           <Spacer />
-          <Button variant="callToAction" onClick={handleAppointment}>
+          <Button
+            isDisabled={isDisableToBook() !== 0}
+            variant="callToAction"
+            onClick={handleAppointment}
+          >
             APPOINT CLIENT
           </Button>
         </HStack>
+        {isDisableToBook() !== 0 ? (
+          <Text variant="alert">{getAlertMessage()}</Text>
+        ) : null}
       </VStack>
     </>
   );

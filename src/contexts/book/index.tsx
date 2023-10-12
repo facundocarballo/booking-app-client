@@ -11,7 +11,7 @@ const BookContext = React.createContext<IBookContext>({
   daySelected: new Date(Date.now()),
   booksAvailables: [],
   clientIdSelected: "",
-  productIdSelected: undefined,
+  productIdSelected: "",
 
   // React useState Methods
   setBookSelected: () => {},

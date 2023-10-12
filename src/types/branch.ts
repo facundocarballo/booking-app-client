@@ -53,20 +53,24 @@ export class Branch {
     description: string,
     price: number,
     photo_url: string
-  ): Promise<boolean> {
+  ): Promise<Product | undefined> {
     try {
-      await supabase.from(ENTITIES.product).insert({
-        name,
-        description,
-        price,
-        photo_url,
-        branch_id: this.id,
-      });
+      const res = await supabase
+        .from(ENTITIES.product)
+        .insert({
+          name,
+          description,
+          price,
+          photo_url,
+          branch_id: this.id,
+        })
+        .select();
+      if (!res.data) return;
+      return new Product(res.data[0]);
     } catch (err) {
       console.error(`Error creating the product for ${this.name}. `, err);
-      return false;
+      return;
     }
-    return true;
   }
 
   async CreateBook(
@@ -170,6 +174,7 @@ export class Branch {
       for (const p of res.data) {
         products.push(new Product(p));
       }
+      products = products.toSorted((a, b) => a.name.localeCompare(b.name));
     } catch (err) {
       console.error("Error getting the products of this branch. ", err);
       return products;

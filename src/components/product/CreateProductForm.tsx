@@ -2,6 +2,8 @@ import React from "react";
 import { VStack, Button, Spinner, HStack, Spacer } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBranchProvider } from "@/src/contexts/branch";
+import { useProductProvider } from "@/src/contexts/product";
+import { useBookProvider } from "@/src/contexts/book";
 
 export interface ICreateBusinessForm {
   onClose: () => void;
@@ -16,12 +18,25 @@ export const CreateProductForm = ({ onClose }: ICreateBusinessForm) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   // Context
   const { branchSelected } = useBranchProvider();
+  const { products, setProducts, productsFiltered, setProductsFiltered } =
+    useProductProvider();
+  const { setProductIdSelected } = useBookProvider();
   // Methods
 
-  const handleCreateBusiness = async () => {
+  const handleCreateProduct = async () => {
     if (branchSelected === undefined) return;
     setLoading(true);
-    await branchSelected.CreateProduct(name, description, Number(price), photoUrl);
+    const newProduct = await branchSelected.CreateProduct(
+      name,
+      description,
+      Number(price),
+      photoUrl
+    );
+    console.log("newProduct: ", newProduct);
+    if (!newProduct) return;
+    setProducts([...products, newProduct]);
+    setProductsFiltered([...productsFiltered, newProduct]);
+    setProductIdSelected(newProduct.id);
     setLoading(false);
     clearInputs();
     onClose();
@@ -60,7 +75,7 @@ export const CreateProductForm = ({ onClose }: ICreateBusinessForm) => {
         />
         <HStack w="full">
           <Spacer />
-          <Button variant="callToAction" onClick={handleCreateBusiness}>
+          <Button variant="callToAction" onClick={handleCreateProduct}>
             CREATE PRODUCT
           </Button>
           {loading ? <Spinner /> : null}

@@ -15,9 +15,9 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { CreateClientForm } from "../branch/CreateClientForm";
 import { useBookProvider } from "@/src/contexts/book";
 import { useProductProvider } from "@/src/contexts/product";
+import { CreateProductForm } from "./CreateProductForm";
 
 interface ISelectProduct {
   setPrice: (_price: string) => void;
@@ -84,11 +84,11 @@ export const SelectProduct = ({ setPrice }: ISelectProduct) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              CREATE CLIENT
+              CREATE PRODUCT
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              <CreateClientForm onClose={onClose} />
+              <CreateProductForm onClose={onClose}/>
             </AlertDialogBody>
           </AlertDialogContent>
         </AlertDialogOverlay>

@@ -8,7 +8,7 @@ export interface IBookContext {
   daySelected: Date;
   booksAvailables: string[];
   clientIdSelected: string;
-  productIdSelected?: string;
+  productIdSelected: string;
 
   // React useState Methods
   setBookSelected: (_book: Book) => void;
