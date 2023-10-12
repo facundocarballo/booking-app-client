@@ -32,7 +32,6 @@ export const CreateProductForm = ({ onClose }: ICreateBusinessForm) => {
       Number(price),
       photoUrl
     );
-    console.log("newProduct: ", newProduct);
     if (!newProduct) return;
     setProducts([...products, newProduct]);
     setProductsFiltered([...productsFiltered, newProduct]);
