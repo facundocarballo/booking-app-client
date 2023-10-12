@@ -59,4 +59,5 @@ export class DataProduct {
 
     return charts;
   }
+
 }

@@ -59,13 +59,12 @@ export const SelectDates = () => {
     );
     const products = await branchSelected.GetProducts();
 
-    console.log("BOOKS: ", books);
-
     const clients = DataClient.CreateDataChartClients(booksSorted);
     const productsData: DataProduct[] = DataProduct.CreateDataChartProducts(
       booksSorted,
       products
     );
+
     setClients(clients);
     setProducts(productsData);
     setAllBooks(booksSorted);
