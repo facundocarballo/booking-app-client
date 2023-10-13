@@ -13,6 +13,7 @@ import { Product } from "../Product";
 import { Storage } from "../storage";
 import { STORAGE } from "@/src/supabase/storage";
 import { BASE_URL_BUSINESS_COVER } from "@/src/supabase/urls";
+import { BranchImage } from "./BranchImage";
 
 export interface SearchBranchQuery {
   category_id: string;
@@ -31,6 +32,7 @@ export class Branch {
   open: Date;
   close: Date;
   time_book: Date;
+  images?: BranchImage[];
   description?: string;
 
   constructor(branch: any) {
@@ -41,6 +43,7 @@ export class Branch {
     this.geogash = branch.geogash;
     this.latitude = branch.latitude;
     this.longitude = branch.longitude;
+    this.images = branch.BranchImage;
     this.open = convertStringToTime(branch.open);
     this.close = convertStringToTime(branch.close);
     this.time_book = convertStringToTime(branch.time_book);
@@ -49,7 +52,6 @@ export class Branch {
   }
 
   // Methods
-
   /// Create
   async CreateProduct(
     name: string,
@@ -241,8 +243,9 @@ export class Branch {
     try {
       const res = await supabase
         .from(ENTITIES.branch)
-        .select("*, Business(*)")
-        .eq("id", id);
+        .select("*, Business(*), BranchImage(*)")
+        .eq("id", id)
+        .eq("BranchImage.branch_id", id);
       if (res.data === null) return;
       return new Branch(res.data[0]);
     } catch (err) {

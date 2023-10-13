@@ -4,28 +4,26 @@ import {
   HStack,
   Heading,
   Spacer,
-  Button,
+  Image,
   Box,
-  Text,
+  Spinner,
   AlertDialog,
   AlertDialogBody,
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
   useDisclosure,
-  Grid,
-  GridItem,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
   Input,
+  Grid,
 } from "@chakra-ui/react";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { CreateProductForm } from "@/src/components/product/CreateProductForm";
 import { useProductProvider } from "@/src/contexts/product";
-import { ProductCard } from "@/src/components/product/ProductCard";
 
 export const BranchImages = () => {
   // Attributes
@@ -53,6 +51,13 @@ export const BranchImages = () => {
     handleGetBranches();
   }, []);
   // Component
+  if (!branchSelected)
+    return (
+      <VStack w="full">
+        <Box h="100px" />
+        <Spinner />
+      </VStack>
+    );
   return (
     <>
       <AlertDialog
@@ -94,7 +99,17 @@ export const BranchImages = () => {
           <AccordionPanel>
             <VStack w="full">
               <Box h="10px" />
-              Images...
+              <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+                {branchSelected.images?.map((branchImage) => (
+                  <Image
+                    src={branchImage.photo_url}
+                    key={branchImage.id}
+                    w="280px"
+                    h="130px"
+                    borderRadius={10}
+                  />
+                ))}
+              </Grid>
             </VStack>
           </AccordionPanel>
         </AccordionItem>
