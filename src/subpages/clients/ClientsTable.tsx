@@ -13,7 +13,6 @@ import {
   Text,
   Tr,
   Th,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 import React from "react";
@@ -68,13 +67,12 @@ export const ClientsTable = () => {
     <>
       <TableContainer>
         <Table variant="simple">
-          <TableCaption>Your clients</TableCaption>
           <Thead>
             <Tr>
               <Th>Name</Th>
               <Th>Description</Th>
               <Th>Last Book</Th>
-              <Th isNumeric>Total Spend</Th>
+              <Th>Total Spend</Th>
               {products.map((p) => (
                 <Th key={p.id}>{p.name}</Th>
               ))}

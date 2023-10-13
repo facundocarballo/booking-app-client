@@ -30,7 +30,6 @@ export class ClientTable {
       const booksClient = c.GetMyBooks(books);
       const totalSpend = Book.GetAllSpend(booksClient);
       const productsBooks = Book.GetProductsOccurrence(booksClient, products);
-      console.log(booksClient[booksClient.length - 1]);
       if (booksClient.length > 0)
         clientTable.push(
           new ClientTable({

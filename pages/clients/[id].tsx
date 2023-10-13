@@ -10,23 +10,9 @@ import { useBranchProvider } from "@/src/contexts/branch";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
 import { Branch } from "@/src/types/branch";
-import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
-import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
-import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
-import { ClientChart } from "@/src/subpages/branch-stats/ClientChart";
-import { ProductChart } from "@/src/subpages/branch-stats/ProductChart";
 import { ClientsTable } from "@/src/subpages/clients/ClientsTable";
 import { useBookProvider } from "@/src/contexts/book";
 import { useProductProvider } from "@/src/contexts/product";
-import { GetServerSidePropsContext } from "next";
-import { Client } from "@/src/types/Client";
-import { Product } from "@/src/types/Product";
-
-interface IClientsPageProps {
-  branch: Branch;
-  clients: Client[];
-  products: Product[];
-}
 
 export default function ClientsPage() {
   // Attributes
@@ -126,4 +112,10 @@ export default function ClientsPage() {
       <ClientsTable />
     </>
   );
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
 }
