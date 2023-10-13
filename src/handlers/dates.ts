@@ -126,7 +126,11 @@ export const getCleanDate = (d: Date, max: boolean): Date => {
 };
 
 export const getDateString = (d: Date): string => {
-  return `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()}`;
+  const day = d.getDate() > 9 ? `${d.getDate()}` : `0${d.getDate()}`;
+  const month =
+    d.getMonth() + 1 > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`;
+
+  return `${month}-${day}-${d.getFullYear()}`;
 };
 
 export const getWeekRange = (d: Date): string => {

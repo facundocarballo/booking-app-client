@@ -3,6 +3,7 @@ import { useBranchProvider } from "@/src/contexts/branch";
 import { useProductProvider } from "@/src/contexts/product";
 import { getDateString } from "@/src/handlers/dates";
 import { ClientTable } from "@/src/types/Client/table";
+import { InfoIcon } from "@chakra-ui/icons";
 import {
   Box,
   Spinner,
@@ -16,7 +17,16 @@ import {
   TableContainer,
   HStack,
   Input,
-  useColorModeValue,
+  Spacer,
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+  Divider,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -27,6 +37,8 @@ export const ClientsTable = () => {
     ClientTable[]
   >([]);
   const [searchInput, setSearchInput] = React.useState<string>("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef(null);
   // Context
   const { clients, branchSelected } = useBranchProvider();
   const { books, setBooks } = useBookProvider();
@@ -86,6 +98,36 @@ export const ClientsTable = () => {
     );
   return (
     <>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Clients Info
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              <Text variant="info">Dates: MM-DD-YYYY</Text>
+              <Box h='10px' />
+              <Divider />
+              <Box h='10px' />
+              <Text variant="caption">Books Frequency</Text>
+              <Text variant="info">
+                Shows how often a client ask for a book.
+              </Text>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} variant="callToAction" onClick={onClose}>
+                OK
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       <HStack w="full">
         <Box w="10px" />
         <Input
@@ -95,6 +137,11 @@ export const ClientsTable = () => {
           value={searchInput}
           onChange={handleSearchInput}
         />
+        <Spacer />
+        <Button variant="callToAction" onClick={onOpen}>
+          <InfoIcon />
+        </Button>
+        <Box w="5px" />
       </HStack>
       <Box h="10px" />
       <TableContainer>
