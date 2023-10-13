@@ -4,7 +4,7 @@ import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import { useRouter } from "next/router";
-import { Box } from "@chakra-ui/react";
+import { Box, Divider } from "@chakra-ui/react";
 import { BusinessSettings } from "@/src/subpages/business/BusinessSettings";
 import { useBusinessProvider } from "@/src/contexts/business";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
@@ -18,7 +18,8 @@ export default function BusinessProfilePage() {
   const businessSelectedId = url[url.length - 1];
   // Context
   const { user } = useHomeProvider();
-  const { business, businessSelected, setBusinessSelected } = useBusinessProvider();
+  const { business, businessSelected, setBusinessSelected } =
+    useBusinessProvider();
   // Methods
   const handleGetTheBusiness = async () => {
     const finded = business?.find((b) => b.id === businessSelectedId);
@@ -53,7 +54,7 @@ export default function BusinessProfilePage() {
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
       <BusinessBranches />
-      <Box h='10px' />
+      <Box h="30px" />
       <BusinessSettings id={url[url.length - 1]} />
     </>
   );

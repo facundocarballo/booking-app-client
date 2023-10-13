@@ -1,6 +1,6 @@
 import { useBusinessProvider } from "@/src/contexts/business";
 import React from "react";
-import { VStack, Spinner } from "@chakra-ui/react";
+import { VStack, Spinner, HStack, Heading } from "@chakra-ui/react";
 import { InputImage } from "@/src/components/inputs/InputImage";
 import { Business } from "@/src/types/business";
 import { useRouter } from "next/router";
@@ -50,6 +50,9 @@ export const BusinessSettings = ({ id }: IBusinessSettings) => {
         <Spinner />
       ) : (
         <VStack w="full">
+          <HStack w="full">
+            <Heading>Change Your Profile Image</Heading>
+          </HStack>
           <InputImage
             types={{ business: theBusiness }}
             handler={handleUploadImage}
