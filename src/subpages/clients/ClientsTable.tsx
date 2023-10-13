@@ -14,12 +14,19 @@ import {
   Tr,
   Th,
   TableContainer,
+  HStack,
+  Input,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 
 export const ClientsTable = () => {
   // Attributes
   const [clientsTable, setClientsTable] = React.useState<ClientTable[]>([]);
+  const [clientsTableFilter, setClientsTableFilter] = React.useState<
+    ClientTable[]
+  >([]);
+  const [searchInput, setSearchInput] = React.useState<string>("");
   // Context
   const { clients, branchSelected } = useBranchProvider();
   const { books, setBooks } = useBookProvider();
@@ -35,12 +42,26 @@ export const ClientsTable = () => {
       );
       const c = await ClientTable.GetClientsTable(clients, products, b);
       setClientsTable(c);
+      setClientsTableFilter(c);
       return;
     }
-
-    console.log("Se ejecutooo....");
     const c = await ClientTable.GetClientsTable(clients, products, books);
     setClientsTable(c);
+    setClientsTableFilter(c);
+  };
+
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.currentTarget.value;
+    setSearchInput(input);
+    if (input === "") {
+      setClientsTableFilter(clientsTable);
+      return;
+    }
+    const c = clientsTable.filter(
+      (client) =>
+        client.name.includes(input) || client.description.includes(input)
+    );
+    setClientsTableFilter(c);
   };
 
   React.useEffect(() => {
@@ -65,6 +86,17 @@ export const ClientsTable = () => {
     );
   return (
     <>
+      <HStack w="full">
+        <Box w="10px" />
+        <Input
+          w={{ lg: "50%", md: "60%", sm: "80%", base: "90%" }}
+          borderRadius={10}
+          placeholder="Clients"
+          value={searchInput}
+          onChange={handleSearchInput}
+        />
+      </HStack>
+      <Box h="10px" />
       <TableContainer>
         <Table variant="simple">
           <Thead>
@@ -73,6 +105,7 @@ export const ClientsTable = () => {
               <Th>Description</Th>
               <Th>Last Book</Th>
               <Th>Total Spend</Th>
+              <Th>Books Frequency</Th>
               {products.map((p) => (
                 <Th key={p.id}>{p.name}</Th>
               ))}
@@ -80,12 +113,13 @@ export const ClientsTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {clientsTable.map((c) => (
+            {clientsTableFilter.map((c) => (
               <Tr>
                 <Th>{c.name}</Th>
                 <Th>{c.description}</Th>
                 <Th>{getDateString(c.lastBook)}</Th>
                 <Th>{c.totalSpend}</Th>
+                <Th>{c.booksFrequency}</Th>
                 {c.productsBooks.map((p) => (
                   <Th>{p}</Th>
                 ))}

@@ -1,3 +1,4 @@
+import { getDaysBetweenTwoDates } from "@/src/handlers/dates";
 import { Client } from ".";
 import { Product } from "../Product";
 import { Book } from "../book";
@@ -7,6 +8,7 @@ export class ClientTable {
   description: string;
   lastBook: Date;
   totalSpend: number;
+  booksFrequency: number;
   productsBooks: number[];
   createdAt: Date;
 
@@ -15,6 +17,7 @@ export class ClientTable {
     this.description = clientTable.description;
     this.lastBook = clientTable.lastBook;
     this.totalSpend = clientTable.totalSpend;
+    this.booksFrequency = clientTable.booksFrequency;
     this.productsBooks = clientTable.productsBooks;
     this.createdAt = clientTable.createdAt;
   }
@@ -30,17 +33,23 @@ export class ClientTable {
       const booksClient = c.GetMyBooks(books);
       const totalSpend = Book.GetAllSpend(booksClient);
       const productsBooks = Book.GetProductsOccurrence(booksClient, products);
-      if (booksClient.length > 0)
+      if (booksClient.length > 0) {
+        const booksFrequency =
+          getDaysBetweenTwoDates(c.createdAt, new Date(Date.now())) /
+          booksClient.length;
+        console.log(booksFrequency.toFixed(2));
         clientTable.push(
           new ClientTable({
             name: c.name,
             description: c.description,
             lastBook: booksClient[booksClient.length - 1].date,
             totalSpend: totalSpend,
+            booksFrequency,
             productsBooks: productsBooks,
             createdAt: c.createdAt,
           })
         );
+      }
     }
     return clientTable;
   }
