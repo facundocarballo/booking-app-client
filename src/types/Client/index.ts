@@ -6,12 +6,14 @@ export class Client {
   name: string;
   id: string;
   description: string;
+  createdAt: Date;
   books?: Book[];
 
   constructor(client: any) {
     this.name = client.name;
     this.id = client.id;
     this.description = client.description;
+    this.createdAt = new Date(client.created_at);
   }
 
   static async GetClientBookInfo(
@@ -46,5 +48,18 @@ export class Client {
       );
       return;
     }
+  }
+
+  // Methods
+
+  /// Get
+  GetMyBooks(books: Book[]): Book[] {
+    let booksClient: Book[] = [];
+    for (const b of books) {
+      if (b.client.id === this.id) {
+        booksClient.push(b);
+      }
+    }
+    return booksClient;
   }
 }

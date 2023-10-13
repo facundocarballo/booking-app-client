@@ -15,6 +15,18 @@ import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
 import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
 import { ClientChart } from "@/src/subpages/branch-stats/ClientChart";
 import { ProductChart } from "@/src/subpages/branch-stats/ProductChart";
+import { ClientsTable } from "@/src/subpages/clients/ClientsTable";
+import { useBookProvider } from "@/src/contexts/book";
+import { useProductProvider } from "@/src/contexts/product";
+import { GetServerSidePropsContext } from "next";
+import { Client } from "@/src/types/Client";
+import { Product } from "@/src/types/Product";
+
+interface IClientsPageProps {
+  branch: Branch;
+  clients: Client[];
+  products: Product[];
+}
 
 export default function ClientsPage() {
   // Attributes
@@ -24,7 +36,10 @@ export default function ClientsPage() {
   const branchSelectedId = url[url.length - 1];
   // Context
   const { user, setUser } = useHomeProvider();
-  const { branches, branchSelected, setBranchesSelected } = useBranchProvider();
+  const { branches, branchSelected, clients, setClients, setBranchesSelected } =
+    useBranchProvider();
+  const { books, setBooks } = useBookProvider();
+  const { products, setProducts } = useProductProvider();
   // Methods
   const handleGetTheBranchSelected = async () => {
     const finded = branches?.find((b) => b.id === branchSelectedId);
@@ -34,6 +49,12 @@ export default function ClientsPage() {
       return;
     }
     setBranchesSelected(finded);
+    const c = await finded.GetClients();
+    const p = await finded.GetProducts();
+    const b = await finded.GetBusyBooks(new Date(0), new Date(Date.now()));
+    setClients(c);
+    setProducts(p);
+    setBooks(b);
     setLoading(false);
   };
 
@@ -46,12 +67,21 @@ export default function ClientsPage() {
     if (user) {
       const newUser = await User.CreateUserWithData(user);
       const branch = await Branch.GetBranch(branchSelectedId);
+
       if (branch === undefined) {
         return;
       }
       if (branch.owner_id !== newUser.id) {
         return;
       }
+
+      const c = await branch.GetClients();
+      const p = await branch.GetProducts();
+      const b = await branch.GetBusyBooks(new Date(0), new Date(Date.now()));
+
+      setClients(c);
+      setProducts(p);
+      setBooks(b);
       setUser(newUser);
       setBranchesSelected(branch);
       setLoading(false);
@@ -70,6 +100,7 @@ export default function ClientsPage() {
     }
     handleGetTheBranchSelected();
   }, []);
+
   // Component
   if (loading)
     return (
@@ -82,7 +113,7 @@ export default function ClientsPage() {
   return (
     <>
       <Head>
-        <title>{branchSelected.name} - Stats</title>
+        <title>{branchSelected.name} - Clients</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
@@ -92,19 +123,7 @@ export default function ClientsPage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <BranchStatsContextProvider>
-        <SelectDates />
-        <Box h="10px" />
-        <BooksChart />
-        <ClientChart />
-        <ProductChart />
-      </BranchStatsContextProvider>
+      <ClientsTable />
     </>
   );
-}
-
-export async function getServerSideProps() {
-  return {
-    props: {},
-  };
 }
