@@ -4,31 +4,19 @@ import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import { useRouter } from "next/router";
-import {
-  VStack,
-  Box,
-  Spinner,
-  HStack,
-  Heading,
-  Spacer,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { VStack, Box, Spinner } from "@chakra-ui/react";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { BranchProducts } from "@/src/subpages/branch/BranchProducts";
-import { BranchBooks } from "@/src/subpages/branch/BranchBooks";
-import { BookContextProvider } from "@/src/contexts/book";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
 import { Branch } from "@/src/types/branch";
-import NextLink from "next/link";
-import { FaUser } from "react-icons/fa";
-import { MdOutlineQueryStats } from "react-icons/md";
-import { SettingsIcon } from "@chakra-ui/icons";
-import { BranchHeadline } from "@/src/components/branch/BranchHeadline";
+import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
+import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
+import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
+import { ClientChart } from "@/src/subpages/branch-stats/ClientChart";
+import { ProductChart } from "@/src/subpages/branch-stats/ProductChart";
 
-export default function BranchProfilePage() {
+export default function BranchConfigurationPage() {
   // Attributes
   const [loading, setLoading] = React.useState<boolean>(true);
   const router = useRouter();
@@ -94,7 +82,7 @@ export default function BranchProfilePage() {
   return (
     <>
       <Head>
-        <title>{branchSelected.name} - Profile</title>
+        <title>{branchSelected.name} - Configuration</title>
         <meta
           name="description"
           content="App to organize your business and get new clients."
@@ -104,13 +92,13 @@ export default function BranchProfilePage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <BranchHeadline branch={branchSelected} />
-      <Box h="30px" />
-      <BranchProducts />
-      <Box h="30px" />
-      <BookContextProvider>
-        <BranchBooks />
-      </BookContextProvider>
+      <BranchStatsContextProvider>
+        <SelectDates />
+        <Box h="10px" />
+        <BooksChart />
+        <ClientChart />
+        <ProductChart />
+      </BranchStatsContextProvider>
     </>
   );
 }

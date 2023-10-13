@@ -2,22 +2,16 @@ import React from "react";
 import {
   VStack,
   HStack,
-  Heading,
-  Spacer,
   Box,
   Text,
   Grid,
-  Button,
   Spinner,
 } from "@chakra-ui/react";
-import { MdOutlineQueryStats } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
 import { useBookProvider } from "@/src/contexts/book";
 import { BookAvailable } from "@/src/components/book/BookAvailable";
 import { BookUnavailable } from "@/src/components/book/BookUnavailable";
 import { useBranchProvider } from "@/src/contexts/branch";
 import { compareTimes, getCleanDate } from "@/src/handlers/dates";
-import NextLink from "next/link";
 
 export const MyBooks = () => {
   // Attributes
@@ -70,26 +64,6 @@ export const MyBooks = () => {
   return (
     <>
       <VStack w="full">
-        <HStack w="full">
-          <Box w="10px" />
-          <Heading>My Books</Heading>
-          <Spacer />
-          <NextLink href={`/clients/${branchSelected.id}`} target="_blank">
-            <Button variant="callToAction">
-              <FaUsers />
-              <Box w="5px" />
-              <Text>Clients</Text>
-            </Button>
-          </NextLink>
-          <NextLink href={`/branch-stats/${branchSelected.id}`} target="_blank">
-            <Button variant="callToAction">
-              <MdOutlineQueryStats />
-              <Box w="5px" />
-              <Text>Stadistics</Text>
-            </Button>
-          </NextLink>
-          <Box w="10px" />
-        </HStack>
         <Box h="10px" />
         <HStack>
           <Box w="10px" />

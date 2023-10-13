@@ -32,14 +32,14 @@ export const SearchBranch = () => {
     base: "95%",
   };
   const selectCategorySize = {
-    xl: "25%",
+    xl: "22%",
     lg: "40%",
     md: "58%",
     sm: "75%",
     base: "80%",
   };
   const selectPrecisionSize = {
-    xl: "5%",
+    xl: "8%",
     lg: "10%",
     md: "12%",
     sm: "15%",
@@ -143,6 +143,11 @@ export const SearchBranch = () => {
         )}
 
         <HStack w={objSize}>
+          {geoHash.current === "" ? (
+            <Text variant="alert">
+              Accept the Geolocation to search for a business
+            </Text>
+          ) : null}
           <Spacer />
           <Button
             isDisabled={geoHash.current === ""}
@@ -151,11 +156,6 @@ export const SearchBranch = () => {
           >
             SEARCH
           </Button>
-          {geoHash.current === "" ? (
-            <Text variant="alert">
-              Accept the Geolocation to search for a business
-            </Text>
-          ) : null}
           {loading ? <Spinner /> : null}
         </HStack>
       </VStack>
