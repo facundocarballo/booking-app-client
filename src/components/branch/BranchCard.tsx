@@ -28,10 +28,10 @@ export const BranchCard = ({ branch }: IBranchCard) => {
   // Component
   return (
     <>
-      <Container variant="branchCard" centerContent >
+      <Container variant="branchCard" centerContent>
         <VStack w={{ lg: "400px" }}>
           <Box h="5px" />
-          <CarrouselImages />
+          <CarrouselImages branch={branch} />
           <Spacer />
           <Container onClick={handleOnClick}>
             <HStack w="full">

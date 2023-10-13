@@ -1,25 +1,44 @@
+import { useBranchProvider } from "@/src/contexts/branch";
+import { Branch } from "@/src/types/Branch";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Button, HStack, Image, VStack, Spacer } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Image,
+  VStack,
+  Spacer,
+  Box,
+  Spinner,
+} from "@chakra-ui/react";
 import React from "react";
 
-const imgs: string[] = [
-  "https://i.ibb.co/7nWy32G/chanchito-volador.png",
-  "https://i.ibb.co/HF3VQXT/Captura-de-pantalla-2023-08-09-a-la-s-10-39-52.png",
-  "https://i.ibb.co/PFFKNpC/Captura-de-pantalla-2023-08-09-a-la-s-10-41-21.png",
-];
-
-export const CarrouselImages = () => {
+interface ICarrouselImages {
+  branch: Branch;
+}
+export const CarrouselImages = ({ branch }: ICarrouselImages) => {
   // Attributes
   const [idx, setIdx] = React.useState<number>(0);
   // Context
   // Methods
   const handleIncrementIdx = () => {
-    if (idx + 1 < imgs.length) return setIdx(idx + 1);
+    if (!branch.images) return;
+    if (idx + 1 < branch.images.length) return setIdx(idx + 1);
   };
   const handleDecrementIdx = () => {
     if (idx - 1 >= 0) return setIdx(idx - 1);
   };
   // Component
+  if (!branch.images) return <Spinner />;
+
+  if (branch.images.length === 0) {
+    return (
+      <VStack w="full">
+        <Box h="50px" />
+        <p>No images</p>
+        <Box h="30px" />
+      </VStack>
+    );
+  }
   return (
     <HStack w="full">
       <VStack w="5px">
@@ -32,11 +51,17 @@ export const CarrouselImages = () => {
         </Button>
       </VStack>
       <Spacer />
-      <Image alt="img" src={imgs[idx]} w="full" h="120px" borderRadius={10} />
+      <Image
+        alt="img"
+        src={branch.images[idx].photo_url}
+        w="full"
+        h="120px"
+        borderRadius={10}
+      />
       <Spacer />
       <VStack w="5px">
         <Button
-          isDisabled={idx === imgs.length - 1}
+          isDisabled={idx === branch.images.length - 1}
           variant="carrousel"
           onClick={handleIncrementIdx}
         >

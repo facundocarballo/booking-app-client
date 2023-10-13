@@ -99,7 +99,7 @@ class User {
     try {
       const res = await supabase
         .from(ENTITIES.branch)
-        .select("*, Business(*)")
+        .select("*, Business(*), BranchImage(*)")
         .eq("Business.category_id", category_id)
         .like("geohash", `${geoHash}%`);
 
