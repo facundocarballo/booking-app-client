@@ -281,6 +281,4 @@ export class Branch {
     }
     return true;
   }
-
-  // TODO: Verificar que se puedan subir imagenes de las branches.
 }

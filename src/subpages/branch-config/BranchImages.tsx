@@ -42,10 +42,11 @@ export const BranchImages = () => {
     setProducts(res);
   };
 
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     file.current = e.target.files === null ? null : e.target.files[0];
+    if (!file.current) return;
     if (!branchSelected) return;
-    //await branchSelected.UploadImage(file);
+    await branchSelected.UploadImage(file.current);
   };
 
   React.useEffect(() => {
