@@ -1,7 +1,7 @@
 import supabase from "@/src/supabase";
 import { Storage } from "../storage";
 import { ENTITIES } from "@/src/supabase/entities";
-import { Branch } from "../branch";
+import { Branch } from "../Branch";
 
 export class Business {
   // Attributes

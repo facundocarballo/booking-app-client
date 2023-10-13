@@ -9,7 +9,7 @@ import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
-import { Branch } from "@/src/types/branch";
+import { Branch } from "@/src/types/Branch";
 import { ClientsTable } from "@/src/subpages/clients/ClientsTable";
 import { useBookProvider } from "@/src/contexts/book";
 import { useProductProvider } from "@/src/contexts/product";

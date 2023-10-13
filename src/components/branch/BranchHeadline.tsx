@@ -4,7 +4,7 @@ import NextLink from "next/link";
 import { FaUser } from "react-icons/fa";
 import { MdOutlineQueryStats } from "react-icons/md";
 import { SettingsIcon } from "@chakra-ui/icons";
-import { Branch } from "@/src/types/branch";
+import { Branch } from "@/src/types/Branch";
 
 interface IBranchHeadline {
   branch: Branch;

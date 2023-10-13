@@ -1,6 +1,6 @@
 import React from "react";
 import { IBranchContext } from "./interface";
-import { Branch } from "@/src/types/branch";
+import { Branch } from "@/src/types/Branch";
 import { Client } from "@/src/types/Client";
 
 const BranchContext = React.createContext<IBranchContext>({

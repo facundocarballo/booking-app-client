@@ -4,12 +4,15 @@ import {
   getDateAtTime,
   getTimeString,
   incrementTime,
-} from "../handlers/dates";
-import supabase from "../supabase";
-import { ENTITIES } from "../supabase/entities";
-import { Client } from "./Client";
-import { Book } from "./book";
-import { Product } from "./Product";
+} from "../../handlers/dates";
+import supabase from "../../supabase";
+import { ENTITIES } from "../../supabase/entities";
+import { Client } from "../Client";
+import { Book } from "../book";
+import { Product } from "../Product";
+import { Storage } from "../storage";
+import { STORAGE } from "@/src/supabase/storage";
+import { BASE_URL_BUSINESS_COVER } from "@/src/supabase/urls";
 
 export interface SearchBranchQuery {
   category_id: string;
@@ -247,4 +250,37 @@ export class Branch {
       return;
     }
   }
+
+  /// Upload
+  async UploadImage(file: File): Promise<boolean> {
+    const now = Date.now();
+    try {
+      await supabase.storage
+        .from(STORAGE.businessCover)
+        .upload(`${this.id}/cover-${now}.png`, file);
+      await this.InsertImageToBranchImages(now);
+    } catch (err) {
+      console.error(
+        `Error uploading the branch imgage to the storage. BranchId(${this.id}). `,
+        err
+      );
+      return false;
+    }
+    return true;
+  }
+
+  async InsertImageToBranchImages(now: number): Promise<boolean> {
+    try {
+      await supabase.from(ENTITIES.branchImage).insert({
+        branch_id: this.id,
+        photo_url: BASE_URL_BUSINESS_COVER + `${this.id}/cover-${now}.png`,
+      });
+    } catch (err) {
+      console.error(`Error inserting the branch image into supabase. `, err);
+      return false;
+    }
+    return true;
+  }
+
+  // TODO: Verificar que se puedan subir imagenes de las branches.
 }

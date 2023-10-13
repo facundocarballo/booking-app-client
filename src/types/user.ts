@@ -4,7 +4,8 @@ import { checkNull } from "../handlers/auxs";
 import { Business } from "./business";
 import { Storage } from "./storage";
 import { ENTITIES } from "../supabase/entities";
-import { Branch } from "./branch";
+import { Branch } from "./Branch";
+import { STORAGE } from "../supabase/storage";
 
 class User {
   // Attributes
@@ -216,7 +217,7 @@ class User {
 
   async UpdatePhotoUrl_Supabase(file: File): Promise<boolean> {
     return await Storage.Upload(
-      "avatars",
+      STORAGE.avatars,
       "User",
       this.id,
       file,

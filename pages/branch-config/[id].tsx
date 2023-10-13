@@ -9,12 +9,9 @@ import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
-import { Branch } from "@/src/types/branch";
-import { SelectDates } from "@/src/subpages/branch-stats/SelectDates";
-import { BranchStatsContextProvider } from "@/src/contexts/branch-stats";
-import { BooksChart } from "@/src/subpages/branch-stats/BooksChart";
-import { ClientChart } from "@/src/subpages/branch-stats/ClientChart";
-import { ProductChart } from "@/src/subpages/branch-stats/ProductChart";
+import { Branch } from "@/src/types/Branch";
+import { BranchImages } from "@/src/subpages/branch-config/BranchImages";
+import { BranchConfig } from "@/src/subpages/branch-config/BranchConfig";
 
 export default function BranchConfigurationPage() {
   // Attributes
@@ -92,13 +89,8 @@ export default function BranchConfigurationPage() {
       </Head>
       <NavBar props={theNavBarProps} />
       <Box h="100px" />
-      <BranchStatsContextProvider>
-        <SelectDates />
-        <Box h="10px" />
-        <BooksChart />
-        <ClientChart />
-        <ProductChart />
-      </BranchStatsContextProvider>
+      <BranchImages />
+      <BranchConfig />
     </>
   );
 }

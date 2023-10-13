@@ -1,5 +1,5 @@
 import { Client } from "@/src/types/Client";
-import { Branch } from "@/src/types/branch";
+import { Branch } from "@/src/types/Branch";
 
 export interface IBranchContext {
   // Attributes

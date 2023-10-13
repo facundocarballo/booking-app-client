@@ -8,11 +8,6 @@ import {
   VStack,
   Box,
   Spinner,
-  HStack,
-  Heading,
-  Spacer,
-  Button,
-  Text,
 } from "@chakra-ui/react";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";
 import { useBranchProvider } from "@/src/contexts/branch";
@@ -21,11 +16,7 @@ import { BranchBooks } from "@/src/subpages/branch/BranchBooks";
 import { BookContextProvider } from "@/src/contexts/book";
 import supabase from "@/src/supabase";
 import User from "@/src/types/user";
-import { Branch } from "@/src/types/branch";
-import NextLink from "next/link";
-import { FaUser } from "react-icons/fa";
-import { MdOutlineQueryStats } from "react-icons/md";
-import { SettingsIcon } from "@chakra-ui/icons";
+import { Branch } from "@/src/types/Branch";
 import { BranchHeadline } from "@/src/components/branch/BranchHeadline";
 
 export default function BranchProfilePage() {
