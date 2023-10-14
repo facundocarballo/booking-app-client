@@ -6,64 +6,43 @@ import {
   Spacer,
   Button,
   Box,
-  Text,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  useDisclosure,
-  Grid,
-  GridItem,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Spinner,
 } from "@chakra-ui/react";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { CreateProductForm } from "@/src/components/product/CreateProductForm";
-import { useProductProvider } from "@/src/contexts/product";
-import { ProductCard } from "@/src/components/product/ProductCard";
+import { InputInfo } from "@/src/components/inputs/InputInfo";
 
 export const BranchConfig = () => {
   // Attributes
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef(null);
+  const [name, setName] = React.useState<string>("");
+  const [description, setDescription] = React.useState<string>("");
+  const [open, setOpen] = React.useState<Date>(new Date());
+  const [close, setClose] = React.useState<Date>(new Date());
+  const [timeBook, setTimeBook] = React.useState<Date>(new Date());
   // Context
   const { branchSelected } = useBranchProvider();
-  const { products, setProducts } = useProductProvider();
   // Methods
-  const handleGetBranches = async () => {
-    if (branchSelected === undefined) return;
-    const res = await branchSelected.GetProducts();
-    setProducts(res);
+  const handleUpdateBranch = () => {
+    console.log("Open: ", open);
+    console.log("Close: ", close);
+    console.log("Book Time: ", timeBook);
   };
-
   React.useEffect(() => {
-    handleGetBranches();
+    if (!branchSelected) return;
+    setTimeBook(branchSelected.time_book);
+    setOpen(branchSelected.open);
+    setClose(branchSelected.close);
+    setName(branchSelected.name);
+    if (branchSelected.description) setDescription(branchSelected.description);
   }, []);
   // Component
+  if (!branchSelected) return <Spinner />;
   return (
     <>
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Create Product
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              <CreateProductForm onClose={onClose} />
-            </AlertDialogBody>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-
       <Accordion allowToggle>
         <AccordionItem>
           <AccordionButton>
@@ -77,7 +56,44 @@ export const BranchConfig = () => {
           <AccordionPanel>
             <VStack w="full">
               <Box h="10px" />
-              Inputs..
+              <InputInfo
+                title="Name"
+                type="text"
+                placeholder="Branch Name"
+                value={name}
+                handler={setName}
+              />
+              <InputInfo
+                title="Description"
+                type="text"
+                placeholder="Branch Description"
+                value={description}
+                handler={setDescription}
+              />
+              <InputInfo
+                title="Open"
+                type="time"
+                placeholder="Branch Open"
+                value={open}
+                handler={setOpen}
+              />
+              <InputInfo
+                title="Close"
+                type="time"
+                placeholder="Branch Close"
+                value={close}
+                handler={setClose}
+              />
+              <InputInfo
+                title="Book Time"
+                type="time"
+                placeholder="Book Time"
+                value={timeBook}
+                handler={setTimeBook}
+              />
+              <Button variant="callToAction" onClick={handleUpdateBranch}>
+                Update
+              </Button>
             </VStack>
           </AccordionPanel>
         </AccordionItem>
