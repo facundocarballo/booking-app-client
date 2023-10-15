@@ -26,7 +26,7 @@ export class Branch {
   business_id: string;
   owner_id?: string;
   name: string;
-  geogash: string;
+  geohash: string;
   latitude: string;
   longitude: string;
   open: Date;
@@ -34,13 +34,15 @@ export class Branch {
   time_book: Date;
   images?: BranchImage[];
   description?: string;
+  whatsapp?: string;
+  instagram: string;
 
   constructor(branch: any) {
     this.id = branch.id;
     this.created_at = branch.created_at;
     this.business_id = branch.business_id;
     this.name = branch.name;
-    this.geogash = branch.geogash;
+    this.geohash = branch.geohash;
     this.latitude = branch.latitude;
     this.longitude = branch.longitude;
     this.images = branch.BranchImage;
@@ -48,7 +50,9 @@ export class Branch {
     this.close = convertStringToTime(branch.close);
     this.time_book = convertStringToTime(branch.time_book);
     this.description = branch.description;
-    this.owner_id = branch.Business.owner;
+    this.owner_id = branch.Business ? branch.Business.owner : branch.owner_id;
+    this.whatsapp = branch.whatsapp;
+    this.instagram = branch.instagram;
   }
 
   // Methods
@@ -164,6 +168,29 @@ export class Branch {
     } catch (err) {
       console.error(`Error editing the product ${productId}. `, err);
       return false;
+    }
+  }
+
+  async EditBranch(branch: Branch): Promise<undefined> {
+    try {
+      await supabase
+        .from(ENTITIES.branch)
+        .update({
+          name: branch.name,
+          description: branch.description,
+          geohash: branch.geohash,
+          latitude: branch.latitude,
+          longitude: branch.longitude,
+          open: branch.open,
+          close: branch.close,
+          time_book: branch.time_book,
+          whatsapp: branch.whatsapp,
+          instagram: branch.instagram,
+        })
+        .eq("id", this.id);
+    } catch (err) {
+      console.error(`Error editing the branch info. `, err);
+      return;
     }
   }
 

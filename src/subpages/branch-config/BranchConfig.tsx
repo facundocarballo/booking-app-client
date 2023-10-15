@@ -1,11 +1,8 @@
 import React from "react";
 import {
-  VStack,
   HStack,
   Heading,
   Spacer,
-  Button,
-  Box,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -14,14 +11,17 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useBranchProvider } from "@/src/contexts/branch";
-import { InputInfo } from "@/src/components/inputs/InputInfo";
 import "leaflet/dist/leaflet.css";
-import { MapBox } from "@/src/components/Map/MapBox";
+import { BranchConfigForm } from "@/src/components/branch-config/BranchConfigForm";
+import { GeoHash } from "@/src/types/GeoHash";
+import { Branch } from "@/src/types/Branch";
 
 export const BranchConfig = () => {
   // Attributes
   const [name, setName] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
+  const [whatsapp, setWhatsApp] = React.useState<string>("");
+  const [instagram, setInstagram] = React.useState<string>("");
   const [open, setOpen] = React.useState<Date>(new Date());
   const [close, setClose] = React.useState<Date>(new Date());
   const [timeBook, setTimeBook] = React.useState<Date>(new Date());
@@ -30,10 +30,20 @@ export const BranchConfig = () => {
   // Context
   const { branchSelected } = useBranchProvider();
   // Methods
-  const handleUpdateBranch = () => {
-    console.log("Open: ", open);
-    console.log("Close: ", close);
-    console.log("Book Time: ", timeBook);
+  const handleUpdateBranch = async () => {
+    if (!branchSelected) return;
+    const b = new Branch(branchSelected);
+    b.name = name;
+    b.description = description;
+    b.whatsapp = whatsapp;
+    b.instagram = instagram;
+    b.open = open;
+    b.close = close;
+    b.time_book = timeBook;
+    b.latitude = lat.toString();
+    b.longitude = long.toString();
+    b.geohash = GeoHash.encode(lat, long, 12);
+    await branchSelected.EditBranch(b);
   };
 
   React.useEffect(() => {
@@ -47,6 +57,8 @@ export const BranchConfig = () => {
       setLong(p.coords.longitude);
     });
     if (branchSelected.description) setDescription(branchSelected.description);
+    if (branchSelected.whatsapp) setWhatsApp(branchSelected.whatsapp);
+    if (branchSelected.instagram) setInstagram(branchSelected.instagram);
   }, []);
   // Component
   if (!branchSelected) return <Spinner />;
@@ -63,57 +75,28 @@ export const BranchConfig = () => {
           </AccordionButton>
 
           <AccordionPanel>
-            <VStack w="full">
-              <Box h="10px" />
-              <InputInfo
-                title="Name"
-                type="text"
-                placeholder="Branch Name"
-                value={name}
-                handler={setName}
-              />
-              <InputInfo
-                title="Description"
-                type="text"
-                placeholder="Branch Description"
-                value={description}
-                handler={setDescription}
-              />
-              <InputInfo
-                title="Open"
-                type="time"
-                placeholder="Branch Open"
-                value={open}
-                handler={setOpen}
-              />
-              <InputInfo
-                title="Close"
-                type="time"
-                placeholder="Branch Close"
-                value={close}
-                handler={setClose}
-              />
-              <InputInfo
-                title="Book Time"
-                type="time"
-                placeholder="Book Time"
-                value={timeBook}
-                handler={setTimeBook}
-              />
-              {lat === 0 ? null : (
-                <MapBox
-                  latitude={lat}
-                  longitude={long}
-                  setLatitude={setLat}
-                  setLongitude={setLong}
-                />
-              )}
-              {/* <MapBoxReact /> */}
-
-              <Button variant="callToAction" onClick={handleUpdateBranch}>
-                Update
-              </Button>
-            </VStack>
+            <BranchConfigForm
+              name={name}
+              description={description}
+              whatsapp={whatsapp}
+              instagram={instagram}
+              open={open}
+              close={close}
+              timeBook={timeBook}
+              lat={lat}
+              long={long}
+              buttonLabel="Update"
+              setName={setName}
+              setDescription={setDescription}
+              setOpen={setOpen}
+              setClose={setClose}
+              setTimeBook={setTimeBook}
+              setLat={setLat}
+              setLong={setLong}
+              setWhatsApp={setWhatsApp}
+              setInstagram={setInstagram}
+              handler={handleUpdateBranch}
+            />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

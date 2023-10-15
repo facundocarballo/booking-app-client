@@ -1,7 +1,16 @@
 export const DAY_TIME = 1000 * 60 * 60 * 24;
 
 export const convertStringToTime = (dateString: any): Date => {
-  const [hours, minutes, seconds] = dateString.split(":").map(Number);
+  let hours: number;
+  let minutes: number;
+  let seconds: number;
+  if (dateString instanceof Date) {
+    hours = dateString.getHours();
+    minutes = dateString.getMinutes();
+    seconds = dateString.getSeconds();
+  } else {
+    [hours, minutes, seconds] = dateString.split(":").map(Number);
+  }
 
   const date = new Date();
   date.setHours(hours, minutes, seconds);
