@@ -16,23 +16,20 @@ import NextLink from "next/link";
 
 interface IBranchCard {
   branch: Branch;
+  href: boolean;
 }
 
-export const BranchCard = ({ branch }: IBranchCard) => {
+export const BranchCard = ({ branch, href }: IBranchCard) => {
   // Attributes
   const router = useRouter();
   const ig = "https://i.ibb.co/D5gPbrz/instagram.png";
   const wpp = "https://i.ibb.co/w0Fzntb/whatsapp.png";
   // Context
   // Methods
-  // Component
-  return (
-    <>
-      <Container variant="branchCard" centerContent>
-        <VStack w={{ lg: "400px" }}>
-          <Box h="5px" />
-          <CarrouselImages branch={branch} />
-          <Spacer />
+  const showContainerNameDescription = () => {
+    if (href) {
+      return (
+        <NextLink href={`/branch/${branch.id}`} target="_blank">
           <Container>
             <HStack w="full">
               <Heading fontSize="lg">{branch.name}</Heading>
@@ -44,6 +41,33 @@ export const BranchCard = ({ branch }: IBranchCard) => {
               <Box w="5px" />
             </HStack>
           </Container>
+        </NextLink>
+      );
+    }
+
+    return (
+      <Container>
+        <HStack w="full">
+          <Heading fontSize="lg">{branch.name}</Heading>
+        </HStack>
+        <HStack w="full">
+          <Text align="justify" variant="description" fontSize="15px">
+            {branch.description}
+          </Text>
+          <Box w="5px" />
+        </HStack>
+      </Container>
+    );
+  };
+  // Component
+  return (
+    <>
+      <Container variant="branchCard" centerContent>
+        <VStack w={{ lg: "400px" }}>
+          <Box h="5px" />
+          <CarrouselImages branch={branch} />
+          <Spacer />
+          {showContainerNameDescription()}
           <Spacer />
           <HStack w="full">
             <Spacer />

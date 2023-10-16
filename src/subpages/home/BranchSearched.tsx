@@ -21,7 +21,7 @@ export const BranchSearched = () => {
       <VStack w="full">
         <Grid templateColumns="repeat(4, 1fr)" gap={6}>
           {searchBranches.map((branch) => (
-            <BranchCard key={branch.id} branch={branch} />
+            <BranchCard key={branch.id} branch={branch} href={false} />
           ))}
         </Grid>
       </VStack>
