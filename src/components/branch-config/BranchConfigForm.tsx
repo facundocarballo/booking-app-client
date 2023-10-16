@@ -121,10 +121,9 @@ export const BranchConfigForm = ({
         handler={setTimeBook}
       />
       {lat === 0 ? null : (
-        <VStack>
+        <VStack w="full">
           <HStack w="full">
-            <Box w="2px" />
-            <Text variant="caption">Where is your branch located?</Text>
+            <Text fontWeight="bold">Where is your branch located?</Text>
           </HStack>
           <MapBox
             latitude={lat}
