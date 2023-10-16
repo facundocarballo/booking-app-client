@@ -103,7 +103,7 @@ export const SearchBranch = () => {
     <>
       <VStack w="full">
         <HStack w={objSize}>
-          <Text variant="caption">Que quieres hacer hoy?</Text>
+          <Text variant="caption">What you wanna do today?</Text>
           <Spacer />
         </HStack>
 
