@@ -20,6 +20,7 @@ import { useBranchProvider } from "@/src/contexts/branch";
 import { BranchCard } from "@/src/components/branch/BranchCard";
 import { BranchConfigForm } from "@/src/components/branch-config/BranchConfigForm";
 import { GeoHash } from "@/src/types/GeoHash";
+import { getWppNumber } from "@/src/handlers/auxs";
 
 export const BusinessBranches = () => {
   // Attributes
@@ -56,7 +57,7 @@ export const BusinessBranches = () => {
     await businessSelected.CreateBranch(
       name,
       description,
-      whatsapp,
+      getWppNumber(whatsapp),
       instagram,
       open,
       close,

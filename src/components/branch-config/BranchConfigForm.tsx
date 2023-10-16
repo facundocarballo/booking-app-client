@@ -88,7 +88,7 @@ export const BranchConfigForm = ({
       <InputInfo
         title="WhatsApp"
         type="text"
-        placeholder="+54 9 11 5867-9316"
+        placeholder="5491158679316"
         value={whatsapp}
         handler={setWhatsApp}
       />

@@ -15,6 +15,7 @@ import "leaflet/dist/leaflet.css";
 import { BranchConfigForm } from "@/src/components/branch-config/BranchConfigForm";
 import { GeoHash } from "@/src/types/GeoHash";
 import { Branch } from "@/src/types/Branch";
+import { getWppNumber } from "@/src/handlers/auxs";
 
 export const BranchConfig = () => {
   // Attributes
@@ -35,7 +36,7 @@ export const BranchConfig = () => {
     const b = new Branch(branchSelected);
     b.name = name;
     b.description = description;
-    b.whatsapp = whatsapp;
+    b.whatsapp = getWppNumber(whatsapp);
     b.instagram = instagram;
     b.open = open;
     b.close = close;
