@@ -111,9 +111,9 @@ export const ClientsTable = () => {
 
             <AlertDialogBody>
               <Text variant="info">Dates: MM-DD-YYYY</Text>
-              <Box h='10px' />
+              <Box h="10px" />
               <Divider />
-              <Box h='10px' />
+              <Box h="10px" />
               <Text variant="caption">Books Frequency</Text>
               <Text variant="info">
                 Shows how often a client ask for a book.
@@ -161,14 +161,14 @@ export const ClientsTable = () => {
           </Thead>
           <Tbody>
             {clientsTableFilter.map((c) => (
-              <Tr>
+              <Tr key={c.createdAt.toDateString()}>
                 <Th>{c.name}</Th>
                 <Th>{c.description}</Th>
                 <Th>{getDateString(c.lastBook)}</Th>
                 <Th>{c.totalSpend}</Th>
                 <Th>{c.booksFrequency}</Th>
                 {c.productsBooks.map((p) => (
-                  <Th>{p}</Th>
+                  <Th key={p.toString()}>{p}</Th>
                 ))}
                 <Th>{getDateString(c.createdAt)}</Th>
               </Tr>
