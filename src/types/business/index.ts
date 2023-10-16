@@ -40,14 +40,28 @@ export class Business {
   /// Create
   async CreateBranch(
     name: string,
-    geogash: string,
-    description: string
+    description: string,
+    whatsapp: string,
+    instagram: string,
+    open: Date,
+    close: Date,
+    time_book: Date,
+    latitude: number,
+    longitude: number,
+    geohash: string,
   ): Promise<boolean> {
     try {
       await supabase.from(ENTITIES.branch).insert({
         name,
         description,
-        geogash,
+        whatsapp,
+        instagram,
+        open,
+        close,
+        time_book,
+        latitude,
+        longitude,
+        geohash,
         business_id: this.id,
       });
     } catch (err) {

@@ -1,5 +1,13 @@
 import React from "react";
-import { VStack, Box, Button } from "@chakra-ui/react";
+import {
+  VStack,
+  Box,
+  Button,
+  Text,
+  HStack,
+  Spinner,
+  Spacer,
+} from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { MapBox } from "../Map/MapBox";
 
@@ -51,8 +59,14 @@ export const BranchConfigForm = ({
   handler,
 }: IBranchConfigForm) => {
   // Attributes
+  const [loading, setLoading] = React.useState<boolean>(false);
   // Context
   // Methods
+  const handleOfHandler = async () => {
+    setLoading(true);
+    await handler();
+    setLoading(false);
+  };
   // Component
   return (
     <VStack w="full">
@@ -107,16 +121,26 @@ export const BranchConfigForm = ({
         handler={setTimeBook}
       />
       {lat === 0 ? null : (
-        <MapBox
-          latitude={lat}
-          longitude={long}
-          setLatitude={setLat}
-          setLongitude={setLong}
-        />
+        <VStack>
+          <HStack w="full">
+            <Box w="2px" />
+            <Text variant="caption">Where is your branch located?</Text>
+          </HStack>
+          <MapBox
+            latitude={lat}
+            longitude={long}
+            setLatitude={setLat}
+            setLongitude={setLong}
+          />
+        </VStack>
       )}
-      <Button variant="callToAction" onClick={handler}>
-        {buttonLabel}
-      </Button>
+      <HStack w="full">
+        <Spacer />
+        <Button variant="callToAction" onClick={handleOfHandler}>
+          {buttonLabel}
+        </Button>
+        {loading ? <Spinner /> : null}
+      </HStack>
     </VStack>
   );
 };

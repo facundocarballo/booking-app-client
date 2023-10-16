@@ -48,8 +48,8 @@ export const MapBox = ({
     <div
       ref={mapDiv}
       style={{
-        height: "250px",
-        width: "91vw",
+        height: "220px",
+        width: "30vw",
         borderRadius: 10,
       }}
     ></div>
