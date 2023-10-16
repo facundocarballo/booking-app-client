@@ -4,7 +4,7 @@ import { NavBar } from "@/src/components/navbar";
 import { theNavBarProps } from "@/src/handlers/navbar";
 import { useHomeProvider } from "@/src/contexts/home";
 import { useRouter } from "next/router";
-import { Box, Divider } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { BusinessSettings } from "@/src/subpages/business/BusinessSettings";
 import { useBusinessProvider } from "@/src/contexts/business";
 import BusinessNotFound from "@/src/subpages/business/BusinessNotFound";

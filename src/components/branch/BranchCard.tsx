@@ -21,7 +21,6 @@ interface IBranchCard {
 
 export const BranchCard = ({ branch, href }: IBranchCard) => {
   // Attributes
-  const router = useRouter();
   const ig = "https://i.ibb.co/D5gPbrz/instagram.png";
   const wpp = "https://i.ibb.co/w0Fzntb/whatsapp.png";
   // Context

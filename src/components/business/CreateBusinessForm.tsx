@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  VStack,
-  Button,
-  Spinner,
-  HStack,
-  Spacer,
-} from "@chakra-ui/react";
+import { VStack, Button, Spinner, HStack, Spacer } from "@chakra-ui/react";
 import { InputInfo } from "../inputs/InputInfo";
 import { useBusinessProvider } from "@/src/contexts/business";
 import { BusinessCategory } from "@/src/types/business/category";
@@ -35,7 +29,7 @@ export const CreateBusinessForm = ({ onClose }: ICreateBusinessForm) => {
   };
 
   const handleCreateBusiness = async () => {
-    if (user === undefined || categorySelected === undefined) return;
+    if (!user || !categorySelected) return;
     setLoading(true);
     await user.CreateBusiness(name, description, categorySelected);
     setLoading(false);
@@ -53,6 +47,7 @@ export const CreateBusinessForm = ({ onClose }: ICreateBusinessForm) => {
   React.useEffect(() => {
     if (categories !== undefined) {
       setCategories(categories);
+      setCategorySelected(categories[0].id);
       return;
     }
     handlerGetAllBusinessCategories();

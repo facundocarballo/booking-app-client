@@ -120,12 +120,13 @@ class User {
     category_id: string
   ): Promise<boolean> {
     try {
-      await supabase.from(ENTITIES.business).insert({
+      const res = await supabase.from(ENTITIES.business).insert({
         name,
         description,
         category_id,
         owner: this.id,
       });
+      console.log(res);
     } catch (err) {
       console.error("Error creating the business for this user. ", err);
       return false;
