@@ -25,6 +25,21 @@ export const InputPassword = ({
     if (valueB.length === 0) return false;
     return true;
   };
+  const isPasswordLengthOk = (): boolean => {
+    if (!valueA) return true;
+    if (valueA.length === 0) return true;
+    if (valueA.length < 6) return false;
+    return true;
+  };
+  const showMessage = (): boolean => {
+    return areDiferrentsPasswords() || !isPasswordLengthOk();
+  };
+  const getMessageToShow = (): string => {
+    if (areDiferrentsPasswords()) return "The passwords doesn't match.";
+    if (!isPasswordLengthOk())
+      return "Password should be at least 6 characters.";
+    return "";
+  };
   // Component
   return (
     <>
@@ -38,7 +53,7 @@ export const InputPassword = ({
           w="full"
         />
         <Button w="50px" onClick={() => setViewPassword(!viewPassword)}>
-          {viewPassword ?  <ViewIcon /> : <ViewOffIcon />}
+          {viewPassword ? <ViewIcon /> : <ViewOffIcon />}
         </Button>
       </HStack>
       <Box h="10px" />
@@ -53,9 +68,7 @@ export const InputPassword = ({
         <Box w="55px" />
       </HStack>
       <Box h="10px" />
-      {areDiferrentsPasswords() ? (
-        <Text variant="alert">{"The passwords doesn't match"}</Text>
-      ) : null}
+      {showMessage() ? <Text variant="alert">{getMessageToShow()}</Text> : null}
     </>
   );
 };

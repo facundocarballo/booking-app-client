@@ -70,6 +70,13 @@ export default function Home() {
     setWelcomeOpen(true);
   };
 
+  const signUpDisable = (): boolean => {
+    if (password.length === 0) return true;
+    if (password.length < 6) return true;
+    if (password !== confirmPassword) return true;
+    return false;
+  };
+
   const handleSignUp = async () => {
     setLoadingSignUp(true);
     await supabase.auth.signUp({
@@ -84,11 +91,10 @@ export default function Home() {
 
   const handleLogIn = async () => {
     setLoadingLogIn(true);
-    const res = await supabase.auth.signInWithPassword({
+    await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    console.log(res);
     clearInputs();
     await checkUserAuth();
     setLogInOpen(false);
@@ -176,7 +182,11 @@ export default function Home() {
               <Box h="10px" />
               <HStack w="full">
                 <Spacer />
-                <Button variant="callToAction" onClick={handleSignUp}>
+                <Button
+                  isDisabled={signUpDisable()}
+                  variant="callToAction"
+                  onClick={handleSignUp}
+                >
                   Sign Up
                 </Button>
                 {loadingSignUp ? <Spinner /> : null}
