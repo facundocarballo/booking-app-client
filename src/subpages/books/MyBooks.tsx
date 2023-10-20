@@ -40,12 +40,10 @@ export const MyBooks = () => {
     const maxDate = getCleanDate(date, true);
     const busyBooks = await branchSelected.GetBusyBooks(minDate, maxDate);
     const books = await branchSelected.GetAvailableBooks(busyBooks);
-    console.log("Books: ", books.length);
-    const busyBooksSorted = busyBooks.toSorted(
+    const busyBooksSorted = busyBooks.sort(
       (a, b) => a.date.getTime() - b.date.getTime()
     );
-    const booksSorted = books.toSorted((a, b) => compareTimes(a, b));
-    console.log("Books Sorted: ", booksSorted.length);
+    const booksSorted = books.sort((a, b) => compareTimes(a, b));
     setBooksAvailables(booksSorted);
     setBooks(busyBooksSorted);
   };
